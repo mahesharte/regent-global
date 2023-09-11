@@ -15,11 +15,16 @@ import {
 } from '@/sanity/config';
 import previewDocumentNode from '@/sanity/plugins/previewPane';
 import { pageStructure, singletonPlugin } from '@/sanity/plugins/settings';
-import page from '@/sanity/schemas/documents/builders/page';
+import article from '@/sanity/schemas/documents/article';
+import articleTag from '@/sanity/schemas/documents/article-tag';
+import page from '@/sanity/schemas/documents/page';
+import people from '@/sanity/schemas/documents/people';
+import section from '@/sanity/schemas/documents/section';
+import pageMeta from '@/sanity/schemas/objects/page-meta';
 
 const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ?? 'Regent POC';
-const pageBuilders = [page.name];
-const previewableTypes = [page.name];
+const pageBuilders = [article.name, page.name];
+const previewableTypes = [article.name, page.name];
 const singletons: string[] = [];
 
 export default defineConfig({
@@ -32,8 +37,13 @@ export default defineConfig({
     types: [
       // Singletons
       // Documents
+      article,
+      articleTag,
       page,
+      people,
+      section,
       // Objects
+      pageMeta,
     ],
   },
   plugins: [
