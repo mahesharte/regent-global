@@ -20,12 +20,14 @@ import articleTag from '@/sanity/schemas/documents/article-tag';
 import page from '@/sanity/schemas/documents/page';
 import people from '@/sanity/schemas/documents/people';
 import section from '@/sanity/schemas/documents/section';
+import keyValue from '@/sanity/schemas/objects/key-value';
 import pageMeta from '@/sanity/schemas/objects/page-meta';
+import setting from '@/sanity/schemas/singletons/setting';
 
 const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ?? 'Regent POC';
 const pageBuilders = [article.name, page.name];
 const previewableTypes = [article.name, page.name];
-const singletons: string[] = [];
+const singletons = [setting.name];
 
 export default defineConfig({
   basePath: '/studio',
@@ -36,6 +38,7 @@ export default defineConfig({
     // Schemas
     types: [
       // Singletons
+      setting,
       // Documents
       article,
       articleTag,
@@ -43,6 +46,7 @@ export default defineConfig({
       people,
       section,
       // Objects
+      keyValue,
       pageMeta,
     ],
   },

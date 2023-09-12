@@ -2,7 +2,7 @@ import { DocumentsIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 import isUndefined from 'lodash/isUndefined';
 
-import { Prepare } from '../types';
+import { Prepare } from '../../types/utils';
 
 const pageTypes: { [value: string]: string } = {
   basic: 'Basic',

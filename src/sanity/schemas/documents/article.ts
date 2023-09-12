@@ -2,7 +2,7 @@ import { DocumentsIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 import defineRichtextField from '../helpers/richtext';
-import { Prepare } from '../types';
+import { Prepare } from '../../types/utils';
 
 export default defineType({
   type: 'document',

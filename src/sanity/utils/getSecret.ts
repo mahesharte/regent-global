@@ -1,4 +1,4 @@
-import type { SanityClient } from './client';
+import type { SanityClient } from '../client';
 
 // updated within the hour, if it's older it'll create a new secret or return null
 const query = (ttl: number) =>
@@ -6,11 +6,11 @@ const query = (ttl: number) =>
 
 const tag = 'preview.secret';
 
-export async function getSecret(
+const getSecret = async (
   client: SanityClient,
   id: `${string}.${string}`,
   createIfNotExists?: true | (() => string)
-): Promise<string | null> {
+): Promise<string | null> => {
   const secret = await client.fetch<string | null>(
     // Use a TTL of 1 hour when reading the secret, while using a 30min expiry if `createIfNotExists` is defined to avoid a race condition where
     // a preview pane could get a Secret and use it just as it expires. Twice the TTL gives a wide margin to ensure that when the secret is read
@@ -40,4 +40,6 @@ export async function getSecret(
   }
 
   return secret;
-}
+};
+
+export default getSecret;

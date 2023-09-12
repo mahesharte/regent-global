@@ -1,6 +1,6 @@
 import { defineField, defineType } from 'sanity';
 
-import { Prepare } from '../types';
+import { Prepare } from '../../types/utils';
 
 export default defineType({
   type: 'object',

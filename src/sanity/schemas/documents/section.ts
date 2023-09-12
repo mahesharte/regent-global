@@ -3,7 +3,7 @@ import { defineField, defineType } from 'sanity';
 import isUndefined from 'lodash/isUndefined';
 
 import defineRichtextField from '../helpers/richtext';
-import { Prepare } from '../types';
+import { Prepare } from '../../types/utils';
 
 const components: { [value: string]: string } = {
   hero: 'Hero',

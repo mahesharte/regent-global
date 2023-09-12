@@ -51,40 +51,10 @@ export const pageStructure =
   (S) => {
     const items = S.documentTypeListItems();
     const pageBuilderItems = pageBuilders
-      .map((pageBuilder) => {
-        const pageBuilderItem = items.find(
-          (item) => item.getId() === pageBuilder
-        );
-        if (pageBuilderItem && singletons.includes(pageBuilder)) {
-          const typeDef = pageBuilderItem.getSchemaType() as SchemaType;
-          return S.listItem()
-            .title(typeDef.title!)
-            .icon(typeDef.icon as ReactNode)
-            .child(
-              S.editor()
-                .id(typeDef.name)
-                .schemaType(typeDef.name)
-                .documentId(typeDef.name)
-                .views([
-                  // Default form view
-                  S.view.form(),
-                  S.view
-                    .component((props) => (
-                      <PreviewPane
-                        previewSecretId={previewSecretId}
-                        apiVersion={apiVersion}
-                        {...props}
-                      />
-                    ))
-                    .title('Preview'),
-                ])
-            );
-        }
-        return pageBuilderItem;
-      })
+      .map((pageBuilder) => items.find((item) => item.getId() === pageBuilder))
       .filter((item) => !isUndefined(item)) as ListItemBuilder[];
 
-    const manuallyOrderedSchemas = [...pageBuilders];
+    const manuallyOrderedSchemas = [...pageBuilders, ...singletons];
 
     const contentItems = items
       .filter((item) => !manuallyOrderedSchemas.includes(item.getId() ?? ''))
@@ -100,7 +70,29 @@ export const pageStructure =
         return 0;
       });
 
+    const singletonItems = items
+      .filter((item) => singletons.includes(item.getId() ?? ''))
+      .map((item) => {
+        const typeDef = item.getSchemaType() as SchemaType;
+        return S.listItem()
+          .title(typeDef.title!)
+          .icon(typeDef.icon as ReactNode)
+          .child(
+            S.editor()
+              .id(typeDef.name)
+              .schemaType(typeDef.name)
+              .documentId(typeDef.name)
+              .views([S.view.form()])
+          );
+      });
+
     return S.list()
       .title('Content')
-      .items([...pageBuilderItems, S.divider(), ...contentItems]);
+      .items([
+        ...pageBuilderItems,
+        S.divider(),
+        ...contentItems,
+        S.divider(),
+        ...singletonItems,
+      ]);
   };

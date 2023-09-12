@@ -3,9 +3,8 @@ import { useClient } from 'sanity';
 import { suspend } from 'suspend-react';
 import clsx from 'clsx';
 
-import { getSecret } from '@/sanity/utils';
-
 import type { SanityClient } from '@/sanity/client';
+import getSecret from '@/sanity/utils/getSecret';
 
 type IframeProps = {
   apiVersion: string;
