@@ -9,3 +9,11 @@ h1 {
 h2 {
   @apply font-semibold text-lg;
 }
+
+h3 {
+  @apply font-medium text-lg;
+}
+
+h4 {
+  @apply font-medium text-base;
+}
