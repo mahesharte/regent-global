@@ -7,7 +7,7 @@ import { PageProps } from './types';
 
 const RootPage: FC<PageProps> = ({ page }) => {
   const [{ preview }] = useAppContext();
-  return <>{preview.active ? <Preview page={page} /> : <Page page={page} />}</>;
+  return preview.active ? <Preview page={page} /> : <Page page={page} />;
 };
 
 export default RootPage;

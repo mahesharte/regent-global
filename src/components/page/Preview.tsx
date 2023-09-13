@@ -4,8 +4,8 @@ import { useLiveQuery } from 'next-sanity/preview';
 import { useAppContext } from '@/components/app/context';
 import { getPageByIdQuery } from '@/sanity/services/getPage';
 import { SanityPage } from '@/sanity/types/documents';
-import Page from './Page';
 import type { PageProps } from './types';
+import Page from './Page';
 
 const Preview: FC<PageProps> = ({ page: initialPage }) => {
   const [, setState] = useAppContext();

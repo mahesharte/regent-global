@@ -3,32 +3,34 @@ import { Suspense } from 'react';
 import type { FC } from 'react';
 import trimStart from 'lodash/trimStart';
 
-import type { SanityPage } from '@/sanity/types/documents';
+import type { SanityArticle } from '@/sanity/types/documents';
 import type { WithPreview } from '../types';
 import DeviceSelector from '../DeviceSelector';
 import IFrame from '../IFrame';
 
-const documentType = 'page';
+const documentType = 'article';
 
-type PreviewPageProps = {
-  page: SanityPage | null;
+type PreviewArticleProps = {
+  article: SanityArticle | null;
+  slugPrefix: string;
 } & WithPreview;
 
-const PreviewPage: FC<PreviewPageProps> = ({
+const PreviewArticle: FC<PreviewArticleProps> = ({
   apiVersion,
   device,
   onChangeDevice,
   onLoadIframe,
-  page,
+  article,
+  slugPrefix,
   previewSecretId,
 }) => {
-  const href = `/${trimStart(page?.slug?.current ?? '', '/')}`;
+  const href = `${slugPrefix}${trimStart(article?.slug?.current ?? '', '/')}`;
 
   if (!href) {
     return (
       <Card tone="primary" margin={5} padding={6}>
         <Text align="center">
-          Please add a slug to the page to see the preview!
+          Please add a slug to the article to see the preview!
         </Text>
       </Card>
     );
@@ -66,4 +68,4 @@ const PreviewPage: FC<PreviewPageProps> = ({
   );
 };
 
-export default PreviewPage;
+export default PreviewArticle;

@@ -2,11 +2,14 @@ import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
 import noop from 'lodash/noop';
 
+import { SanitySetting } from '@/sanity/types/documents';
+
 type AppState = {
   preview: {
     active: boolean;
     loading: boolean;
   };
+  setting: SanitySetting | null;
 };
 type AppContextValue = [AppState, Dispatch<SetStateAction<AppState>>];
 type AppProviderProps = {
@@ -20,6 +23,7 @@ const AppContext = createContext<AppContextValue>([
       active: false,
       loading: false,
     },
+    setting: null,
   },
   noop,
 ]);

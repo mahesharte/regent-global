@@ -1,3 +1,4 @@
+import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { NextStudio } from 'next-sanity/studio';
 import { metadata } from 'next-sanity/studio/metadata';
@@ -9,6 +10,9 @@ import StudioContext, {
   type StudioContextValue,
   type StudioState,
 } from '@/sanity/context';
+import { getClient } from '@/sanity/client';
+import getSetting from '@/sanity/services/getSetting';
+import { GlobalPageProps } from '@/types/global';
 import config from '@/../sanity.config';
 
 type CallbackArgs = (string | number | boolean)[];
@@ -99,6 +103,19 @@ const StudioPage: FC = () => {
       <NextStudio config={config} />
     </StudioContext.Provider>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<
+  GlobalPageProps
+> = async () => {
+  const client = getClient();
+  const setting = await getSetting(client);
+  return {
+    props: {
+      preview: null,
+      setting,
+    },
+  };
 };
 
 export default StudioPage;

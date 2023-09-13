@@ -1,11 +1,9 @@
 import type { FC } from 'react';
-import type { SanityArticle } from '@/sanity/types/documents';
 import { PortableText } from '@portabletext/react';
 import omit from 'lodash/omit';
 
-type ArticleProps = {
-  article: SanityArticle;
-};
+import { ArticleProps } from './types';
+
 const Article: FC<ArticleProps> = ({ article }) => (
   <main className="p-4">
     <h1 className="mb-4">{article?.title}</h1>

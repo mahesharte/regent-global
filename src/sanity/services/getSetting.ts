@@ -5,8 +5,6 @@ import type { SanitySetting } from '../types/documents';
 
 const getSettingQuery = groq`
   *[_type == "setting"][0] {
-    _id,
-    _type,
     variables[]
   }
 `;

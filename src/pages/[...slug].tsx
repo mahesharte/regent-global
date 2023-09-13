@@ -7,7 +7,7 @@ import type {
   SanityPage,
   SanitySetting,
 } from '@/sanity/types/documents';
-import Article from '@/components/article/Article';
+import Article from '@/components/article/Root';
 import Page from '@/components/page/Root';
 import { getClient } from '@/sanity/client';
 import { writeToken } from '@/sanity/config';
@@ -16,7 +16,7 @@ import getArticles from '@/sanity/services/getArticles';
 import getPage from '@/sanity/services/getPage';
 import getPages from '@/sanity/services/getPages';
 import getSetting from '@/sanity/services/getSetting';
-import getSettingValue from '@/sanity/utils/getSettingValue';
+import getArticleSlugPrefix from '@/sanity/utils/getArticleSlugPrefix';
 import { GlobalPageProps } from '@/types/global';
 
 export type CatchAllProps = GlobalPageProps & {
@@ -33,9 +33,6 @@ const CatchAll: FC<CatchAllProps> = ({ document }) => {
       return <></>;
   }
 };
-
-const getArticleSlugPrefix = (setting: SanitySetting): string =>
-  getSettingValue<string>(setting, 'articleSlugPrefix', '/');
 
 export const getStaticProps: GetStaticProps<CatchAllProps> = async (
   context

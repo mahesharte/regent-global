@@ -11,10 +11,10 @@ const App: FC<AppProps<GlobalPageProps>> = ({
   pageProps,
   router,
 }) => {
-  const { preview } = pageProps;
+  const { preview, setting = null } = pageProps;
   return (
     <AppProvider
-      initialState={{ preview: { active: !!preview, loading: false } }}
+      initialState={{ preview: { active: !!preview, loading: false }, setting }}
     >
       {!!preview ? (
         <PreviewProvider token={preview}>
