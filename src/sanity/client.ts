@@ -4,7 +4,7 @@ import { apiVersion, dataset, projectId, useCdn, readToken } from './config';
 
 export type SanityClient = ReturnType<typeof createClient>;
 
-export const getClient = (preview?: { token?: string }): SanityClient => {
+export const getClient = (previewToken?: string | null): SanityClient => {
   const client = createClient({
     projectId,
     dataset,
@@ -13,11 +13,11 @@ export const getClient = (preview?: { token?: string }): SanityClient => {
     token: readToken,
     perspective: 'published',
   });
-  if (!preview) {
+  if (!previewToken) {
     return client;
   }
   return client.withConfig({
-    token: preview.token ?? readToken,
+    token: previewToken,
     useCdn: false,
     ignoreBrowserTokenWarning: true,
     perspective: 'previewDrafts',

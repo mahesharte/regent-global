@@ -9,12 +9,12 @@ import type {
 import type { ListItemBuilder, StructureResolver } from 'sanity/desk';
 import type { ReactNode } from 'react';
 
-import { PreviewPane } from './previewPane/PreviewPane';
+// import { PreviewPane } from './previewPane/PreviewPane';
 
 export const singletonPlugin = (types: string[]): PluginOptions => ({
   name: 'singletonPlugin',
   document: {
-    // Hide 'Singletons (such as Home)' from new document options
+    // Hide 'Singletons (such as Settings)' from new document options
     // https://user-images.githubusercontent.com/81981/195728798-e0c6cf7e-d442-4e58-af3a-8cd99d7fcc28.png
     newDocumentOptions: (prev, { creationContext }): TemplateItem[] => {
       if (creationContext.type === 'global') {

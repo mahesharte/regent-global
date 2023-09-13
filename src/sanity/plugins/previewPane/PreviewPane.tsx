@@ -18,8 +18,8 @@ export const PreviewPane: FC<PreviewProps> = (props) => {
   const { displayed, published } = document;
   const documentType = String(displayed._type);
   const pageType = String(displayed.type ?? '');
-  // Default device is mobile
-  const [device, setDevice] = useState('mobile');
+  // Default device is desktop
+  const [device, setDevice] = useState('desktop');
   const [iframe, setIframe] = useState<HTMLIFrameElement | null>(null);
   const [, setStudioState] = useStudioContext();
 

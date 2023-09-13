@@ -1,16 +1,14 @@
 import type { FC } from 'react';
-import type { SanityPage } from '@/sanity/types/documents';
 
-type PageProps = {
-  page: SanityPage;
-};
+import { PageProps } from './types';
+
 const Page: FC<PageProps> = ({ page }) => (
-  <main className="p-4">
+  <div className="p-4">
     <h1 className="mb-4">{page?.title}</h1>
     <pre className="text-xs  whitespace-pre-wrap">
       {JSON.stringify(page, null, 2)}
     </pre>
-  </main>
+  </div>
 );
 
 export default Page;

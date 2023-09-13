@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { NextStudio } from 'next-sanity/studio';
 import { metadata } from 'next-sanity/studio/metadata';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type FC } from 'react';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 
@@ -10,8 +10,6 @@ import StudioContext, {
   type StudioState,
 } from '@/sanity/context';
 import config from '@/../sanity.config';
-
-import type { FC } from 'react';
 
 type CallbackArgs = (string | number | boolean)[];
 

@@ -8,16 +8,18 @@ import type {
   SanitySetting,
 } from '@/sanity/types/documents';
 import Article from '@/components/article/Article';
-import Page from '@/components/page/Page';
+import Page from '@/components/page/Root';
 import { getClient } from '@/sanity/client';
+import { writeToken } from '@/sanity/config';
 import getArticle from '@/sanity/services/getArticle';
 import getArticles from '@/sanity/services/getArticles';
 import getPage from '@/sanity/services/getPage';
 import getPages from '@/sanity/services/getPages';
 import getSetting from '@/sanity/services/getSetting';
 import getSettingValue from '@/sanity/utils/getSettingValue';
+import { GlobalPageProps } from '@/types/global';
 
-export type CatchAllProps = {
+export type CatchAllProps = GlobalPageProps & {
   document: SanityArticle | SanityPage | null;
 };
 
@@ -38,8 +40,9 @@ const getArticleSlugPrefix = (setting: SanitySetting): string =>
 export const getStaticProps: GetStaticProps<CatchAllProps> = async (
   context
 ) => {
-  const { params = {} } = context;
-  const client = getClient();
+  const { draftMode = false, params = {} } = context;
+  const preview = draftMode ? writeToken : null;
+  const client = getClient(preview);
   const slug = `/${isArray(params.slug) ? params.slug.join('/') : params.slug}`;
   const setting = await getSetting(client);
   const articleSlugPrefix = getArticleSlugPrefix(setting);
@@ -58,7 +61,10 @@ export const getStaticProps: GetStaticProps<CatchAllProps> = async (
   return {
     props: {
       document,
+      preview,
     },
+    // Revalidate in 10 seconds
+    revalidate: 10,
   };
 };
 

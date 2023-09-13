@@ -1,5 +1,6 @@
 import { Box, Card, Flex, Text } from '@sanity/ui';
 import { Suspense } from 'react';
+import trimStart from 'lodash/trimStart';
 
 import type { SanityPage } from '@/sanity/types/documents';
 import type { FC } from 'react';
@@ -21,13 +22,13 @@ const PreviewPage: FC<PreviewPageProps> = ({
   page,
   previewSecretId,
 }) => {
-  const href = `/${page?.name ?? ''}`;
+  const href = `/${trimStart(page?.slug?.current ?? '', '/')}`;
 
   if (!href) {
     return (
       <Card tone="primary" margin={5} padding={6}>
         <Text align="center">
-          Please add a slug to the post to see the preview!
+          Please add a slug to the page to see the preview!
         </Text>
       </Card>
     );
