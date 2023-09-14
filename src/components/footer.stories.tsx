@@ -1,0 +1,30 @@
+import { Meta, StoryObj } from "@storybook/react";
+
+import { Footer } from "@/components/footer";
+
+const meta: Meta<typeof Footer> = {
+  title: "Footer",
+  component: Footer,
+  tags: ["autodocs"],
+  argTypes: {},
+};
+export default meta;
+
+const links = [
+    {name: 'About us', url: 'B', currentPage: false},
+    {name: 'Economy', url: 'B', currentPage: false},
+    {name: 'Investment', url: 'B', currentPage: true},
+    {name: 'Mission', url: 'B', currentPage: false},
+    {name: 'Team', url: 'B', currentPage: false},
+    {name: 'Blog', url: 'B', currentPage: false},
+    {name: 'Contact', url: 'B', currentPage: false},
+    {name: 'Regent Global', url: 'B', currentPage: false},
+    {name: 'Privacy', url: 'B', currentPage: false},
+    {name: 'Cookies', url: 'B', currentPage: false},]
+
+type Story = StoryObj<typeof Footer>;
+
+export const Base: Story = {
+  render: (args) => <Footer {...args}></Footer>,
+  args: { links },
+};
