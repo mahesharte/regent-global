@@ -1,0 +1,1 @@
+export { BigText } from './bigtext'

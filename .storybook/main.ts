@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/nextjs";
+import * as path from 'path'
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -7,6 +8,7 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
+    "storybook-css-modules"
   ],
   framework: {
     name: "@storybook/nextjs",
@@ -15,5 +17,14 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  webpackFinal: async (config) => {
+    // @ts-ignore
+    config.resolve.alias = {
+      // @ts-ignore
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, "../src/"),
+    };
+    return config;
+  }
 };
 export default config;
