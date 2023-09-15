@@ -1,5 +1,6 @@
 import { DocumentsIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
+import slugify from 'slugify';
 
 import defineRichtextField from '../helpers/richtext';
 import { Prepare } from '../../types/utils';
@@ -22,6 +23,11 @@ export default defineType({
       type: 'slug',
       options: {
         source: 'title',
+        slugify: (input: string) =>
+          slugify(input, {
+            lower: true,
+            strict: true,
+          }),
       },
       validation: (rule) => rule.required(),
     }),

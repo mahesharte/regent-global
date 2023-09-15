@@ -17,17 +17,20 @@ import previewDocumentNode from '@/sanity/plugins/previewPane';
 import { pageStructure, singletonPlugin } from '@/sanity/plugins/settings';
 import article from '@/sanity/schemas/documents/article';
 import articleTag from '@/sanity/schemas/documents/article-tag';
+import link from '@/sanity/schemas/documents/link';
 import page from '@/sanity/schemas/documents/page';
 import people from '@/sanity/schemas/documents/people';
 import section from '@/sanity/schemas/documents/section';
 import keyValue from '@/sanity/schemas/objects/key-value';
 import pageMeta from '@/sanity/schemas/objects/page-meta';
+import footer from '@/sanity/schemas/singletons/footer';
+import header from '@/sanity/schemas/singletons/header';
 import setting from '@/sanity/schemas/singletons/setting';
 
 const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ?? 'Regent POC';
-const pageBuilders = [article.name, page.name];
-const previewableTypes = [article.name, page.name];
-const singletons = [setting.name];
+const pageBuilders = [article.name, page.name, header.name, footer.name];
+const previewableTypes = [article.name, page.name, header.name, footer.name];
+const singletons = [setting.name, header.name, footer.name];
 
 export default defineConfig({
   basePath: '/studio',
@@ -38,10 +41,13 @@ export default defineConfig({
     // Schemas
     types: [
       // Singletons
+      footer,
+      header,
       setting,
       // Documents
       article,
       articleTag,
+      link,
       page,
       people,
       section,

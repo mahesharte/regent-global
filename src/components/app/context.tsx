@@ -3,8 +3,10 @@ import { createContext, useContext, useMemo, useState } from 'react';
 import noop from 'lodash/noop';
 
 import { SanitySetting } from '@/sanity/types/documents';
+import { SanityPageMeta } from '@/sanity/types/objects';
 
 type AppState = {
+  pageMeta: SanityPageMeta | null;
   preview: {
     active: boolean;
     loading: boolean;
@@ -19,6 +21,7 @@ type AppProviderProps = {
 
 const AppContext = createContext<AppContextValue>([
   {
+    pageMeta: null,
     preview: {
       active: false,
       loading: false,

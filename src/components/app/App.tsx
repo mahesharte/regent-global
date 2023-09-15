@@ -11,19 +11,23 @@ const App: FC<AppProps<GlobalPageProps>> = ({
   pageProps,
   router,
 }) => {
-  const { preview, setting = null } = pageProps;
+  const { pageMeta = null, preview, setting = null, ...rest } = pageProps;
   return (
     <AppProvider
-      initialState={{ preview: { active: !!preview, loading: false }, setting }}
+      initialState={{
+        pageMeta,
+        preview: { active: !!preview, loading: false },
+        setting,
+      }}
     >
       {!!preview ? (
         <PreviewProvider token={preview}>
-          <Layout router={router}>
+          <Layout router={router} {...rest}>
             <Component {...pageProps} />
           </Layout>
         </PreviewProvider>
       ) : (
-        <Layout router={router}>
+        <Layout router={router} {...rest}>
           <Component {...pageProps} />
         </Layout>
       )}

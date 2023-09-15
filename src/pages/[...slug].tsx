@@ -2,17 +2,15 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 import type { FC } from 'react';
 import isArray from 'lodash/isArray';
 
-import type {
-  SanityArticle,
-  SanityPage,
-  SanitySetting,
-} from '@/sanity/types/documents';
+import type { SanityArticle, SanityPage } from '@/sanity/types/documents';
 import Article from '@/components/article/Root';
 import Page from '@/components/page/Root';
 import { getClient } from '@/sanity/client';
 import { writeToken } from '@/sanity/config';
 import getArticle from '@/sanity/services/getArticle';
 import getArticles from '@/sanity/services/getArticles';
+import getFooter from '@/sanity/services/getFooter';
+import getHeader from '@/sanity/services/getHeader';
 import getPage from '@/sanity/services/getPage';
 import getPages from '@/sanity/services/getPages';
 import getSetting from '@/sanity/services/getSetting';
@@ -41,7 +39,11 @@ export const getStaticProps: GetStaticProps<CatchAllProps> = async (
   const preview = draftMode ? writeToken : null;
   const client = getClient(preview);
   const slug = `/${isArray(params.slug) ? params.slug.join('/') : params.slug}`;
-  const setting = await getSetting(client);
+  const [footer, header, setting] = await Promise.all([
+    getFooter(client),
+    getHeader(client),
+    getSetting(client),
+  ]);
   const articleSlugPrefix = getArticleSlugPrefix(setting);
   let document: CatchAllProps['document'] = await getPage(client, slug);
   if (!document && slug.startsWith(articleSlugPrefix)) {
@@ -58,6 +60,9 @@ export const getStaticProps: GetStaticProps<CatchAllProps> = async (
   return {
     props: {
       document,
+      footer,
+      header,
+      pageMeta: document?.pageMeta ?? null,
       preview,
     },
     // Revalidate in 10 seconds

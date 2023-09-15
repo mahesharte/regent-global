@@ -30,6 +30,15 @@ export type SanityArticle = SanityDocument & {
   pageMeta: SanityPageMeta;
 };
 
+export type SanityLink = SanityDocument & {
+  type: 'reference' | 'url';
+  title: 'string';
+  reference?: SanityArticle | SanityPage | null;
+  url?: string;
+  target: '_blank' | '_self';
+  image?: Image | null;
+};
+
 export type SanitySection = SanityDocument & {
   component: SanitySectionComponent;
 };
@@ -38,8 +47,16 @@ export type SanityPage = SanityDocument & {
   title: string;
   type: SanityPageType;
   slug: Slug;
-  sections?: SanitySectionComponent[];
+  sections?: SanitySection[];
   pageMeta: SanityPageMeta;
+};
+
+export type SanityHeader = SanityDocument & {
+  links?: SanityLink[];
+};
+
+export type SanityFooter = SanityDocument & {
+  links?: SanityLink[];
 };
 
 export type SanitySetting = SanityDocument & {

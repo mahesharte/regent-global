@@ -1,5 +1,6 @@
 import { DocumentsIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
+import slugify from 'slugify';
 import isUndefined from 'lodash/isUndefined';
 
 import { Prepare } from '../../types/utils';
@@ -26,6 +27,7 @@ export default defineType({
       name: 'type',
       title: 'Type',
       type: 'string',
+      initialValue: 'basic',
       validation: (rule) => rule.required(),
       options: {
         list: Object.keys(pageTypes).map((value) => ({
@@ -38,6 +40,14 @@ export default defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      options: {
+        source: 'title',
+        slugify: (input: string) =>
+          `/${slugify(input, {
+            lower: true,
+            strict: true,
+          })}`,
+      },
       hidden: ({ document }) =>
         !['basic'].includes((document?.type as string | undefined) ?? ''),
       validation: (rule) =>

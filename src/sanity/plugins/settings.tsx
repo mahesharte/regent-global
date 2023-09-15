@@ -1,5 +1,3 @@
-import isUndefined from 'lodash/isUndefined';
-
 import type {
   DocumentActionComponent,
   PluginOptions,
@@ -8,8 +6,10 @@ import type {
 } from 'sanity';
 import type { ListItemBuilder, StructureResolver } from 'sanity/desk';
 import type { ReactNode } from 'react';
+import isUndefined from 'lodash/isUndefined';
+import difference from 'lodash/difference';
 
-// import { PreviewPane } from './previewPane/PreviewPane';
+import { PreviewPane } from './previewPane/PreviewPane';
 
 export const singletonPlugin = (types: string[]): PluginOptions => ({
   name: 'singletonPlugin',
@@ -50,11 +50,42 @@ export const pageStructure =
   }): StructureResolver =>
   (S) => {
     const items = S.documentTypeListItems();
+    const restOfSingletons = difference(singletons, pageBuilders);
     const pageBuilderItems = pageBuilders
-      .map((pageBuilder) => items.find((item) => item.getId() === pageBuilder))
+      .map((pageBuilder) => {
+        const pageBuilderItem = items.find(
+          (item) => item.getId() === pageBuilder
+        );
+        if (pageBuilderItem && singletons.includes(pageBuilder)) {
+          const typeDef = pageBuilderItem.getSchemaType() as SchemaType;
+          return S.listItem()
+            .title(typeDef.title!)
+            .icon(typeDef.icon as ReactNode)
+            .child(
+              S.editor()
+                .id(typeDef.name)
+                .schemaType(typeDef.name)
+                .documentId(typeDef.name)
+                .views([
+                  // Default form view
+                  S.view.form(),
+                  S.view
+                    .component((props) => (
+                      <PreviewPane
+                        previewSecretId={previewSecretId}
+                        apiVersion={apiVersion}
+                        {...props}
+                      />
+                    ))
+                    .title('Preview'),
+                ])
+            );
+        }
+        return pageBuilderItem;
+      })
       .filter((item) => !isUndefined(item)) as ListItemBuilder[];
 
-    const manuallyOrderedSchemas = [...pageBuilders, ...singletons];
+    const manuallyOrderedSchemas = [...pageBuilders, ...restOfSingletons];
 
     const contentItems = items
       .filter((item) => !manuallyOrderedSchemas.includes(item.getId() ?? ''))
@@ -71,7 +102,7 @@ export const pageStructure =
       });
 
     const singletonItems = items
-      .filter((item) => singletons.includes(item.getId() ?? ''))
+      .filter((item) => restOfSingletons.includes(item.getId() ?? ''))
       .map((item) => {
         const typeDef = item.getSchemaType() as SchemaType;
         return S.listItem()
