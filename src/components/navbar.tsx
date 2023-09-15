@@ -1,14 +1,14 @@
 import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 
-type NavbarLinks = {
+export type LinkList = {
   name: string;
   url: string;
   currentPage: boolean;
 };
 
 type NavbarProps = {
-  links: NavbarLinks[];
+  links: LinkList[];
 };
 
 const Navbar: React.FC<NavbarProps> = ({ links }) => (

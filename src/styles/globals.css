@@ -16,6 +16,7 @@ h3 {
 
 h4 {
   @apply font-medium text-base;
+}
  
 @layer base {
   :root {
