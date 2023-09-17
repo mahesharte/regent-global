@@ -41,6 +41,7 @@ export type SanityLink = SanityDocument & {
 
 export type SanitySection = SanityDocument & {
   component: SanitySectionComponent;
+  title?: string;
 };
 
 export type SanityPage = SanityDocument & {

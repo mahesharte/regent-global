@@ -70,10 +70,22 @@ export default defineType({
   preview: {
     select: {
       component: 'component',
+      title: 'title',
     },
-    prepare: ({ component }: Prepare) => ({
-      title: components[component],
-      subtitle: `Section`,
-    }),
+    prepare: ({ component, title }: Prepare) => {
+      const subtitle = components[component];
+      switch (component) {
+        case 'hero':
+          return {
+            title: title ?? 'Untitled',
+            subtitle,
+          };
+        default:
+          return {
+            title: 'Untitled',
+            subtitle: 'Section',
+          };
+      }
+    },
   },
 });
