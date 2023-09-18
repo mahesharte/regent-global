@@ -1,5 +1,4 @@
 const Avatar = () => {
-
 }
 
 export { Avatar }

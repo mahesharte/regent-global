@@ -1,6 +1,3 @@
-import logo from "../assets/regent-logo.svg";
-import wordmark from "../assets/regent-wordmark.svg";
-
 const fills = {
     blue: 'fill-blue',
     white: 'fill-white',

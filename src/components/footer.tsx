@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { LinkList } from './navbar';
+import { LinkList } from './Navbar';
 
 type NavbarProps = {
   links: LinkList[];
@@ -29,9 +29,9 @@ const Footer: React.FC<NavbarProps> = ({ links }) => (
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam
         volutpat ornare. Duis dui purus.
       </p>
-      <form className="w-full relative h-16">
-        <input className="rounded-full w-full h-full" />
-        <Button className="absolute right-2 top-2">Submit</Button>
+      <form className='w-full relative h-16'>
+        <input className="rounded-full w-full h-full pl-5 pr-28 text-sm" placeholder='Your email'/>
+        <Button className='absolute right-2 top-2'>Submit</Button>
       </form>
     </div>
   </div>
