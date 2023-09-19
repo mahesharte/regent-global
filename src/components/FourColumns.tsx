@@ -1,6 +1,4 @@
 import { ReactNode } from "react";
-import { Cta } from "./ui/button";
-import { cn } from "@/lib/utils";
 
 type Column = {
   icon: ReactNode;
