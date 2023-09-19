@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useRouter } from 'next/router';
 
-import { Navbar } from '@/components/navbar';
+import { Navbar } from '@/components/Navbar';
 import { SanityHeader } from '@/sanity/types/documents';
 import { useAppContext } from '@/components/app/context';
 import sanityLinkToLinkList from '@/sanity/utils/sanityLinkToLinkList';

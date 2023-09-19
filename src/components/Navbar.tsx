@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Logo } from '@/components/logo';
+import { Logo } from '@/components/Logo';
 import { cn } from '@/lib/utils';
 
 export type LinkList = {

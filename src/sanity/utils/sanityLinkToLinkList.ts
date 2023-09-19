@@ -1,4 +1,4 @@
-import { LinkList } from '@/components/navbar';
+import { LinkList } from '@/components/Navbar';
 import {
   SanityArticle,
   SanityLink,
