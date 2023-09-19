@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
 
-import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/Navbar";
 
-const meta: Meta<typeof Footer> = {
-  title: "Footer",
-  component: Footer,
+const meta: Meta<typeof Navbar> = {
+  title: "Navbar",
+  component: Navbar,
   tags: ["autodocs"],
   argTypes: {},
 };
@@ -18,13 +18,11 @@ const links = [
     {name: 'Team', url: 'B', currentPage: false},
     {name: 'Blog', url: 'B', currentPage: false},
     {name: 'Contact', url: 'B', currentPage: false},
-    {name: 'Regent Global', url: 'B', currentPage: false},
-    {name: 'Privacy', url: 'B', currentPage: false},
-    {name: 'Cookies', url: 'B', currentPage: false},]
+]
 
-type Story = StoryObj<typeof Footer>;
+type Story = StoryObj<typeof Navbar>;
 
 export const Base: Story = {
-  render: (args) => <Footer {...args}></Footer>,
+  render: (args) => <Navbar {...args}></Navbar>,
   args: { links },
 };
