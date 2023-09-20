@@ -17,12 +17,16 @@ import previewDocumentNode from '@/sanity/plugins/previewPane';
 import { pageStructure, singletonPlugin } from '@/sanity/plugins/settings';
 import article from '@/sanity/schemas/documents/article';
 import articleTag from '@/sanity/schemas/documents/article-tag';
+import gradient from '@/sanity/schemas/documents/gradient';
 import link from '@/sanity/schemas/documents/link';
 import page from '@/sanity/schemas/documents/page';
 import people from '@/sanity/schemas/documents/people';
 import section from '@/sanity/schemas/documents/section';
+import button from '@/sanity/schemas/objects/button';
 import keyValue from '@/sanity/schemas/objects/key-value';
+import padding from '@/sanity/schemas/objects/padding';
 import pageMeta from '@/sanity/schemas/objects/page-meta';
+import sectionItem from '@/sanity/schemas/objects/section-item';
 import footer from '@/sanity/schemas/singletons/footer';
 import header from '@/sanity/schemas/singletons/header';
 import setting from '@/sanity/schemas/singletons/setting';
@@ -47,13 +51,17 @@ export default defineConfig({
       // Documents
       article,
       articleTag,
+      gradient,
       link,
       page,
       people,
       section,
       // Objects
+      button,
       keyValue,
+      padding,
       pageMeta,
+      sectionItem,
     ],
   },
   plugins: [

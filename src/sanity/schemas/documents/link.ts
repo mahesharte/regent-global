@@ -92,10 +92,12 @@ export default defineType({
   ],
   preview: {
     select: {
+      media: 'image',
       title: 'title',
       type: 'type',
     },
-    prepare: ({ title, type }: Prepare) => ({
+    prepare: ({ media, title, type }: Prepare) => ({
+      media,
       title,
       subtitle: linkTypes[type],
     }),

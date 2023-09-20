@@ -14,6 +14,6 @@ export default meta;
 type Story = StoryObj<typeof ContactBlock>;
 
 export const Base: Story = {
-  render: (args) => <ContactBlock {...args}></ContactBlock>,
+  render: (args) => <ContactBlock></ContactBlock>,
   args: {},
 };

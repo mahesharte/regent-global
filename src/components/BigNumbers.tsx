@@ -1,20 +1,22 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from 'react';
 
 type NumberData = {
   imageUrl: string;
   number: string;
-  subText: string;
+  subText: ReactNode;
 };
 
 const BigNumbers = ({
   headline,
   items,
+  style,
 }: {
   headline: string;
   items: NumberData[];
+  style?: CSSProperties;
 }) => {
   return (
-    <div className="bg-gradient-to-r from-red to-blue px-24 pb-28 pt-20 text-center text-white">
+    <div className="text-center text-white px-24" style={style}>
       <div className="">
         <h2 className="pb-16 text-5xl">{headline}</h2>
         <ul className="mx-auto flex max-w-6xl justify-between">

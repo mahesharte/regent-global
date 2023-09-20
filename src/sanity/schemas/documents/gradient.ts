@@ -5,36 +5,36 @@ import { Prepare } from '../../types/utils';
 
 export default defineType({
   type: 'document',
-  name: 'person',
-  title: 'People',
+  name: 'gradient',
+  title: 'Gradients',
   icon: DocumentsIcon,
   fields: [
     defineField({
-      name: 'name',
-      title: 'Name',
+      name: 'title',
+      title: 'Title',
       type: 'string',
+      description: 'Enter a description for this gradient',
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'photo',
-      title: 'Photo',
-      type: 'image',
-    }),
-    defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'string',
+      name: 'colors',
+      title: 'Colors',
+      type: 'array',
+      of: [
+        {
+          type: 'color',
+        },
+      ],
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {
     select: {
-      media: 'photo',
-      title: 'name',
+      title: 'title',
     },
-    prepare: ({ media, title }: Prepare) => ({
-      media,
+    prepare: ({ title }: Prepare) => ({
       title,
-      subtitle: 'People',
+      subtitle: 'Gradient',
     }),
   },
 });

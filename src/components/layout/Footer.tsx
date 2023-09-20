@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import dynamic from 'next/dynamic';
 
 import { useAppContext } from '@/components/app/context';
-import { Footer as FooterComponent } from '@/components/footer';
+import { Footer as FooterComponent } from '@/components/Footer';
 import { SanityFooter } from '@/sanity/types/documents';
 import sanityLinkToLinkList from '@/sanity/utils/sanityLinkToLinkList';
 import getArticleSlugPrefix from '@/sanity/utils/getArticleSlugPrefix';

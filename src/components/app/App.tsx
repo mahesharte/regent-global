@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import type { AppProps } from 'next/app';
 
 import Layout from '@/components/layout/Layout';

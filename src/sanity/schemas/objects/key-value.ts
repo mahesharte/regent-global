@@ -9,6 +9,7 @@ const keyValueTypes: { [value: string]: string } = {
   number: 'Number',
   richtext: 'Richtext',
   image: 'Image',
+  gradient: 'Gradient',
 };
 
 export default defineType({
@@ -57,6 +58,17 @@ export default defineType({
       title: 'Value',
       type: 'image',
       hidden: ({ parent }) => parent.type !== 'image',
+    }),
+    defineField({
+      name: 'gradientValue',
+      title: 'Value',
+      type: 'reference',
+      to: [
+        {
+          type: 'gradient',
+        },
+      ],
+      hidden: ({ parent }) => parent.type !== 'gradient',
     }),
   ],
   preview: {

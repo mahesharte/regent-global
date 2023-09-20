@@ -18,8 +18,19 @@ export const Left: Story = {
   args: {
     align: 'left',
     heading: 'Meet the Minds Behind Regent Group',
-    body: "At the heart of our story is the balance of global outreach and family values. While we proudly wear the badge of a global institution, we've never strayed from our authentic roots, ensuring every student feels the warmth of a family-run institution.",
+    body: (
+      <p>
+        At the heart of our story is the balance of global outreach and family
+        values. While we proudly wear the badge of a global institution,
+        we&apos;ve never strayed from our authentic roots, ensuring every
+        student feels the warmth of a family-run institution.
+      </p>
+    ),
     image: image.src,
+    cta: [
+      { text: 'Button', url: '#' },
+      { text: 'Button', url: '#' },
+    ],
   },
 };
 
@@ -28,7 +39,18 @@ export const Center: Story = {
   args: {
     align: 'center',
     heading: 'Meet the Minds Behind Regent Group',
-    body: "At the heart of our story is the balance of global outreach and family values. While we proudly wear the badge of a global institution, we've never strayed from our authentic roots, ensuring every student feels the warmth of a family-run institution.",
+    body: (
+      <p>
+        At the heart of our story is the balance of global outreach and family
+        values. While we proudly wear the badge of a global institution,
+        we&apos;ve never strayed from our authentic roots, ensuring every
+        student feels the warmth of a family-run institution.
+      </p>
+    ),
+    cta: [
+      { text: 'Button', url: '#' },
+      { text: 'Button', url: '#' },
+    ],
   },
 };
 
@@ -37,7 +59,18 @@ export const Right: Story = {
   args: {
     align: 'right',
     heading: 'Meet the Minds Behind Regent Group',
-    body: "At the heart of our story is the balance of global outreach and family values. While we proudly wear the badge of a global institution, we've never strayed from our authentic roots, ensuring every student feels the warmth of a family-run institution.",
+    body: (
+      <p>
+        At the heart of our story is the balance of global outreach and family
+        values. While we proudly wear the badge of a global institution,
+        we&apos;ve never strayed from our authentic roots, ensuring every
+        student feels the warmth of a family-run institution.
+      </p>
+    ),
     image: image.src,
+    cta: [
+      { text: 'Button', url: '#' },
+      { text: 'Button', url: '#' },
+    ],
   },
 };

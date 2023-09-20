@@ -40,7 +40,7 @@ const sanityLinkToLinkList = (
   return {
     name: title,
     url,
-    currentPage: options?.currentPath === url,
+    currentPage: options?.currentPath?.startsWith(url) ?? false,
   };
 };
 

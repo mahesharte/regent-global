@@ -9,10 +9,31 @@ const pageFields = `
   title,
   type,
   slug,
-  sections[]->,
+  sections[]-> {
+    ...,
+    image {
+      ...,
+      asset->
+    },
+    links[]-> {
+      ...,
+      image {
+        ...,
+        asset->
+      }
+    },
+    items[] {
+      ...,
+      image {
+        ...,
+        asset->
+      }
+    },
+    styleGradient->
+  },
   pageMeta {
     ...,
-    image-> {
+    image {
       ...,
       asset->
     }

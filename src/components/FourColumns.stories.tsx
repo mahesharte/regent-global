@@ -15,29 +15,33 @@ export default meta;
 type Story = StoryObj<typeof FourColumns>;
 
 export const Base: Story = {
-  render: (args) => <FourColumns {...args}></FourColumns>,
+  render: (args) => (
+    <div className="bg-gradient-to-r from-red to-blue pt-20 px-24 pb-28">
+      <FourColumns {...args}></FourColumns>
+    </div>
+  ),
   args: {
     columns: [
-        {
-            icon: <SpaceRocketEarth />,
-            headline: 'Headline here',
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.'
-        },
-        {
-            icon: <SpaceRocketEarth />,
-            headline: 'Headline here',
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.'
-        },
-        {
-            icon: <SpaceRocketEarth />,
-            headline: 'Headline here',
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.'
-        },
-        {
-            icon: <SpaceRocketEarth />,
-            headline: 'Headline here',
-            body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.'
-        }
-    ]
+      {
+        icon: <SpaceRocketEarth />,
+        headline: 'Headline here',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.',
+      },
+      {
+        icon: <SpaceRocketEarth />,
+        headline: 'Headline here',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.',
+      },
+      {
+        icon: <SpaceRocketEarth />,
+        headline: 'Headline here',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.',
+      },
+      {
+        icon: <SpaceRocketEarth />,
+        headline: 'Headline here',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.',
+      },
+    ],
   },
 };
