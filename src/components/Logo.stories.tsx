@@ -14,12 +14,10 @@ type Story = StoryObj<typeof Logo>;
 
 export const Base: Story = {
   render: (args) => <Logo {...args}></Logo>,
-  args: { hasWordmark: false, },
+  args: { hasWordmark: false },
 };
 
-
 export const Wordmark: Story = {
-    render: (args) => <Logo {...args}></Logo>,
-    args: { hasWordmark: true, },
-  };
-  
+  render: (args) => <Logo {...args}></Logo>,
+  args: { hasWordmark: true },
+};

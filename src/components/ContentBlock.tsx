@@ -10,7 +10,7 @@ type CTA = {
 };
 
 type ContentBlockProps = {
-  align: 'left' | 'right' | 'center';
+  align: "left" | "right" | "center";
   image?: string;
   heading: string;
   body?: ReactNode;
@@ -19,9 +19,9 @@ type ContentBlockProps = {
 };
 
 const alignStyles: Record<string, string> = {
-  left: '',
-  center: 'justify-center',
-  right: 'flex-row-reverse',
+  left: "",
+  center: "justify-center",
+  right: "flex-row-reverse",
 };
 
 const ContentBlock = ({

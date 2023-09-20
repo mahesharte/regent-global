@@ -1,12 +1,12 @@
-import { Meta, StoryObj } from '@storybook/react';
-import image from '../assets/regent-logo-full.svg';
+import { Meta, StoryObj } from "@storybook/react";
+import image from "../assets/regent-logo-full.svg";
 
-import { LogoWall } from '@/components/LogoWall';
+import { LogoWall } from "@/components/LogoWall";
 
 const meta: Meta<typeof LogoWall> = {
-  title: 'LogoWall',
+  title: "LogoWall",
   component: LogoWall,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {},
 };
 export default meta;
@@ -20,16 +20,16 @@ export const Base: Story = {
     </div>
   ),
   args: {
-    headline: 'Partnerships that speak volumes',
+    headline: "Partnerships that speak volumes",
     items: [
-      { text: 'Big number here', imageUrl: image.src },
-      { text: 'Big number here', imageUrl: image.src },
-      { text: 'Big number here', imageUrl: image.src },
-      { text: 'Big number here', imageUrl: image.src },
-      { text: 'Big number here', imageUrl: image.src },
-      { text: 'Big number here', imageUrl: image.src },
-      { text: 'Big number here', imageUrl: image.src },
-      { text: 'Big number here', imageUrl: image.src },
+      { text: "Big number here", imageUrl: image.src },
+      { text: "Big number here", imageUrl: image.src },
+      { text: "Big number here", imageUrl: image.src },
+      { text: "Big number here", imageUrl: image.src },
+      { text: "Big number here", imageUrl: image.src },
+      { text: "Big number here", imageUrl: image.src },
+      { text: "Big number here", imageUrl: image.src },
+      { text: "Big number here", imageUrl: image.src },
     ],
   },
 };

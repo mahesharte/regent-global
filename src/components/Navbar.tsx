@@ -1,7 +1,7 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { Logo } from '@/components/Logo';
-import { cn } from '@/lib/utils';
+import { Logo } from "@/components/Logo";
+import { cn } from "@/lib/utils";
 
 export type LinkList = {
   name: string;
@@ -14,7 +14,7 @@ type NavbarProps = {
 };
 
 const Navbar: React.FC<NavbarProps> = ({ links }) => (
-  <div className="flex justify-between items-center">
+  <div className="flex items-center justify-between">
     <Link href="/">
       <Logo hasWordmark />
     </Link>
@@ -22,10 +22,10 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => (
       {links.map((link, i) => (
         <Link
           className={cn([
-            'underline-offset-8 underline decoration-transparent decoration-4 transition-all px-5 py-8 first:ps-0 last:pe-0',
+            "px-5 py-8 underline decoration-transparent decoration-4 underline-offset-8 transition-all first:ps-0 last:pe-0",
             link.currentPage
-              ? 'underline-offset-10 decoration-red'
-              : 'hover:underline-offset-10 hover:decoration-red',
+              ? "decoration-red underline-offset-10"
+              : "hover:decoration-red hover:underline-offset-10",
           ])}
           key={i}
           href={link.url}
