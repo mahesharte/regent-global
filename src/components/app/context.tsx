@@ -1,5 +1,5 @@
 import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import noop from 'lodash/noop';
 
 import { SanitySetting } from '@/sanity/types/documents';
@@ -33,7 +33,17 @@ const AppContext = createContext<AppContextValue>([
 
 const AppProvider: FC<AppProviderProps> = ({ children, initialState }) => {
   const [state, setState] = useState<AppState>(initialState);
+  const { pageMeta, setting } = initialState;
   const value = useMemo<AppContextValue>(() => [state, setState], [state]);
+
+  useEffect(() => {
+    setState((prev) => ({
+      ...prev,
+      pageMeta,
+      setting,
+    }));
+  }, [pageMeta, setting]);
+
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 

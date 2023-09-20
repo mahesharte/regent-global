@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 type Logo = {
   imageUrl: string;
@@ -8,12 +8,14 @@ type Logo = {
 const LogoWall = ({
   headline,
   items,
+  style,
 }: {
   headline: string;
   items: Logo[];
+  style: CSSProperties;
 }) => {
   return (
-    <div className="bg-gradient-to-r from-red to-blue text-center text-white pt-20 px-24 pb-28">
+    <div className="text-center text-white px-24" style={style}>
       <h2 className="text-5xl pb-16">{headline}</h2>
       <ul className="grid grid-cols-4 gap-4 max-w-5xl mx-auto">
         {items.map((item, i) => (

@@ -1,14 +1,31 @@
-import { SanityDocument } from 'next-sanity';
-import type { Image, Slug } from 'sanity';
+import type { SanityDocument } from 'next-sanity';
+import type { ImageAsset, Slug } from 'sanity';
+import type { ColorValue } from '@sanity/color-input';
 
-import type { SanityKeyValue, SanityPageMeta, SanityRichtext } from './objects';
+import type {
+  SanityButton,
+  SanityKeyValue,
+  SanityPadding,
+  SanityPageMeta,
+  SanityRichtext,
+  SanitySectionItem,
+} from './objects';
 
-export type SanitySectionComponent = 'hero';
+export type SanitySectionComponent =
+  | 'bigNumbers'
+  | 'contentBlock'
+  | 'hero'
+  | 'logoWall'
+  | 'multiColumn';
 export type SanityPageType = 'basic' | 'home' | 'notFound';
+
+export type SanityImage = {
+  asset: ImageAsset | null;
+};
 
 export type SanityPerson = SanityDocument & {
   name: string;
-  photo?: Image | null;
+  photo?: SanityImage | null;
   description?: string;
 };
 
@@ -20,7 +37,7 @@ export type SanityArticleTag = SanityDocument & {
 export type SanityArticle = SanityDocument & {
   title: string;
   slug: Slug;
-  featuredImage?: Image | null;
+  featuredImage?: SanityImage | null;
   introduction?: SanityRichtext;
   content: SanityRichtext;
   excerpt?: string;
@@ -36,12 +53,26 @@ export type SanityLink = SanityDocument & {
   reference?: SanityArticle | SanityPage | null;
   url?: string;
   target: '_blank' | '_self';
-  image?: Image | null;
+  image?: SanityImage | null;
+};
+
+export type SanityGradient = SanityDocument & {
+  title: string;
+  colors: ColorValue[];
 };
 
 export type SanitySection = SanityDocument & {
   component: SanitySectionComponent;
   title?: string;
+  subtitle?: string;
+  content?: SanityRichtext;
+  image?: SanityImage | null;
+  buttons?: SanityButton[];
+  links?: SanityLink[];
+  items?: SanitySectionItem[];
+  styleAlignment?: 'left' | 'center' | 'right';
+  stylePadding?: SanityPadding;
+  styleGradient?: SanityGradient | null;
 };
 
 export type SanityPage = SanityDocument & {

@@ -14,13 +14,17 @@ export default meta;
 type Story = StoryObj<typeof BigNumbers>;
 
 export const Base: Story = {
-  render: (args) => <BigNumbers {...args}></BigNumbers>,
+  render: (args) => (
+    <div className="bg-gradient-to-r from-red to-blue pt-20 px-24 pb-28">
+      <BigNumbers {...args}></BigNumbers>
+    </div>
+  ),
   args: {
     headline: 'We are global by design',
     items: [
-      { subText: 'Big number here', imageUrl: image.src, number: '100+' },
-      { subText: 'Big number here', imageUrl: image.src, number: '100+' },
-      { subText: 'Big number here', imageUrl: image.src, number: '100+' },
+      { subText: <>Big number here</>, imageUrl: image.src, number: '100+' },
+      { subText: <>Big number here</>, imageUrl: image.src, number: '100+' },
+      { subText: <>Big number here</>, imageUrl: image.src, number: '100+' },
     ],
   },
 };

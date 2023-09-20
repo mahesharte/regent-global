@@ -1,15 +1,24 @@
-import type { Image } from 'sanity';
 import { PortableTextBlock } from '@portabletext/types';
 
-export type SanityKeyValueType = 'string' | 'number' | 'richtext' | 'image';
+import { SanityGradient, SanityImage, SanityLink } from './documents';
+
+export type SanityKeyValueType =
+  | 'string'
+  | 'number'
+  | 'richtext'
+  | 'image'
+  | 'gradient';
 export type SanityKeyValueTypes =
   | string
   | number
   | SanityRichtext
-  | Image
+  | SanityImage
+  | SanityGradient
   | null;
 
-export type SanityRichtext = PortableTextBlock;
+export type SanityButtonVariant = 'primary';
+
+export type SanityRichtext = PortableTextBlock[];
 
 export type SanityKeyValue = {
   type: SanityKeyValueType;
@@ -17,12 +26,32 @@ export type SanityKeyValue = {
   stringValue?: string;
   numberValue?: number;
   richtextValue?: SanityRichtext;
-  imageValue?: Image | null;
+  imageValue?: SanityImage | null;
 };
 
 export type SanityPageMeta = {
   title: string;
   description?: string;
   canonicalUrl?: string;
-  image?: Image | null;
+  image?: SanityImage | null;
+};
+
+export type SanityButton = {
+  title: string;
+  variant: SanityButtonVariant;
+  link?: SanityLink;
+  icon?: SanityImage | null;
+  alignment?: 'left' | 'right';
+  size?: 'medium';
+};
+
+export type SanityPadding = {
+  top?: string;
+  bottom?: string;
+};
+
+export type SanitySectionItem = {
+  title: string;
+  image?: SanityImage | null;
+  content?: SanityRichtext;
 };

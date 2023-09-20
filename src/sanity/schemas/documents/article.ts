@@ -105,9 +105,11 @@ export default defineType({
   ],
   preview: {
     select: {
+      media: 'featuredImage',
       title: 'title',
     },
-    prepare: ({ title }: Prepare) => ({
+    prepare: ({ media, title }: Prepare) => ({
+      media,
       title,
       subtitle: 'Article',
     }),
