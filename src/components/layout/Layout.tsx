@@ -26,9 +26,16 @@ const Layout: FC<Props> = ({ children, footer, header, router }) => {
     <>
       <Head>
         <title>{pageMeta?.title}</title>
+        <meta property="og:title" content={pageMeta?.title} />
         {!!pageMeta?.description && (
-          <meta name="description" content={pageMeta.description} />
+          <>
+            <meta name="description" content={pageMeta.description} />
+            <meta property="og:description" content={pageMeta.description} />
+          </>
         )}
+        {!!pageMeta?.image?.asset?.url &&
+          <meta property="og:image" content={pageMeta.image.asset.url} />
+        }
       </Head>
       <style jsx global>
         {`

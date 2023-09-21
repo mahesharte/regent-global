@@ -1,7 +1,7 @@
-import { SanitySetting } from '@/sanity/types/documents';
-import getSettingValue from './getSettingValue';
+import trimEnd from "lodash/trimEnd";
+import { SanitySetting } from "@/sanity/types/documents";
 
 const getArticleSlugPrefix = (setting: SanitySetting | null): string =>
-  getSettingValue<string>(setting, 'articleSlugPrefix', '/');
+  `${trimEnd(setting?.articlesHome?.slug?.current ?? "", "/")}/`;
 
 export default getArticleSlugPrefix;

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import image from '../../assets/avatar.png'
+import image from "../../assets/avatar.png";
 
 import { BigText } from "@/components/bigtext";
 
@@ -15,20 +15,32 @@ type Story = StoryObj<typeof BigText>;
 
 export const Base: Story = {
   render: (args) => <BigText {...args}></BigText>,
-  args: { heading: "Meet the Minds Behind Regent Group", },
+  args: {
+    heading: "Meet the Minds Behind Regent Group",
+    className: "bg-gradient-to-r from-red to-blue py-28",
+  },
 };
 
 export const Subheading: Story = {
   render: (args) => <BigText {...args}></BigText>,
-  args: { heading: "From very insipiring people.", subheading: "Blog" },
+  args: {
+    heading: "From very insipiring people.",
+    subheading: "Blog",
+    className: "bg-gradient-to-r from-red to-blue py-28",
+  },
 };
 
 export const Author: Story = {
-  render: (args) => <BigText {...args}>
-    <div className="flex justify-center items-center mt-10">
-        <img className='w-14 h-14 mr-12' src={image.src} />
+  render: (args) => (
+    <BigText {...args}>
+      <div className="mt-10 flex items-center justify-center">
+        <img className="mr-12 h-14 w-14" src={image.src} />
         <span>John Isaiah Smith</span>
-    </div>
-    </BigText>,
-  args: { heading: 'Meet the Minds Behind Regent Group' },
+      </div>
+    </BigText>
+  ),
+  args: {
+    heading: "Meet the Minds Behind Regent Group",
+    className: "bg-gradient-to-r from-red to-blue py-28",
+  },
 };

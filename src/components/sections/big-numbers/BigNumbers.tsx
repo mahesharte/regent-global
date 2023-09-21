@@ -1,25 +1,28 @@
-import type { SanitySection } from '@/sanity/types/documents';
-import type { FC } from 'react';
+import type { SanitySection } from "@/sanity/types/documents";
+import type { FC } from "react";
 
-import { BigNumbers as BigNumbersComponent } from '@/components/BigNumbers';
-import { PortableText } from '@portabletext/react';
-import { getSectionStyle } from '../utils';
+import { BigNumbers as BigNumbersComponent } from "@/components/BigNumbers";
+import { PortableText } from "@portabletext/react";
+import { useSectionStyles } from "../utils";
+import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
 
 type Props = {
   section: SanitySection;
 };
 
 const BigNumbers: FC<Props> = ({ section }) => {
-  const style = getSectionStyle(section, ['gradient', 'padding']);
+  const styles = useSectionStyles(section, ["gradient", "margin", "padding"]);
+  const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
   return (
     <BigNumbersComponent
-      headline={section.title ?? ''}
+      ref={ref}
+      className={className}
+      headline={section.title ?? ""}
       items={(section.items ?? []).map((item) => ({
         number: item.title,
-        imageUrl: item.image?.asset?.url ?? '',
+        imageUrl: item.image?.asset?.url ?? "",
         subText: <PortableText value={item.content ?? []} />,
       }))}
-      style={style}
     />
   );
 };

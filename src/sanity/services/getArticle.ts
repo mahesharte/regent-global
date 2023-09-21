@@ -1,7 +1,7 @@
-import { groq } from 'next-sanity';
+import { groq } from "next-sanity";
 
-import type { SanityClient } from '../client';
-import type { SanityArticle } from '../types/documents';
+import type { SanityClient } from "../client";
+import type { SanityArticle } from "../types/documents";
 
 const articleFields = `
   _id,
@@ -17,7 +17,7 @@ const articleFields = `
   excerpt,
   author-> {
     ...,
-    photo-> {
+    photo {
       ...,
       asset->
     }
@@ -34,6 +34,7 @@ const articleFields = `
     excerpt,
     tags[]->
   },
+  datePublished,
   pageMeta {
     ...,
     image-> {
@@ -63,7 +64,7 @@ const queryBy = {
 const getArticle = async (
   client: SanityClient,
   query: string,
-  by: 'id' | 'slug' = 'slug'
+  by: "id" | "slug" = "slug",
 ): Promise<SanityArticle | null> =>
   client.fetch<SanityArticle | null>(queryBy[by], {
     [by]: query,

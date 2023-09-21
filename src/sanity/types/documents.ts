@@ -1,23 +1,23 @@
-import type { SanityDocument } from 'next-sanity';
-import type { ImageAsset, Slug } from 'sanity';
-import type { ColorValue } from '@sanity/color-input';
+import type { SanityDocument } from "next-sanity";
+import type { ImageAsset, Slug } from "sanity";
+import type { ColorValue } from "@sanity/color-input";
 
 import type {
   SanityButton,
-  SanityKeyValue,
-  SanityPadding,
+  SanityMeasurements,
   SanityPageMeta,
   SanityRichtext,
   SanitySectionItem,
-} from './objects';
+} from "./objects";
 
 export type SanitySectionComponent =
-  | 'bigNumbers'
-  | 'contentBlock'
-  | 'hero'
-  | 'logoWall'
-  | 'multiColumn';
-export type SanityPageType = 'basic' | 'home' | 'notFound';
+  | "articles"
+  | "bigNumbers"
+  | "contentBlock"
+  | "hero"
+  | "logoWall"
+  | "multiColumn";
+export type SanityPageType = "basic" | "error";
 
 export type SanityImage = {
   asset: ImageAsset | null;
@@ -44,15 +44,16 @@ export type SanityArticle = SanityDocument & {
   author: SanityPerson;
   tags?: SanityArticleTag[];
   relatedArticles?: SanityArticle[];
+  datePublished?: string;
   pageMeta: SanityPageMeta;
 };
 
 export type SanityLink = SanityDocument & {
-  type: 'reference' | 'url';
-  title: 'string';
+  type: "reference" | "url";
+  title: "string";
   reference?: SanityArticle | SanityPage | null;
   url?: string;
-  target: '_blank' | '_self';
+  target: "_blank" | "_self";
   image?: SanityImage | null;
 };
 
@@ -63,6 +64,7 @@ export type SanityGradient = SanityDocument & {
 
 export type SanitySection = SanityDocument & {
   component: SanitySectionComponent;
+  variant?: string;
   title?: string;
   subtitle?: string;
   content?: SanityRichtext;
@@ -70,8 +72,9 @@ export type SanitySection = SanityDocument & {
   buttons?: SanityButton[];
   links?: SanityLink[];
   items?: SanitySectionItem[];
-  styleAlignment?: 'left' | 'center' | 'right';
-  stylePadding?: SanityPadding;
+  styleAlignment?: "left" | "center" | "right";
+  styleMargin?: SanityMeasurements;
+  stylePadding?: SanityMeasurements;
   styleGradient?: SanityGradient | null;
 };
 
@@ -92,5 +95,7 @@ export type SanityFooter = SanityDocument & {
 };
 
 export type SanitySetting = SanityDocument & {
-  variables: SanityKeyValue[];
+  articlesHome?: SanityPage | null;
+  servicesGtmId?: string;
+  themeGlobalGradient?: SanityGradient | null;
 };

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type Tag = {
   title: string;
 };
@@ -12,20 +14,30 @@ const ArticleCard = ({
   image,
   title,
   tags,
+  url = "/",
 }: {
   image: string;
   title: string;
   tags?: Tag[];
+  url?: string;
 }) => {
   return (
     <div className="flex flex-col bg-neutral-100">
       <div>
-        <img className="aspect-video w-full object-cover" src={image} alt="" />
+        <Link href={url}>
+          <img
+            className="aspect-video w-full object-cover"
+            src={image}
+            alt=""
+          />
+        </Link>
       </div>
       <div className="mb-4 mt-6 flex h-5 justify-center gap-3 tracking-wide">
         {tags && tags.map((tag, i) => <Tag key={i} title={tag.title} />)}
       </div>
-      <div className="mb-12 text-center text-2xl">{title}</div>
+      <div className="mb-12 text-center text-2xl">
+        <Link href={url}>{title}</Link>
+      </div>
     </div>
   );
 };

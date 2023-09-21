@@ -1,13 +1,27 @@
-import {ReactNode} from 'react';
+import { ReactNode, forwardRef } from "react";
+import clsx from "clsx";
 
-const BigText = ({children, heading, subheading, className}: {children?: ReactNode, heading: string, subheading?: string, className?: string}) => {
+type Props = {
+  children?: ReactNode;
+  heading: string;
+  subheading?: string;
+  className?: string;
+};
+
+const BigText = forwardRef<HTMLDivElement, Props>(
+  ({ children, heading, subheading, className }, ref) => {
     return (
-        <div className='bg-gradient-to-r from-red to-blue text-center text-white py-28 px-14'>
-            {subheading && <span className='uppercase text-xl'>{subheading}</span>}
-            <h1 className='text-hero'>{heading}</h1>
-            {children}
-        </div>
-    )
-}
+      <div
+        className={clsx("px-14 text-center text-white", className)}
+        ref={ref}
+      >
+        {subheading && <span className="text-xl uppercase">{subheading}</span>}
+        <h1 className="text-hero">{heading}</h1>
+        {children}
+      </div>
+    );
+  },
+);
+BigText.displayName = "BigText";
 
-export { BigText }
+export { BigText };

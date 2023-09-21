@@ -1,45 +1,45 @@
-import { visionTool } from '@sanity/vision';
-import { defineConfig } from 'sanity';
-import { deskTool } from 'sanity/desk';
-import { colorInput } from '@sanity/color-input';
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
-import { media } from 'sanity-plugin-media';
-import { dashboardTool } from '@sanity/dashboard';
-import { documentListWidget } from 'sanity-plugin-dashboard-widget-document-list';
+import { visionTool } from "@sanity/vision";
+import { defineConfig } from "sanity";
+import { deskTool } from "sanity/desk";
+import { colorInput } from "@sanity/color-input";
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
+import { media } from "sanity-plugin-media";
+import { dashboardTool } from "@sanity/dashboard";
+import { documentListWidget } from "sanity-plugin-dashboard-widget-document-list";
 
 import {
   apiVersion,
   dataset,
   previewSecretId,
   projectId,
-} from '@/sanity/config';
-import previewDocumentNode from '@/sanity/plugins/previewPane';
-import { pageStructure, singletonPlugin } from '@/sanity/plugins/settings';
-import article from '@/sanity/schemas/documents/article';
-import articleTag from '@/sanity/schemas/documents/article-tag';
-import gradient from '@/sanity/schemas/documents/gradient';
-import link from '@/sanity/schemas/documents/link';
-import page from '@/sanity/schemas/documents/page';
-import people from '@/sanity/schemas/documents/people';
-import section from '@/sanity/schemas/documents/section';
-import button from '@/sanity/schemas/objects/button';
-import keyValue from '@/sanity/schemas/objects/key-value';
-import padding from '@/sanity/schemas/objects/padding';
-import pageMeta from '@/sanity/schemas/objects/page-meta';
-import sectionItem from '@/sanity/schemas/objects/section-item';
-import footer from '@/sanity/schemas/singletons/footer';
-import header from '@/sanity/schemas/singletons/header';
-import setting from '@/sanity/schemas/singletons/setting';
+} from "@/sanity/config";
+import previewDocumentNode from "@/sanity/plugins/previewPane";
+import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings";
+import article from "@/sanity/schemas/documents/article";
+import articleTag from "@/sanity/schemas/documents/article-tag";
+import gradient from "@/sanity/schemas/documents/gradient";
+import link from "@/sanity/schemas/documents/link";
+import page from "@/sanity/schemas/documents/page";
+import people from "@/sanity/schemas/documents/people";
+import section from "@/sanity/schemas/documents/section";
+import button from "@/sanity/schemas/objects/button";
+import keyValue from "@/sanity/schemas/objects/key-value";
+import measurements from "@/sanity/schemas/objects/measurements";
+import pageMeta from "@/sanity/schemas/objects/page-meta";
+import sectionItem from "@/sanity/schemas/objects/section-item";
+import footer from "@/sanity/schemas/singletons/footer";
+import header from "@/sanity/schemas/singletons/header";
+import setting from "@/sanity/schemas/singletons/setting";
 
-const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ?? 'Regent POC';
+const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ?? "Regent POC";
 const pageBuilders = [article.name, page.name, header.name, footer.name];
 const previewableTypes = [article.name, page.name, header.name, footer.name];
 const singletons = [setting.name, header.name, footer.name];
 
 export default defineConfig({
-  basePath: '/studio',
-  projectId: projectId || '',
-  dataset: dataset || '',
+  basePath: "/studio",
+  projectId: projectId || "",
+  dataset: dataset || "",
   title,
   schema: {
     // Schemas
@@ -59,7 +59,7 @@ export default defineConfig({
       // Objects
       button,
       keyValue,
-      padding,
+      measurements,
       pageMeta,
       sectionItem,
     ],
@@ -89,8 +89,8 @@ export default defineConfig({
     dashboardTool({
       widgets: [
         documentListWidget({
-          title: 'Most recent edited documents',
-          order: '_createdAt desc',
+          title: "Most recent edited documents",
+          order: "_createdAt desc",
         }),
       ],
     }),

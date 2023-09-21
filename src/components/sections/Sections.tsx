@@ -1,31 +1,41 @@
-import { FC } from 'react';
+import { FC } from "react";
 
-import BigNumbers from './big-numbers/BigNumbers';
-import ContentBlock from './content-block/ContentBlock';
-import Hero from './hero/Hero';
-import LogoWall from './logo-wall/LogoWall';
-import MultiColumn from './multi-column/MultiColumn';
-import { SanitySection } from '@/sanity/types/documents';
+import Articles from "./articles/Articles";
+import BigNumbers from "./big-numbers/BigNumbers";
+import ContentBlock from "./content-block/ContentBlock";
+import Hero from "./hero/Hero";
+import LogoWall from "./logo-wall/LogoWall";
+import MultiColumn from "./multi-column/MultiColumn";
+import { SanitySection } from "@/sanity/types/documents";
+import { SectionVariables } from "./types";
 
 type Props = {
   sections: SanitySection[];
+  variables: SectionVariables;
 };
 
-const Sections: FC<Props> = ({ sections }) => (
+const Sections: FC<Props> = ({ sections, variables }) => (
   <div>
     {sections.map((section, index) => (
       <section key={`${section?._id}-${index}`}>
         {(() => {
           switch (section?.component) {
-            case 'bigNumbers':
+            case "articles":
+              return (
+                <Articles
+                  section={section}
+                  articles={variables.articles ?? []}
+                />
+              );
+            case "bigNumbers":
               return <BigNumbers section={section} />;
-            case 'contentBlock':
+            case "contentBlock":
               return <ContentBlock section={section} />;
-            case 'hero':
+            case "hero":
               return <Hero section={section} />;
-            case 'logoWall':
+            case "logoWall":
               return <LogoWall section={section} />;
-            case 'multiColumn':
+            case "multiColumn":
               return <MultiColumn section={section} />;
             default:
               return <></>;

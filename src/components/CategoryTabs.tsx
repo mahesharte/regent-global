@@ -1,13 +1,17 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-type CategoryTabItem = {
+export type CategoryTabItem = {
   title: string;
   linkTo: string;
   active: boolean;
 };
+type Props = {
+  categories: CategoryTabItem[];
+  onSelect?: (item: CategoryTabItem) => void;
+};
 
-const CategoryTabs = ({ categories }: { categories: CategoryTabItem[] }) => {
+const CategoryTabs = ({ categories, onSelect }: Props) => {
   return (
     <div className="bg-neutral-100 text-neutral-900">
       <ul className="container mx-auto flex h-20 items-stretch gap-14">
@@ -19,7 +23,17 @@ const CategoryTabs = ({ categories }: { categories: CategoryTabItem[] }) => {
             )}
             key={category.linkTo}
           >
-            <Link className="p-6" href={category.linkTo}>
+            <Link
+              className="p-6"
+              href={category.linkTo}
+              onClick={(event) => {
+                if (onSelect) {
+                  onSelect(category);
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+              }}
+            >
               {category.title}
             </Link>
           </li>

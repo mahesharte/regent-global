@@ -1,11 +1,18 @@
-import { groq } from 'next-sanity';
+import { groq } from "next-sanity";
 
-import type { SanityClient } from '../client';
-import type { SanitySetting } from '../types/documents';
+import type { SanityClient } from "../client";
+import type { SanitySetting } from "../types/documents";
 
 const getSettingQuery = groq`
   *[_type == "setting"][0] {
-    variables[]
+    ...,
+    articlesHome-> {
+      _id,
+      type,
+      slug,
+      title
+    },
+    themeGlobalGradient->
   }
 `;
 

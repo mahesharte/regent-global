@@ -1,28 +1,28 @@
-import { DocumentsIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
-import slugify from 'slugify';
+import { DocumentsIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
+import slugify from "slugify";
 
-import defineRichtextField from '../helpers/richtext';
-import { Prepare } from '../../types/utils';
+import defineRichtextField from "../helpers/richtext";
+import { Prepare } from "../../types/utils";
 
 export default defineType({
-  type: 'document',
-  name: 'article',
-  title: 'Articles',
+  type: "document",
+  name: "article",
+  title: "Articles",
   icon: DocumentsIcon,
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Title",
+      type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       options: {
-        source: 'title',
+        source: "title",
         slugify: (input: string) =>
           slugify(input, {
             lower: true,
@@ -32,86 +32,92 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'featuredImage',
-      title: 'Featured Image',
-      type: 'image',
+      name: "featuredImage",
+      title: "Featured Image",
+      type: "image",
+      validation: (rule) => rule.required(),
     }),
     defineRichtextField({
-      name: 'introduction',
-      title: 'Introduction',
+      name: "introduction",
+      title: "Introduction",
     }),
     defineRichtextField(
       {
-        name: 'content',
-        title: 'Content',
+        name: "content",
+        title: "Content",
         validation: (rule) => rule.required(),
       },
       {
-        attachments: ['image'],
-      }
+        attachments: ["image"],
+      },
     ),
     defineField({
-      name: 'excerpt',
-      title: 'Excerpt',
-      type: 'text',
+      name: "excerpt",
+      title: "Excerpt",
+      type: "text",
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
+      name: "author",
+      title: "Author",
+      type: "reference",
       to: [
         {
-          type: 'person',
+          type: "person",
         },
       ],
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
+      name: "tags",
+      title: "Tags",
+      type: "array",
       of: [
         {
-          type: 'reference',
+          type: "reference",
           to: [
             {
-              type: 'articleTag',
+              type: "articleTag",
             },
           ],
         },
       ],
     }),
     defineField({
-      name: 'relatedArticles',
-      title: 'Related Articles',
-      type: 'array',
+      name: "relatedArticles",
+      title: "Related Articles",
+      type: "array",
       of: [
         {
-          type: 'reference',
+          type: "reference",
           to: [
             {
-              type: 'article',
+              type: "article",
             },
           ],
         },
       ],
     }),
     defineField({
-      name: 'pageMeta',
-      title: 'Page Meta',
-      type: 'pageMeta',
+      name: "datePublished",
+      title: "Date Published",
+      type: "date",
+    }),
+    defineField({
+      name: "pageMeta",
+      title: "Page Meta",
+      type: "pageMeta",
       validation: (rule) => rule.required(),
     }),
   ],
   preview: {
     select: {
-      media: 'featuredImage',
-      title: 'title',
+      media: "featuredImage",
+      title: "title",
     },
     prepare: ({ media, title }: Prepare) => ({
       media,
       title,
-      subtitle: 'Article',
+      subtitle: "Article",
     }),
   },
 });

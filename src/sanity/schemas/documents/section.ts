@@ -1,41 +1,67 @@
-import { DocumentsIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
-import isUndefined from 'lodash/isUndefined';
+import type { FC } from "react";
+import { SanityDocument } from "next-sanity";
+import { DocumentsIcon } from "@sanity/icons";
+import {
+  defineField,
+  defineType,
+  StringInputProps,
+  useFormValue,
+} from "sanity";
+import isUndefined from "lodash/isUndefined";
 
-import defineRichtextField from '../helpers/richtext';
-import { Prepare } from '../../types/utils';
+import defineRichtextField from "../helpers/richtext";
+import { Prepare } from "../../types/utils";
 
 const components: { [value: string]: string } = {
-  bigNumbers: 'Big Numbers',
-  contentBlock: 'Content Block',
-  hero: 'Hero',
-  logoWall: 'Logo Wall',
-  multiColumn: 'Multi Column',
+  articles: "Articles",
+  bigNumbers: "Big Numbers",
+  contentBlock: "Content Block",
+  hero: "Hero",
+  logoWall: "Logo Wall",
+  multiColumn: "Multi Column",
+};
+
+const variants: { [variant: string]: { [value: string]: string } } = {
+  hero: {
+    default: "Default",
+    bigText: "Big Text",
+    image: "Image",
+  },
 };
 
 const styleAlignments: { [value: string]: string } = {
-  left: 'Left',
-  center: 'Center',
-  right: 'Right',
+  left: "Left",
+  center: "Center",
+  right: "Right",
+};
+
+const DynamicListField: FC<StringInputProps> = (props) => {
+  const document = useFormValue([]);
+  // @ts-ignore
+  props.schemaType.options.list = props.schemaType.options.dynamicList({
+    document,
+    path: props.path,
+  });
+  return props.renderDefault(props);
 };
 
 export default defineType({
-  type: 'document',
-  name: 'section',
-  title: 'Sections',
+  type: "document",
+  name: "section",
+  title: "Sections",
   icon: DocumentsIcon,
   fieldsets: [
     {
-      name: 'style',
-      title: 'Style',
+      name: "style",
+      title: "Style",
       options: { collapsible: true },
     },
   ],
   fields: [
     defineField({
-      name: 'component',
-      title: 'Component',
-      type: 'string',
+      name: "component",
+      title: "Component",
+      type: "string",
       validation: (rule) => rule.required(),
       options: {
         list: Object.keys(components).map((value) => ({
@@ -45,17 +71,51 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "variant",
+      title: "Variant",
+      type: "string",
+      components: {
+        input: DynamicListField,
+      },
+      hidden: ({ document }) =>
+        !Object.keys(variants).includes(
+          (document?.component as string | undefined) ?? "",
+        ),
+      validation: (rule) =>
+        rule.custom((field, context) => {
+          switch (context.document?.component) {
+            case "hero":
+              return !isUndefined(field) || "Variant is required";
+            default:
+              return true;
+          }
+        }),
+      options: {
+        // @ts-ignore
+        dynamicList: ({ document }: SanityDocument) =>
+          Object.keys(variants[document.component]).map((value) => ({
+            title: variants[document.component][value],
+            value,
+          })),
+      },
+    }),
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
       hidden: ({ document }) =>
         ![
-          'bigNumbers',
-          'contentBlock',
-          'hero',
-          'logoWall',
-          'multiColumn',
-        ].includes((document?.component as string | undefined) ?? ''),
+          "articles",
+          "bigNumbers",
+          "contentBlock",
+          "hero",
+          "logoWall",
+          "multiColumn",
+        ].includes((document?.component as string | undefined) ?? "") ||
+        (document?.component === "hero" &&
+          !["default", "bigText"].includes(
+            (document?.variant as string | undefined) ?? "",
+          )),
       validation: (rule) =>
         rule.custom((field, context) => {
           switch (context.document?.component) {
@@ -68,169 +128,206 @@ export default defineType({
         }),
     }),
     defineField({
-      name: 'subtitle',
-      title: 'Subtitle',
-      type: 'string',
+      name: "subtitle",
+      title: "Subtitle",
+      type: "string",
       hidden: ({ document }) =>
-        !['hero'].includes((document?.component as string | undefined) ?? ''),
+        !["hero"].includes((document?.component as string | undefined) ?? "") ||
+        (document?.component === "hero" &&
+          !["default", "bigText"].includes(
+            (document?.variant as string | undefined) ?? "",
+          )),
     }),
     defineRichtextField(
       {
-        name: 'content',
-        title: 'Content',
+        name: "content",
+        title: "Content",
         hidden: ({ document }) =>
-          !['contentBlock'].includes(
-            (document?.component as string | undefined) ?? ''
+          !["contentBlock"].includes(
+            (document?.component as string | undefined) ?? "",
           ),
       },
       {
-        attachments: ['image'],
-      }
+        attachments: ["image"],
+      },
     ),
     defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
+      name: "image",
+      title: "Image",
+      type: "image",
       hidden: ({ document }) =>
-        !['contentBlock', 'hero'].includes(
-          (document?.component as string | undefined) ?? ''
-        ),
+        !["contentBlock", "hero"].includes(
+          (document?.component as string | undefined) ?? "",
+        ) ||
+        (document?.component === "hero" &&
+          !["default", "image"].includes(
+            (document?.variant as string | undefined) ?? "",
+          )),
     }),
     defineField({
-      name: 'buttons',
-      title: 'Buttons',
-      type: 'array',
+      name: "buttons",
+      title: "Buttons",
+      type: "array",
       of: [
         {
-          type: 'button',
+          type: "button",
         },
       ],
       hidden: ({ document }) =>
-        !['contentBlock'].includes(
-          (document?.component as string | undefined) ?? ''
+        !["contentBlock"].includes(
+          (document?.component as string | undefined) ?? "",
         ),
     }),
     defineField({
-      name: 'items',
-      title: 'Items',
-      type: 'array',
+      name: "items",
+      title: "Items",
+      type: "array",
       of: [
         {
-          type: 'sectionItem',
+          type: "sectionItem",
         },
       ],
       hidden: ({ document }) =>
-        !['bigNumbers', 'contentBlock', 'hero', 'multiColumn'].includes(
-          (document?.component as string | undefined) ?? ''
+        !["bigNumbers", "contentBlock", "multiColumn"].includes(
+          (document?.component as string | undefined) ?? "",
         ),
       validation: (rule) =>
         rule.custom((field, context) => {
           switch (context.document?.component) {
-            case 'bigNumbers':
-            case 'multiColumn':
-              return !isUndefined(field) || 'Items are required';
+            case "bigNumbers":
+            case "multiColumn":
+              return !isUndefined(field) || "Items are required";
             default:
               return true;
           }
         }),
     }),
     defineField({
-      name: 'links',
-      title: 'Links',
-      type: 'array',
+      name: "links",
+      title: "Links",
+      type: "array",
       of: [
         {
-          type: 'reference',
+          type: "reference",
           to: [
             {
-              type: 'link',
+              type: "link",
             },
           ],
         },
       ],
       hidden: ({ document }) =>
-        !['logoWall'].includes(
-          (document?.component as string | undefined) ?? ''
+        !["logoWall"].includes(
+          (document?.component as string | undefined) ?? "",
         ),
       validation: (rule) =>
         rule.custom((field, context) => {
           switch (context.document?.component) {
-            case 'logoWall':
-              return !isUndefined(field) || 'Links are required';
+            case "logoWall":
+              return !isUndefined(field) || "Links are required";
             default:
               return true;
           }
         }),
     }),
     defineField({
-      name: 'styleAlignment',
-      type: 'string',
-      title: 'Alignment',
-      fieldset: 'style',
+      name: "styleAlignment",
+      type: "string",
+      title: "Alignment",
+      fieldset: "style",
       options: {
+        layout: "radio",
         list: Object.keys(styleAlignments).map((value) => ({
           title: styleAlignments[value],
           value,
         })),
       },
       hidden: ({ document }) =>
-        !['contentBlock'].includes(
-          (document?.component as string | undefined) ?? ''
+        !["contentBlock"].includes(
+          (document?.component as string | undefined) ?? "",
         ),
     }),
     defineField({
-      name: 'stylePadding',
-      title: 'Padding',
-      type: 'padding',
-      fieldset: 'style',
+      name: "styleMargin",
+      title: "Margin",
+      type: "measurements",
+      fieldset: "style",
       hidden: ({ document }) =>
         ![
-          'bigNumbers',
-          'contentBlock',
-          'hero',
-          'logoWall',
-          'multiColumn',
-        ].includes((document?.component as string | undefined) ?? ''),
+          "articles",
+          "bigNumbers",
+          "contentBlock",
+          "hero",
+          "logoWall",
+          "multiColumn",
+        ].includes((document?.component as string | undefined) ?? "") ||
+        (document?.component === "hero" &&
+          !["default", "bigText", "image"].includes(
+            (document?.variant as string | undefined) ?? "",
+          )),
     }),
     defineField({
-      name: 'styleGradient',
-      title: 'Gradient',
-      type: 'reference',
-      fieldset: 'style',
+      name: "stylePadding",
+      title: "Padding",
+      type: "measurements",
+      fieldset: "style",
+      hidden: ({ document }) =>
+        ![
+          "articles",
+          "bigNumbers",
+          "contentBlock",
+          "hero",
+          "logoWall",
+          "multiColumn",
+        ].includes((document?.component as string | undefined) ?? "") ||
+        (document?.component === "hero" &&
+          !["default", "bigText"].includes(
+            (document?.variant as string | undefined) ?? "",
+          )),
+    }),
+    defineField({
+      name: "styleGradient",
+      title: "Gradient",
+      type: "reference",
+      fieldset: "style",
       to: [
         {
-          type: 'gradient',
+          type: "gradient",
         },
       ],
       hidden: ({ document }) =>
-        !['bigNumbers', 'hero', 'logoWall', 'multiColumn'].includes(
-          (document?.component as string | undefined) ?? ''
+        !["bigNumbers", "hero", "logoWall", "multiColumn"].includes(
+          (document?.component as string | undefined) ?? "",
         ),
     }),
   ],
   preview: {
     select: {
-      component: 'component',
-      media: 'image',
-      title: 'title',
+      component: "component",
+      media: "image",
+      title: "title",
+      variant: "variant",
     },
-    prepare: ({ component, media, title }: Prepare) => {
-      const subtitle = components[component];
+    prepare: ({ component, media, title, variant }: Prepare) => {
+      const variantName = variants?.[component]?.[variant] ?? "";
       switch (component) {
-        case 'bigNumbers':
-        case 'contentBlock':
-        case 'hero':
-        case 'logoWall':
-        case 'multiColumn':
+        case "articles":
+        case "bigNumbers":
+        case "contentBlock":
+        case "hero":
+        case "logoWall":
+        case "multiColumn":
           return {
-            title: title ?? (media ? 'Image' : 'Untitled'),
+            title: title ?? "Untitled",
             media,
-            subtitle,
+            subtitle: `${components[component]}${
+              variantName ? ` (${variantName})` : ""
+            }`,
           };
         default:
           return {
-            title: 'Untitled',
-            subtitle: 'Section',
+            title: "Untitled",
+            subtitle: "Section",
           };
       }
     },

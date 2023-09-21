@@ -11,7 +11,10 @@ const Header = ({
   authorImage?: string;
 }) => {
   return (
-    <BigText heading={title}>
+    <BigText
+      className="bg-gradient-to-r from-red to-blue py-28"
+      heading={title}
+    >
       {author && authorImage && (
         <Avatar className="mt-10" image={authorImage} name={author} />
       )}

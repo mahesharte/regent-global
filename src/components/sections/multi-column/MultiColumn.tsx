@@ -1,19 +1,23 @@
-import type { SanitySection } from '@/sanity/types/documents';
-import type { FC } from 'react';
+import type { SanitySection } from "@/sanity/types/documents";
+import { PortableText } from "@portabletext/react";
+import type { FC } from "react";
+import Image from "next/image";
 
-import { FourColumns } from '@/components/FourColumns';
-import { PortableText } from '@portabletext/react';
-import { getSectionStyle } from '../utils';
-import Image from 'next/image';
+import { FourColumns } from "@/components/FourColumns";
+import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
+import { useSectionStyles } from "../utils";
 
 type Props = {
   section: SanitySection;
 };
 
 const MultiColumn: FC<Props> = ({ section }) => {
-  const style = getSectionStyle(section, ['gradient', 'padding']);
+  const styles = useSectionStyles(section, ["gradient", "margin", "padding"]);
+  const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
   return (
     <FourColumns
+      ref={ref}
+      className={className}
       columns={(section.items ?? []).map((item) => ({
         headline: item.title,
         icon: (
@@ -21,8 +25,8 @@ const MultiColumn: FC<Props> = ({ section }) => {
             {!!item.image && (
               <Image
                 className="inline"
-                src={item.image.asset?.url ?? ''}
-                alt={item.title ?? ''}
+                src={item.image.asset?.url ?? ""}
+                alt={item.title ?? ""}
                 width={24}
                 height={24}
               />
@@ -31,7 +35,6 @@ const MultiColumn: FC<Props> = ({ section }) => {
         ),
         body: <PortableText value={item.content ?? []} />,
       }))}
-      style={style}
     />
   );
 };

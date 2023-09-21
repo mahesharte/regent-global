@@ -1,13 +1,13 @@
-import { PortableTextBlock } from '@portabletext/types';
+import { PortableTextBlock } from "@portabletext/types";
 
-import { SanityGradient, SanityImage, SanityLink } from './documents';
+import { SanityGradient, SanityImage, SanityLink } from "./documents";
 
 export type SanityKeyValueType =
-  | 'string'
-  | 'number'
-  | 'richtext'
-  | 'image'
-  | 'gradient';
+  | "string"
+  | "number"
+  | "richtext"
+  | "image"
+  | "gradient";
 export type SanityKeyValueTypes =
   | string
   | number
@@ -16,7 +16,7 @@ export type SanityKeyValueTypes =
   | SanityGradient
   | null;
 
-export type SanityButtonVariant = 'primary';
+export type SanityButtonVariant = "primary";
 
 export type SanityRichtext = PortableTextBlock[];
 
@@ -41,13 +41,17 @@ export type SanityButton = {
   variant: SanityButtonVariant;
   link?: SanityLink;
   icon?: SanityImage | null;
-  alignment?: 'left' | 'right';
-  size?: 'medium';
+  alignment?: "left" | "right";
+  size?: "medium";
 };
 
-export type SanityPadding = {
+export type SanityMeasurementBreakpoint = {
+  size: "xs" | "sm" | "md" | "lg" | "xl";
   top?: string;
   bottom?: string;
+};
+export type SanityMeasurements = {
+  breakpoints?: SanityMeasurementBreakpoint[];
 };
 
 export type SanitySectionItem = {

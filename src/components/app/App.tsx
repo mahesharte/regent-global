@@ -1,10 +1,10 @@
-import { useEffect, type FC } from 'react';
-import type { AppProps } from 'next/app';
+import { useEffect, type FC } from "react";
+import type { AppProps } from "next/app";
 
-import Layout from '@/components/layout/Layout';
-import PreviewProvider from '@/components/preview/Provider';
-import { GlobalPageProps } from '@/types/global';
-import AppProvider from './context';
+import Layout from "@/components/layout/Layout";
+import PreviewProvider from "@/components/preview/Provider";
+import { GlobalPageProps } from "@/types/global";
+import AppProvider from "./context";
 
 const App: FC<AppProps<GlobalPageProps>> = ({
   Component,
