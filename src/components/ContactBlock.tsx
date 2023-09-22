@@ -1,8 +1,13 @@
+import { forwardRef } from "react";
 import { Button } from "./ui/button";
 
-const ContactBlock = () => {
+type Props = {
+  className?: string;
+};
+
+const ContactBlock = forwardRef<HTMLDivElement, Props>(({ className }, ref) => {
   return (
-    <div className="">
+    <div className={className} ref={ref}>
       <h2 className="mb-14 text-3xl font-black text-blue">
         Book a chat with our advisors
       </h2>
@@ -54,7 +59,9 @@ const ContactBlock = () => {
       </form>
     </div>
   );
-};
+});
+
+ContactBlock.displayName = "ContactBlock";
 
 export { ContactBlock };
 

@@ -1,19 +1,19 @@
-import type { GetServerSideProps } from 'next';
-import Head from 'next/head';
-import { NextStudio } from 'next-sanity/studio';
-import { metadata } from 'next-sanity/studio/metadata';
-import { useEffect, useMemo, useState, type FC } from 'react';
-import isFunction from 'lodash/isFunction';
-import noop from 'lodash/noop';
+import type { GetServerSideProps } from "next";
+import Head from "next/head";
+import { NextStudio } from "next-sanity/studio";
+import { metadata } from "next-sanity/studio/metadata";
+import { useEffect, useMemo, useState, type FC } from "react";
+import isFunction from "lodash/isFunction";
+import noop from "lodash/noop";
 
 import StudioContext, {
   type StudioContextValue,
   type StudioState,
-} from '@/sanity/context';
-import { getClient } from '@/sanity/client';
-import getSetting from '@/sanity/services/getSetting';
-import { GlobalPageProps } from '@/types/global';
-import config from '@/../sanity.config';
+} from "@/sanity/context";
+import { getClient } from "@/sanity/client";
+import getSetting from "@/sanity/services/getSetting";
+import { GlobalPageProps } from "@/types/global";
+import config from "@/../sanity.config";
 
 type CallbackArgs = (string | number | boolean)[];
 
@@ -26,7 +26,7 @@ const sleep = async (ms: number): Promise<void> =>
 const waitUntil = async (
   condition: () => boolean,
   timeout = 5000,
-  waitMs = 100
+  waitMs = 100,
 ): Promise<void> => {
   const now = Date.now();
   while (!condition() && Date.now() - now < timeout) {
@@ -38,7 +38,7 @@ const waitUntil = async (
 const callIframeMethod = async (
   iframe: HTMLIFrameElement,
   method: string,
-  args: CallbackArgs = []
+  args: CallbackArgs = [],
 ): Promise<void> => {
   const getCallback = (): ((...params: CallbackArgs) => void) =>
     // eslint-disable-next-line
@@ -62,26 +62,24 @@ const StudioPage: FC = () => {
   useEffect(() => {
     if (iframes.length > 0) {
       const status = {
-        path: '',
+        path: "",
       };
       const interval = setInterval(() => {
         const path = window.location.pathname;
         if (path !== status.path) {
           // eslint-disable-next-line
           status.path = path;
-          // Product Page preview
+          console.log(path);
+          // Page preview
           if (
-            path.startsWith('/studio/desk/page') &&
-            path.includes('type%3DproductSection')
+            path.startsWith("/studio/desk/page") &&
+            path.includes("type%3Dsection")
           ) {
-            const [, , preview] = path.split(';');
-            const id = preview.substring(0, preview.indexOf('%'));
+            const [, , preview] = path.split(";");
+            const id = preview.substring(0, preview.indexOf("%"));
             iframes.forEach((iframe) => {
               // eslint-disable-next-line
-              callIframeMethod(iframe, 'scrollToProductSection', [
-                id,
-                scrollOffset,
-              ]);
+              callIframeMethod(iframe, "scrollToSection", [id, scrollOffset]);
             });
           }
         }

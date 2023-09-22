@@ -1,8 +1,8 @@
 import type { SanitySection } from "@/sanity/types/documents";
-import { PortableText } from "@portabletext/react";
 import type { FC } from "react";
 
 import { ContentBlock as ContentBlockComponent } from "@/components/ContentBlock";
+import RichText from "@/components/richtext/RichText";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
 import { useSectionStyles } from "../utils";
 
@@ -20,7 +20,7 @@ const ContentBlock: FC<Props> = ({ section }) => {
       align={section.styleAlignment ?? "left"}
       heading={section.title ?? ""}
       image={section.image?.asset?.url}
-      body={<PortableText value={section.content ?? []} />}
+      body={<RichText value={section.content ?? []} />}
       cta={(section.buttons ?? []).map((button) => ({
         text: button.title ?? button.link?.title,
         url: button.link?.url ?? "",

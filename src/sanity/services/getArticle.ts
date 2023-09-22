@@ -8,7 +8,7 @@ const articleFields = `
   _type,
   title,
   slug,
-  featuredImage-> {
+  featuredImage {
     ...,
     asset->
   },
@@ -27,7 +27,7 @@ const articleFields = `
     _id,
     title,
     slug,
-    featuredImage-> {
+    featuredImage {
       ...,
       asset->
     },

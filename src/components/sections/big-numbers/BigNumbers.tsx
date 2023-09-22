@@ -2,7 +2,7 @@ import type { SanitySection } from "@/sanity/types/documents";
 import type { FC } from "react";
 
 import { BigNumbers as BigNumbersComponent } from "@/components/BigNumbers";
-import { PortableText } from "@portabletext/react";
+import RichText from "@/components/richtext/RichText";
 import { useSectionStyles } from "../utils";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
 
@@ -21,7 +21,7 @@ const BigNumbers: FC<Props> = ({ section }) => {
       items={(section.items ?? []).map((item) => ({
         number: item.title,
         imageUrl: item.image?.asset?.url ?? "",
-        subText: <PortableText value={item.content ?? []} />,
+        subText: <RichText value={item.content ?? []} />,
       }))}
     />
   );

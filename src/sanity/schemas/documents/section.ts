@@ -15,6 +15,7 @@ import { Prepare } from "../../types/utils";
 const components: { [value: string]: string } = {
   articles: "Articles",
   bigNumbers: "Big Numbers",
+  contact: "Contact",
   contentBlock: "Content Block",
   hero: "Hero",
   logoWall: "Logo Wall",
@@ -108,6 +109,7 @@ export default defineType({
         ![
           "articles",
           "bigNumbers",
+          "contact",
           "contentBlock",
           "hero",
           "logoWall",
@@ -145,7 +147,7 @@ export default defineType({
         name: "content",
         title: "Content",
         hidden: ({ document }) =>
-          !["contentBlock"].includes(
+          !["contact", "contentBlock"].includes(
             (document?.component as string | undefined) ?? "",
           ),
       },
@@ -158,7 +160,7 @@ export default defineType({
       title: "Image",
       type: "image",
       hidden: ({ document }) =>
-        !["contentBlock", "hero"].includes(
+        !["contact", "contentBlock", "hero"].includes(
           (document?.component as string | undefined) ?? "",
         ) ||
         (document?.component === "hero" &&
@@ -245,7 +247,7 @@ export default defineType({
         })),
       },
       hidden: ({ document }) =>
-        !["contentBlock"].includes(
+        !["contact", "contentBlock"].includes(
           (document?.component as string | undefined) ?? "",
         ),
     }),
@@ -258,6 +260,7 @@ export default defineType({
         ![
           "articles",
           "bigNumbers",
+          "contact",
           "contentBlock",
           "hero",
           "logoWall",
@@ -278,6 +281,7 @@ export default defineType({
         ![
           "articles",
           "bigNumbers",
+          "contact",
           "contentBlock",
           "hero",
           "logoWall",
@@ -300,7 +304,7 @@ export default defineType({
         },
       ],
       hidden: ({ document }) =>
-        !["bigNumbers", "hero", "logoWall", "multiColumn"].includes(
+        !["bigNumbers", "contact", "hero", "logoWall", "multiColumn"].includes(
           (document?.component as string | undefined) ?? "",
         ),
     }),
@@ -317,6 +321,7 @@ export default defineType({
       switch (component) {
         case "articles":
         case "bigNumbers":
+        case "contact":
         case "contentBlock":
         case "hero":
         case "logoWall":

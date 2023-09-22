@@ -11,7 +11,7 @@ const getSectionVariables = async (
 ): Promise<SectionVariables> => {
   const variables: SectionVariables = {};
   for (const section of sections) {
-    switch (section.component) {
+    switch (section?.component) {
       case "articles":
         variables.articles = await getArticlesWithTags(client);
         break;

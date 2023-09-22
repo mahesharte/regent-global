@@ -13,6 +13,7 @@ import type {
 export type SanitySectionComponent =
   | "articles"
   | "bigNumbers"
+  | "contact"
   | "contentBlock"
   | "hero"
   | "logoWall"

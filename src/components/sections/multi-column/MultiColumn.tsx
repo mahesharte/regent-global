@@ -1,9 +1,9 @@
 import type { SanitySection } from "@/sanity/types/documents";
-import { PortableText } from "@portabletext/react";
 import type { FC } from "react";
 import Image from "next/image";
 
 import { FourColumns } from "@/components/FourColumns";
+import RichText from "@/components/richtext/RichText";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
 import { useSectionStyles } from "../utils";
 
@@ -33,7 +33,7 @@ const MultiColumn: FC<Props> = ({ section }) => {
             )}
           </>
         ),
-        body: <PortableText value={item.content ?? []} />,
+        body: <RichText value={item.content ?? []} />,
       }))}
     />
   );

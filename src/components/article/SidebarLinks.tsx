@@ -8,16 +8,22 @@ type HeadingLink = {
 const SidebarLinks = ({
   headings,
   className,
+  onClick,
 }: {
   headings: HeadingLink[];
   className?: string;
+  onClick?: (id: string) => void;
 }) => {
   return (
     <aside className={cn(className, "flex flex-col gap-4 text-sm font-bold")}>
       <span className="uppercase text-neutral-900">Browse the Content</span>
       {headings.map((heading, i) => (
-        <div key={i} className="flex gap-5">
-          <svg className="mb-4 mt-3 h-[1px] w-8">
+        <div
+          key={i}
+          className="flex cursor-pointer gap-5"
+          onClick={() => onClick?.(heading.id)}
+        >
+          <svg className="mb-4 mt-3 h-[1px] w-8 min-w-[32px]">
             <rect className="h-full w-full fill-neutral-500" />
           </svg>
           <span className="text-neutral-400">{heading.title}</span>

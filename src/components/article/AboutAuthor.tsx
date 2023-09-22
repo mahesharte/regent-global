@@ -1,5 +1,4 @@
 import { Avatar } from "../Avatar";
-import image from "@/assets/avatar.png";
 
 const AboutAuthor = ({
   text,
@@ -11,10 +10,10 @@ const AboutAuthor = ({
   authorImage?: string;
 }) => {
   return (
-    <div className="px-12 py-14 bg-gradient-to-r text-white  from-blue to-red text-center flex flex-col gap-10">
-      <span className="font-black text-3xl">About the author</span>
-      <Avatar image={image.src} name={author} />
-      <p>{text}</p>
+    <div className="flex flex-col gap-10 bg-gradient-to-r  from-blue to-red px-12 py-14 text-center text-white">
+      <span className="text-3xl font-black">About the author</span>
+      {!!authorImage && <Avatar image={authorImage} name={author} />}
+      {!!text && <p>{text}</p>}
     </div>
   );
 };

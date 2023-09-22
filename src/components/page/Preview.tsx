@@ -27,6 +27,21 @@ const Preview: FC<PageProps> = ({ page: initialPage, sectionVariables }) => {
     }));
   }, [loading, setState]);
 
+  useEffect(() => {
+    // eslint-disable-next-line
+    (window as any).scrollToSection = (sectionId: string, offset = -90) => {
+      // Make this function available for parent window calls
+      const sections = document.getElementById("sections");
+      const section = sections?.querySelector<HTMLElement>(
+        `section[data-id="${sectionId}"]`,
+      );
+      section?.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+      });
+    };
+  }, []);
+
   return (
     <Page page={page ?? initialPage} sectionVariables={sectionVariables} />
   );

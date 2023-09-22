@@ -108,7 +108,9 @@ export const Base = {
                   author="John Isaiah Smith"
                   authorImage={avatarImage.src}
                 ></AboutAuthor>
-                <RelatedArticles articles={[{ image: "src", title: "src" }]} />
+                <RelatedArticles
+                  articles={[{ image: "src", title: "src", url: "" }]}
+                />
               </div>
             </main>
           </div>

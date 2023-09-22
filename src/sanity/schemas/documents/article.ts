@@ -55,6 +55,7 @@ export default defineType({
       name: "excerpt",
       title: "Excerpt",
       type: "text",
+      hidden: true,
     }),
     defineField({
       name: "author",

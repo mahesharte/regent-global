@@ -14,6 +14,8 @@ type Props = {
   team: SanityPerson[];
 };
 
+const showGradient = false;
+
 const Team: FC<Props> = ({ section, team }) => {
   const styles = useSectionStyles(section, ["margin", "padding"]);
   const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
@@ -33,7 +35,9 @@ const Team: FC<Props> = ({ section, team }) => {
               image={person.photo?.asset?.url ?? ""}
               name={person.name ?? ""}
               title={person.title ?? ""}
-              gradientDirection={directions[index % 4]}
+              gradientDirection={
+                showGradient ? directions[index % 4] : undefined
+              }
             />
           ))}
         </div>

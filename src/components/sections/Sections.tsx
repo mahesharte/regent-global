@@ -2,6 +2,7 @@ import { FC } from "react";
 
 import Articles from "./articles/Articles";
 import BigNumbers from "./big-numbers/BigNumbers";
+import Contact from "./contact/Contact";
 import ContentBlock from "./content-block/ContentBlock";
 import Hero from "./hero/Hero";
 import LogoWall from "./logo-wall/LogoWall";
@@ -16,9 +17,13 @@ type Props = {
 };
 
 const Sections: FC<Props> = ({ sections, variables }) => (
-  <div>
+  <div id="sections">
     {sections.map((section, index) => (
-      <section key={`${section?._id}-${index}`}>
+      <section
+        key={`${section?._id}-${index}`}
+        data-id={section?._id}
+        className="scroll-my-5"
+      >
         {(() => {
           switch (section?.component) {
             case "articles":
@@ -30,6 +35,8 @@ const Sections: FC<Props> = ({ sections, variables }) => (
               );
             case "bigNumbers":
               return <BigNumbers section={section} />;
+            case "contact":
+              return <Contact section={section} />;
             case "contentBlock":
               return <ContentBlock section={section} />;
             case "hero":
