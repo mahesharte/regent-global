@@ -19,6 +19,7 @@ const components: { [value: string]: string } = {
   hero: "Hero",
   logoWall: "Logo Wall",
   multiColumn: "Multi Column",
+  team: "Team",
 };
 
 const variants: { [variant: string]: { [value: string]: string } } = {
@@ -111,6 +112,7 @@ export default defineType({
           "hero",
           "logoWall",
           "multiColumn",
+          "team",
         ].includes((document?.component as string | undefined) ?? "") ||
         (document?.component === "hero" &&
           !["default", "bigText"].includes(
@@ -134,7 +136,7 @@ export default defineType({
       hidden: ({ document }) =>
         !["hero"].includes((document?.component as string | undefined) ?? "") ||
         (document?.component === "hero" &&
-          !["default", "bigText"].includes(
+          !["bigText"].includes(
             (document?.variant as string | undefined) ?? "",
           )),
     }),
@@ -260,6 +262,7 @@ export default defineType({
           "hero",
           "logoWall",
           "multiColumn",
+          "team",
         ].includes((document?.component as string | undefined) ?? "") ||
         (document?.component === "hero" &&
           !["default", "bigText", "image"].includes(
@@ -279,6 +282,7 @@ export default defineType({
           "hero",
           "logoWall",
           "multiColumn",
+          "team",
         ].includes((document?.component as string | undefined) ?? "") ||
         (document?.component === "hero" &&
           !["default", "bigText"].includes(
@@ -317,6 +321,7 @@ export default defineType({
         case "hero":
         case "logoWall":
         case "multiColumn":
+        case "team":
           return {
             title: title ?? "Untitled",
             media,

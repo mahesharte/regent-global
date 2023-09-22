@@ -6,6 +6,7 @@ import ContentBlock from "./content-block/ContentBlock";
 import Hero from "./hero/Hero";
 import LogoWall from "./logo-wall/LogoWall";
 import MultiColumn from "./multi-column/MultiColumn";
+import Team from "./team/Team";
 import { SanitySection } from "@/sanity/types/documents";
 import { SectionVariables } from "./types";
 
@@ -37,6 +38,8 @@ const Sections: FC<Props> = ({ sections, variables }) => (
               return <LogoWall section={section} />;
             case "multiColumn":
               return <MultiColumn section={section} />;
+            case "team":
+              return <Team section={section} team={variables.team ?? []} />;
             default:
               return <></>;
           }

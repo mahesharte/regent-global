@@ -16,8 +16,11 @@ export type SanitySectionComponent =
   | "contentBlock"
   | "hero"
   | "logoWall"
-  | "multiColumn";
+  | "multiColumn"
+  | "team";
 export type SanityPageType = "basic" | "error";
+
+export type SanityPersonGroup = "author" | "team";
 
 export type SanityImage = {
   asset: ImageAsset | null;
@@ -26,7 +29,9 @@ export type SanityImage = {
 export type SanityPerson = SanityDocument & {
   name: string;
   photo?: SanityImage | null;
+  title?: string;
   description?: string;
+  groups?: SanityPersonGroup[];
 };
 
 export type SanityArticleTag = SanityDocument & {

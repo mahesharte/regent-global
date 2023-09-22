@@ -2,6 +2,7 @@ import { SanityClient } from "next-sanity";
 
 import { SectionVariables } from "@/components/sections/types";
 import { getArticlesWithTags } from "../services/getArticles";
+import getPeople from "../services/getPeople";
 import { SanitySection } from "../types/documents";
 
 const getSectionVariables = async (
@@ -14,6 +15,8 @@ const getSectionVariables = async (
       case "articles":
         variables.articles = await getArticlesWithTags(client);
         break;
+      case "team":
+        variables.team = await getPeople(client, ["team"]);
       default:
         break;
     }

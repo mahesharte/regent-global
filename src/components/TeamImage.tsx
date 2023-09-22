@@ -1,10 +1,12 @@
 import { cn } from "@/lib/utils";
 
-const gradientDirections: Record<string, string> = {
+export type GradientDirection = "NE" | "SE" | "SW" | "NW";
+
+export const gradientDirections: Record<string, string> = {
   SE: "left-1/2 top-1/2",
   NE: "left-1/2 top-0",
-  NW: "left-0 top-0",
   SW: "left-0 top-1/2",
+  NW: "left-0 top-0",
 };
 
 const TeamImage = ({
@@ -17,7 +19,7 @@ const TeamImage = ({
   image: string;
   name: string;
   title: string;
-  gradientDirection: "NE" | "SE" | "SW" | "NW";
+  gradientDirection: GradientDirection;
   fadeToTransparent?: boolean;
 }) => {
   return (
