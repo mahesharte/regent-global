@@ -1,7 +1,7 @@
-import { groq } from 'next-sanity';
+import { groq } from "next-sanity";
 
-import type { SanityClient } from '../client';
-import type { SanityPage } from '../types/documents';
+import type { SanityClient } from "../client";
+import type { SanityPage } from "../types/documents";
 
 const pageFields = `
   _id,
@@ -52,6 +52,12 @@ export const getPageBySlugQuery = groq`
   }
 `;
 
+export const getPageByStatusQuery = groq`
+  *[_type == "page" && type == "error" && status == $status][0] {
+    ${pageFields}
+  }
+`;
+
 export const getPageByTypeQuery = groq`
   *[_type == "page" && type == $type][0] {
     ${pageFields}
@@ -61,13 +67,14 @@ export const getPageByTypeQuery = groq`
 const queryBy = {
   id: getPageByIdQuery,
   slug: getPageBySlugQuery,
+  status: getPageByStatusQuery,
   type: getPageByTypeQuery,
 };
 
 const getPage = async (
   client: SanityClient,
   query: string,
-  by: 'id' | 'slug' | 'type' = 'slug'
+  by: "id" | "slug" | "status" | "type" = "slug",
 ): Promise<SanityPage | null> =>
   client.fetch<SanityPage | null>(queryBy[by], {
     [by]: query,

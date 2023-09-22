@@ -63,6 +63,7 @@ export const getStaticProps: GetStaticProps<CatchAllProps> = async (
   if (!document) {
     return {
       notFound: true,
+      revalidate: 10,
     };
   }
 
@@ -92,15 +93,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const pages = await getPages(client, "basic");
   const articles = await getArticles(client);
   const articleSlugPrefix = getArticleSlugPrefix(setting);
+  const paths = [
+    ...pages
+      .filter((page) => page.slug.current !== "/")
+      .map((page) => page.slug.current),
+    ...articles.map((article) => `${articleSlugPrefix}${article.slug.current}`),
+  ];
   return {
-    paths: [
-      ...pages
-        .filter((page) => page.slug.current !== "/")
-        .map((page) => page.slug.current),
-      ...articles.map(
-        (article) => `${articleSlugPrefix}${article.slug.current}`,
-      ),
-    ],
+    paths,
     fallback: false,
   };
 };

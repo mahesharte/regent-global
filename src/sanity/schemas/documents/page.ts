@@ -13,6 +13,7 @@ const pageTypes: { [value: string]: string } = {
 const pageStatuses: { [value: string]: string } = {
   "200": "200: OK",
   "404": "404: Not Found",
+  "500": "500: Server Error",
 };
 
 export default defineType({

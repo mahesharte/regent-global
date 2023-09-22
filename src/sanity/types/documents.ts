@@ -81,6 +81,7 @@ export type SanitySection = SanityDocument & {
 export type SanityPage = SanityDocument & {
   title: string;
   type: SanityPageType;
+  status: "200" | "404" | "500";
   slug: Slug;
   sections?: SanitySection[];
   pageMeta: SanityPageMeta;
