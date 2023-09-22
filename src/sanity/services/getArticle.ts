@@ -37,7 +37,7 @@ const articleFields = `
   datePublished,
   pageMeta {
     ...,
-    image-> {
+    image {
       ...,
       asset->
     }

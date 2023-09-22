@@ -1,5 +1,6 @@
 import type { SanityPerson, SanitySection } from "@/sanity/types/documents";
 import type { FC } from "react";
+import sortBy from "lodash/sortBy";
 
 import {
   GradientDirection,
@@ -29,7 +30,7 @@ const Team: FC<Props> = ({ section, team }) => {
           </h2>
         )}
         <div className="grid grid-cols-4 gap-x-24 gap-y-20 pt-20">
-          {team.map((person, index) => (
+          {sortBy(team, "name").map((person, index) => (
             <TeamImage
               key={person._id}
               image={person.photo?.asset?.url ?? ""}

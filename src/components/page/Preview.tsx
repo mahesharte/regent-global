@@ -29,7 +29,7 @@ const Preview: FC<PageProps> = ({ page: initialPage, sectionVariables }) => {
 
   useEffect(() => {
     // eslint-disable-next-line
-    (window as any).scrollToSection = (sectionId: string, offset = -90) => {
+    (window as any).scrollToSection = (sectionId: string) => {
       // Make this function available for parent window calls
       const sections = document.getElementById("sections");
       const section = sections?.querySelector<HTMLElement>(

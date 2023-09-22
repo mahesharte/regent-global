@@ -56,7 +56,6 @@ const StudioPage: FC = () => {
     scrollOffset: 0,
   });
   const value = useMemo<StudioContextValue>(() => [state, setState], [state]);
-  const { scrollOffset } = value[0];
   const iframes = useMemo(() => state.iframes, [state]);
 
   useEffect(() => {
@@ -79,7 +78,7 @@ const StudioPage: FC = () => {
             const id = preview.substring(0, preview.indexOf("%"));
             iframes.forEach((iframe) => {
               // eslint-disable-next-line
-              callIframeMethod(iframe, "scrollToSection", [id, scrollOffset]);
+              callIframeMethod(iframe, "scrollToSection", [id]);
             });
           }
         }
@@ -89,7 +88,7 @@ const StudioPage: FC = () => {
       };
     }
     return noop;
-  }, [iframes, scrollOffset]);
+  }, [iframes]);
 
   return (
     <StudioContext.Provider value={value}>
