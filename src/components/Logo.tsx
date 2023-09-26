@@ -18,7 +18,7 @@ const Logo = ({
   <svg
     className={cn(fills[fill], className, "max-h-full max-w-full")}
     xmlns="http://www.w3.org/2000/svg"
-    viewBox={hasWordmark ? "0 0 133 32" : "0 0 52 32"}
+    viewBox={hasWordmark ? "0 0 133 32" : "0 0 42 32"}
     fill="none"
   >
     {hasWordmark && (

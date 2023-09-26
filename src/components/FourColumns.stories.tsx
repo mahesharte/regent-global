@@ -1,13 +1,13 @@
-import { Meta, StoryObj } from '@storybook/react';
-import image from '../assets/globe.svg';
+import { Meta, StoryObj } from "@storybook/react";
+import image from "../assets/globe.svg";
 
-import { FourColumns } from '@/components/FourColumns';
-import { SpaceRocketEarth } from './Icons';
+import { FourColumns } from "@/components/FourColumns";
+import { SpaceRocketEarth } from "./Icons";
 
 const meta: Meta<typeof FourColumns> = {
-  title: 'FourColumns',
+  title: "FourColumns",
   component: FourColumns,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {},
 };
 export default meta;
@@ -16,7 +16,7 @@ type Story = StoryObj<typeof FourColumns>;
 
 export const Base: Story = {
   render: (args) => (
-    <div className="bg-gradient-to-r from-red to-blue pt-20 px-24 pb-28">
+    <div className="bg-gradient-to-r from-red to-blue">
       <FourColumns {...args}></FourColumns>
     </div>
   ),
@@ -24,23 +24,23 @@ export const Base: Story = {
     columns: [
       {
         icon: <SpaceRocketEarth />,
-        headline: 'Headline here',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.',
+        headline: "Headline here",
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.",
       },
       {
         icon: <SpaceRocketEarth />,
-        headline: 'Headline here',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.',
+        headline: "Headline here",
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.",
       },
       {
         icon: <SpaceRocketEarth />,
-        headline: 'Headline here',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.',
+        headline: "Headline here",
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.",
       },
       {
         icon: <SpaceRocketEarth />,
-        headline: 'Headline here',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.',
+        headline: "Headline here",
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce egestas lacus lacinia erat maximus, eget facilisis turpis sodales. In et tincidunt ligula, non rhoncus dolor.",
       },
     ],
   },

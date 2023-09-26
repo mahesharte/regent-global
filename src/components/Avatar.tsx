@@ -10,7 +10,12 @@ const Avatar = ({
   className?: string;
 }) => {
   return (
-    <div className={cn(className, "flex items-center justify-center gap-12")}>
+    <div
+      className={cn(
+        className,
+        "flex items-center justify-center gap-6 lg:gap-12",
+      )}
+    >
       {image && <img className="h-14 w-14 rounded-full" src={image} />}
       {name && <span>{name}</span>}
     </div>

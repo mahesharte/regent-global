@@ -15,7 +15,7 @@ type Story = StoryObj<typeof LogoWall>;
 
 export const Base: Story = {
   render: (args) => (
-    <div className="bg-gradient-to-r from-red to-blue pt-20 px-24 pb-28">
+    <div className="bg-gradient-to-r from-red to-blue">
       <LogoWall {...args}></LogoWall>
     </div>
   ),
