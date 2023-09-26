@@ -3,9 +3,10 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { ArrowRight, Menu } from "./Icons";
-import { useState } from "react";
+import { ArrowRight, Close, Menu } from "./Icons";
+import { useEffect, useState } from "react";
 import { useBreakpoint } from "@/lib/hooks/useBreakpoint";
+import { useRouter } from "next/router";
 
 export type LinkList = {
   name: string;
@@ -20,6 +21,11 @@ type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const [menuOpen, setMenuopen] = useState(false);
   const isMobile = !useBreakpoint("md");
+  const { asPath } = useRouter();
+
+  useEffect(() => {
+    setMenuopen(false);
+  }, [asPath]);
 
   return (
     <div className={!menuOpen ? "bg-white" : ""}>
@@ -40,7 +46,11 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             onClick={() => setMenuopen((state) => !state)}
             aria-label="Menu"
           >
-            <Menu className={menuOpen ? "stroke-white" : "stroke-blue"} />
+            {menuOpen ? (
+              <Close className="stroke-white" />
+            ) : (
+              <Menu className="stroke-blue" />
+            )}
           </Button>
           <div
             className={cn(

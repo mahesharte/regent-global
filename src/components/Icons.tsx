@@ -189,3 +189,27 @@ export const Menu = ({ className }: { className?: string }) => (
     <line y1="15.1" x2="24" y2="15.1" strokeWidth="1.8" />
   </svg>
 );
+
+export const Close = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+    width="21"
+    height="22"
+    viewBox="0 0 21 22"
+    fill="none"
+  >
+    <path
+      d="M19 2.25L1.5 19.75"
+      stroke-width="1.8"
+      stroke-linecap="square"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M1.5 2.25L19 19.75"
+      stroke-width="1.8"
+      stroke-linecap="square"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
