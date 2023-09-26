@@ -174,3 +174,18 @@ export const LinkedIn = ({ className }: { className?: string }) => (
     />
   </svg>
 );
+
+export const Menu = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="16"
+    viewBox="0 0 24 16"
+    fill="none"
+  >
+    <line y1="1.1" x2="24" y2="1.1" stroke="#0D3E62" strokeWidth="1.8" />
+    <line y1="8.1" x2="24" y2="8.1" stroke="#0D3E62" strokeWidth="1.8" />
+    <line y1="15.1" x2="24" y2="15.1" stroke="#0D3E62" strokeWidth="1.8" />
+  </svg>
+);

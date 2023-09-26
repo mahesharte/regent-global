@@ -1,11 +1,11 @@
-import type { FC } from 'react';
-import { useRouter } from 'next/router';
+import type { FC } from "react";
+import { useRouter } from "next/router";
 
-import { Navbar } from '@/components/Navbar';
-import { SanityHeader } from '@/sanity/types/documents';
-import { useAppContext } from '@/components/app/context';
-import sanityLinkToLinkList from '@/sanity/utils/sanityLinkToLinkList';
-import getArticleSlugPrefix from '@/sanity/utils/getArticleSlugPrefix';
+import { Navbar } from "@/components/Navbar";
+import { SanityHeader } from "@/sanity/types/documents";
+import { useAppContext } from "@/components/app/context";
+import sanityLinkToLinkList from "@/sanity/utils/sanityLinkToLinkList";
+import getArticleSlugPrefix from "@/sanity/utils/getArticleSlugPrefix";
 
 type Props = {
   header?: SanityHeader | null;
@@ -21,10 +21,10 @@ const Header: FC<Props> = ({ header }) => {
       prefixes: {
         article: articlePrefix,
       },
-    })
+    }),
   );
   return (
-    <header className="p-[36px_115px_24px_77px]">
+    <header>
       <Navbar links={links} />
     </header>
   );
