@@ -184,8 +184,8 @@ export const Menu = ({ className }: { className?: string }) => (
     viewBox="0 0 24 16"
     fill="none"
   >
-    <line y1="1.1" x2="24" y2="1.1" stroke="#0D3E62" strokeWidth="1.8" />
-    <line y1="8.1" x2="24" y2="8.1" stroke="#0D3E62" strokeWidth="1.8" />
-    <line y1="15.1" x2="24" y2="15.1" stroke="#0D3E62" strokeWidth="1.8" />
+    <line y1="1.1" x2="24" y2="1.1" strokeWidth="1.8" />
+    <line y1="8.1" x2="24" y2="8.1" strokeWidth="1.8" />
+    <line y1="15.1" x2="24" y2="15.1" strokeWidth="1.8" />
   </svg>
 );

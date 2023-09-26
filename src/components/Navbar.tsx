@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { Menu } from "./Icons";
+import { ArrowRight, Menu } from "./Icons";
 import { useState } from "react";
 import { useBreakpoint } from "@/lib/hooks/useBreakpoint";
 
@@ -22,39 +22,53 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const isMobile = !useBreakpoint("md");
 
   return (
-    <div className="bg-white">
-      <div className="mx-auto bg-white px-4 lg:container md:py-4 lg:px-0 lg:py-9">
-        <nav className="relative flex h-12 items-center justify-between bg-white py-2 md:py-0">
-          <Logo hasWordmark />
+    <div className={!menuOpen ? "bg-white" : ""}>
+      <div
+        className={cn(
+          "relative mx-auto bg-white px-4 pt-1 lg:container md:py-4 lg:px-0 lg:py-9",
+        )}
+      >
+        <nav className="flex h-12 items-center justify-between py-3 md:py-0">
+          <Logo
+            className="z-20"
+            hasWordmark
+            fill={menuOpen ? "white" : "red"}
+          />
           <Button
-            className="p-0 md:hidden"
+            className="z-20 p-0 md:hidden"
             variant="ghost"
             onClick={() => setMenuopen((state) => !state)}
             aria-label="Menu"
           >
-            <Menu />
+            <Menu className={menuOpen ? "stroke-white" : "stroke-blue"} />
           </Button>
           <div
             className={cn(
-              "absolute left-0 right-0 top-12 -mx-4 bg-white px-3 text-gray-900 md:relative md:top-auto md:mx-0 md:flex md:justify-end md:px-0",
+              "absolute left-0 right-0 top-16 z-50 px-3 text-gray-900 md:relative md:top-auto md:flex md:justify-end md:px-0",
               !menuOpen && isMobile && "hidden",
             )}
           >
             {links.map((link, i) => (
-              <Link
-                className={cn([
-                  "block py-3 underline decoration-transparent decoration-4 underline-offset-8 transition-all md:px-3 md:py-3 md:first:ps-0 md:last:pe-0 lg:px-5",
-                  link.currentPage
-                    ? "md:text-900 text-red underline-offset-10 md:decoration-red"
-                    : "hover:underline-offset-10 md:hover:decoration-red",
-                ])}
-                key={i}
-                href={link.url}
-              >
-                {link.name}
-              </Link>
+              <div key={i} className="items-center gap-5  max-md:flex">
+                <ArrowRight className="ml-1 h-4 w-4 stroke-white md:hidden" />
+                <Link
+                  className={cn([
+                    "block py-3 underline decoration-transparent decoration-4 underline-offset-8 transition-all md:px-3 md:py-3 md:first:ps-0 md:last:pe-0 lg:px-5",
+                    link.currentPage
+                      ? "md:text-900 underline-offset-10 md:decoration-red"
+                      : "hover:underline-offset-10 md:hover:decoration-red",
+                    "max-md:text-white",
+                  ])}
+                  href={link.url}
+                >
+                  {link.name}
+                </Link>
+              </div>
             ))}
           </div>
+          {menuOpen && isMobile && (
+            <div className="absolute left-0 top-0 z-10 h-screen w-screen bg-gradient-to-r from-blue to-red" />
+          )}
         </nav>
       </div>
     </div>
