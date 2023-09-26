@@ -235,6 +235,20 @@ export default defineType({
         }),
     }),
     defineField({
+      name: "form",
+      title: "Form",
+      type: "reference",
+      to: [
+        {
+          type: "form",
+        },
+      ],
+      hidden: ({ document }) =>
+        !["contact"].includes(
+          (document?.component as string | undefined) ?? "",
+        ),
+    }),
+    defineField({
       name: "styleAlignment",
       type: "string",
       title: "Alignment",
@@ -323,6 +337,7 @@ export default defineType({
         case "bigNumbers":
         case "contact":
         case "contentBlock":
+        case "form":
         case "hero":
         case "logoWall":
         case "multiColumn":

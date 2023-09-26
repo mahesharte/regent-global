@@ -4,6 +4,7 @@ import type { ColorValue } from "@sanity/color-input";
 
 import type {
   SanityButton,
+  SanityFormInput,
   SanityMeasurements,
   SanityPageMeta,
   SanityRichtext,
@@ -78,6 +79,7 @@ export type SanitySection = SanityDocument & {
   buttons?: SanityButton[];
   links?: SanityLink[];
   items?: SanitySectionItem[];
+  form?: SanityForm | null;
   styleAlignment?: "left" | "center" | "right";
   styleMargin?: SanityMeasurements;
   stylePadding?: SanityMeasurements;
@@ -99,10 +101,19 @@ export type SanityHeader = SanityDocument & {
 
 export type SanityFooter = SanityDocument & {
   links?: SanityLink[];
+  form?: SanityForm;
 };
 
 export type SanitySetting = SanityDocument & {
   articlesHome?: SanityPage | null;
   servicesGtmId?: string;
   themeGlobalGradient?: SanityGradient | null;
+};
+
+export type SanityForm = SanityDocument & {
+  action: "contact" | "subscribe";
+  title: string;
+  content?: SanityRichtext;
+  inputs: SanityFormInput[];
+  cta: string;
 };

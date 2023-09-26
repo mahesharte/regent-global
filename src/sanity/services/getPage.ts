@@ -29,6 +29,7 @@ const pageFields = `
         asset->
       }
     },
+    form->,
     styleGradient->
   },
   pageMeta {

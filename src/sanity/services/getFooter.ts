@@ -1,14 +1,15 @@
-import { groq } from 'next-sanity';
+import { groq } from "next-sanity";
 
-import type { SanityClient } from '../client';
-import type { SanityFooter } from '../types/documents';
+import type { SanityClient } from "../client";
+import type { SanityFooter } from "../types/documents";
 
 const getFooterQuery = groq`
   *[_type == "footer"][0] {
     links[]-> {
       ...,
       reference->
-    }
+    },
+    form->
   }
 `;
 

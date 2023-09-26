@@ -1,12 +1,13 @@
-import type { FC, ReactNode } from 'react';
-import Head from 'next/head';
-import { Router } from 'next/router';
-import { Inter } from 'next/font/google';
+import type { FC, ReactNode } from "react";
+import Head from "next/head";
+import Script from "next/script";
+import { Router } from "next/router";
+import { Inter } from "next/font/google";
 
-import { useAppContext } from '@/components/app/context';
-import { GlobalPageProps } from '@/types/global';
-import Header from './Header';
-import Footer from './Footer';
+import { useAppContext } from "@/components/app/context";
+import { GlobalPageProps } from "@/types/global";
+import Header from "./Header";
+import Footer from "./Footer";
 
 type Props = GlobalPageProps & {
   children: ReactNode;
@@ -14,13 +15,13 @@ type Props = GlobalPageProps & {
 };
 
 const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '700', '900'],
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
 });
 
 const Layout: FC<Props> = ({ children, footer, header, router }) => {
-  const [{ pageMeta }] = useAppContext();
-  return router.route === '/studio/[[...index]]' ? (
+  const [{ pageMeta, setting }] = useAppContext();
+  return router.route === "/studio/[[...index]]" ? (
     <>{children}</>
   ) : (
     <>
@@ -33,9 +34,9 @@ const Layout: FC<Props> = ({ children, footer, header, router }) => {
             <meta property="og:description" content={pageMeta.description} />
           </>
         )}
-        {!!pageMeta?.image?.asset?.url &&
+        {!!pageMeta?.image?.asset?.url && (
           <meta property="og:image" content={pageMeta.image.asset.url} />
-        }
+        )}
       </Head>
       <style jsx global>
         {`
@@ -44,7 +45,12 @@ const Layout: FC<Props> = ({ children, footer, header, router }) => {
           }
         `}
       </style>
-      <div className="flex flex-col min-h-[100vh]">
+      {!!setting?.servicesGtmId && (
+        <Script
+          src={`https://www.googletagmanager.com/gtm.js?id=${setting.servicesGtmId}`}
+        />
+      )}
+      <div className="flex min-h-[100vh] flex-col">
         <Header header={header} />
         <main className="flex-grow">{children}</main>
         <Footer footer={footer} />

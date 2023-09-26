@@ -13,6 +13,7 @@
   "dependencies": {
     "@fontsource-variable/inter": "^5.0.8",
     "@fontsource/inter": "^5.0.8",
+    "@mailchimp/mailchimp_transactional": "^1.0.50",
     "@portabletext/react": "^3.0.7",
     "@radix-ui/react-slot": "^1.0.2",
     "@sanity/color-input": "^3.1.0",
@@ -56,6 +57,7 @@
     "@storybook/testing-library": "^0.2.0",
     "@tailwindcss/forms": "^0.5.6",
     "@tailwindcss/typography": "^0.5.9",
+    "@types/mailchimp__mailchimp_transactional": "^1.0.5",
     "@types/webpack": "^5.28.2",
     "eslint-plugin-storybook": "^0.6.13",
     "storybook": "^7.4.0",
