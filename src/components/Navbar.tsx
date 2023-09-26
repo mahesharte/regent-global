@@ -35,11 +35,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
         )}
       >
         <nav className="flex h-12 items-center justify-between py-3 md:py-0">
-          <Logo
-            className="z-20"
-            hasWordmark
-            fill={menuOpen ? "white" : "red"}
-          />
+          <Link className="z-20 h-full" href="/">
+            <Logo hasWordmark fill={menuOpen ? "white" : "red"} />
+          </Link>
           <Button
             className="z-20 p-0 md:hidden"
             variant="ghost"
