@@ -6,6 +6,7 @@ import "@/styles/globals.css";
 
 const preview: Preview = {
   parameters: {
+    layout: "fullscreen",
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
@@ -15,5 +16,4 @@ const preview: Preview = {
     },
   },
 };
-
 export default preview;
