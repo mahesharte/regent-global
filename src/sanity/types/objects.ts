@@ -59,3 +59,10 @@ export type SanitySectionItem = {
   image?: SanityImage | null;
   content?: SanityRichtext;
 };
+
+export type SanityFormInput = {
+  type: "email" | "tel" | "text" | "textArea";
+  title?: string;
+  placeholder?: string;
+  required?: boolean;
+};

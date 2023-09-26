@@ -29,6 +29,6 @@ export function useBreakpoint(breakpoint: string) {
       matcher.removeEventListener("change", onMatch);
     };
   }, [size]);
-  console.log(match);
+
   return match;
 }
