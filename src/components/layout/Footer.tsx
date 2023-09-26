@@ -6,6 +6,7 @@ import { Footer as FooterComponent } from "@/components/Footer";
 import { SanityFooter } from "@/sanity/types/documents";
 import sanityLinkToLinkList from "@/sanity/utils/sanityLinkToLinkList";
 import getArticleSlugPrefix from "@/sanity/utils/getArticleSlugPrefix";
+import useFormAction from "@/lib/hooks/useFormAction";
 import inIframe from "@/lib/inIframe";
 
 type Props = {
@@ -16,6 +17,9 @@ const Banner = dynamic(() => import("@/components/preview/Banner"));
 
 const Footer: FC<Props> = ({ footer }) => {
   const [{ preview, setting }] = useAppContext();
+  const { formState, message, onSubmit, register } = useFormAction(
+    footer?.form,
+  );
   const articlePrefix = getArticleSlugPrefix(setting);
   const links = (footer?.links ?? []).map((link) =>
     sanityLinkToLinkList(link, {
@@ -24,9 +28,22 @@ const Footer: FC<Props> = ({ footer }) => {
       },
     }),
   );
+
   return (
     <footer>
-      <FooterComponent links={links} />
+      <FooterComponent
+        form={{
+          content: footer?.form?.content,
+          cta: footer?.form?.cta,
+          inputs: footer?.form?.inputs ?? [],
+          message,
+          onSubmit,
+          register,
+          state: formState,
+          title: footer?.form?.title,
+        }}
+        links={links}
+      />
       {preview.active && !inIframe() && <Banner loading={preview.loading} />}
     </footer>
   );

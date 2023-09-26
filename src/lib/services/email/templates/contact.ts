@@ -7,7 +7,12 @@ export const text = (args: Args) => `
 
   A visitor has reached out:
 
+  Name: ${args.firstName} ${args.lastName}
   Email address: ${args.email}
+  Phone: ${args.phone ?? "-"}
+  Message:
+  
+  ${args.message}
 
   Regent Global
 `;
@@ -17,7 +22,12 @@ export const html = (args: Args) => `
   <br />
   A visitor has reached out:<br />
   <br />
+  Name: <strong>${args.firstName} ${args.lastName}</strong><br />
   Email address: <strong>${args.email}</strong><br />
+  Phone: <strong>${args.phone ?? "-"}</strong><br />
+  Message:<br />
+  <br />
+  ${args.message}<br />
   <br />
   Regent Global
 `;

@@ -3,16 +3,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import isString from "lodash/isString";
 
 import { html, subject, text } from "@/lib/services/email/templates/subscribe";
+import { FormAPIResponse } from "@/types/global";
 
 type Request = {
-  email?: string;
-};
-type Response = {
-  error?: boolean;
-  message: string;
+  email: string;
 };
 
-const contact = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
+const contact = async (
+  req: NextApiRequest,
+  res: NextApiResponse<FormAPIResponse>,
+) => {
   if (req.method?.toUpperCase() !== "POST") {
     return res.status(405).json({
       error: true,
@@ -23,7 +23,7 @@ const contact = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
   if (!email || !isString(email)) {
     return res.status(400).json({
       error: true,
-      message: "Email is required",
+      message: "Email address is required",
     });
   }
   const args = {
@@ -34,14 +34,14 @@ const contact = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
     recipients: [
       {
         name: process.env.MAIL_RECIPIENT_NAME ?? "",
-        email: "ronald@iona.fi", // process.env.MAIL_RECIPIENT_EMAIL ?? "",
+        email: process.env.MAIL_RECIPIENT_EMAIL ?? "",
       },
     ],
     subject: subject(),
     text: text(args),
   });
   return res.json({
-    message: "Subscription sent",
+    message: "Your subscription has been submitted",
   });
 };
 

@@ -247,6 +247,15 @@ export default defineType({
         !["contact"].includes(
           (document?.component as string | undefined) ?? "",
         ),
+      validation: (rule) =>
+        rule.custom((field, context) => {
+          switch (context.document?.component) {
+            case "contact":
+              return !isUndefined(field) || "Form is required";
+            default:
+              return true;
+          }
+        }),
     }),
     defineField({
       name: "styleAlignment",

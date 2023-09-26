@@ -7,6 +7,7 @@ import { useSectionStyles } from "../utils";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
 import { ContactBlock } from "@/components/ContactBlock";
 import RichText from "@/components/richtext/RichText";
+import useFormAction from "@/lib/hooks/useFormAction";
 
 type Props = {
   section: SanitySection;
@@ -19,9 +20,17 @@ const textAlignments = {
 };
 
 const Contact: FC<Props> = ({ section }) => {
-  const { content, image, title = "", styleAlignment = "right" } = section;
+  const {
+    content,
+    image,
+    title = "",
+    form,
+    styleAlignment = "right",
+  } = section;
   const styles = useSectionStyles(section, ["gradient", "margin", "padding"]);
   const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
+  const { formState, message, onSubmit, register } = useFormAction(form);
+
   return (
     <div ref={ref} className={className}>
       <div className="container mx-auto">
@@ -37,7 +46,7 @@ const Contact: FC<Props> = ({ section }) => {
                 "text-[18px] leading-[24px] text-white",
                 styleAlignment === "right" ? "order-0" : "order-1",
                 styleAlignment === "center"
-                  ? "text-center pt-10"
+                  ? "pt-10 text-center"
                   : "max-w-[670px] text-left",
               )}
             >
@@ -75,7 +84,18 @@ const Contact: FC<Props> = ({ section }) => {
               styleAlignment === "left" ? "order-0" : "order-1",
             )}
           >
-            <ContactBlock />
+            <ContactBlock
+              form={{
+                content: form?.content,
+                cta: form?.cta,
+                inputs: form?.inputs ?? [],
+                message,
+                onSubmit,
+                register,
+                state: formState,
+                title: form?.title,
+              }}
+            />
           </div>
         </div>
       </div>

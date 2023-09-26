@@ -1,65 +1,77 @@
 import { forwardRef } from "react";
+import camelCase from "lodash/camelCase";
+
+import { FormProps } from "@/lib/hooks/useFormAction";
 import { Button } from "./ui/button";
+import RichText from "./richtext/RichText";
 
 type Props = {
   className?: string;
+  form?: FormProps;
 };
 
-const ContactBlock = forwardRef<HTMLDivElement, Props>(({ className }, ref) => {
-  return (
-    <div className={className} ref={ref}>
-      <h2 className="mb-14 text-3xl font-black text-blue">
-        Book a chat with our advisors
-      </h2>
-      <form>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm text-neutral-900">
-          <label className="block">
-            <span>First name</span>
-            <input
-              className="mt-1 block w-full border-transparent bg-neutral-100 focus:border-neutral-500 focus:bg-white focus:ring-0"
-              type="text"
-            />
-          </label>
-          <label className="block">
-            <span>Last name</span>
-            <input
-              className="mt-1 block w-full border-transparent bg-neutral-100 focus:border-neutral-500 focus:bg-white focus:ring-0"
-              type="text"
-            />
-          </label>
-          <label className="block">
-            <span>Email</span>
-            <input
-              className="mt-1 block w-full border-transparent bg-neutral-100 focus:border-neutral-500 focus:bg-white focus:ring-0"
-              type="email"
-            />
-          </label>
-          <label className="block">
-            <span>Phone</span>
-            <input
-              className="mt-1 block w-full border-transparent bg-neutral-100 focus:border-neutral-500 focus:bg-white focus:ring-0"
-              type="tel"
-            />
-          </label>
-          <label className="col-span-2 block">
-            <span>Message</span>
-            <textarea
-              className="mt-1 block w-full border-transparent bg-neutral-100 focus:border-neutral-500 focus:bg-white focus:ring-0"
-              rows={3}
-            />
-          </label>
-          <div className="gap col-span-2 flex justify-between">
-            <span className="max-w-[48ch]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-              aliquam volutpat ornare. Duis dui purus.
-            </span>
-            <Button type="submit">Send</Button>
+const ContactBlock = forwardRef<HTMLDivElement, Props>(
+  ({ className, form }, ref) => {
+    return (
+      <div className={className} ref={ref}>
+        {!!form?.title && (
+          <h2 className="mb-14 text-3xl font-black text-blue">{form.title}</h2>
+        )}
+        <form method="post" onSubmit={form?.onSubmit}>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm text-neutral-900">
+            {form?.inputs.map((input, index) => {
+              switch (input.type) {
+                case "textarea":
+                  return (
+                    <label key={index} className="col-span-2 block">
+                      {!!input.title && <span>{input.title}</span>}
+                      <textarea
+                        className="mt-1 block w-full border-transparent bg-neutral-100 focus:border-neutral-500 focus:bg-white focus:ring-0"
+                        rows={3}
+                        disabled={form?.state?.isSubmitting}
+                        placeholder={input.placeholder}
+                        required={input.required}
+                        {...form?.register?.(camelCase(input.title ?? "email"))}
+                      />
+                    </label>
+                  );
+                default:
+                  return (
+                    <label key={index} className="block">
+                      {!!input.title && <span>{input.title}</span>}
+                      <input
+                        className="mt-1 block w-full border-transparent bg-neutral-100 focus:border-neutral-500 focus:bg-white focus:ring-0"
+                        disabled={form?.state?.isSubmitting}
+                        placeholder={input.placeholder}
+                        required={input.required}
+                        type={input.type ?? "email"}
+                        {...form?.register?.(camelCase(input.title ?? "email"))}
+                      />
+                    </label>
+                  );
+              }
+            })}
+            <div className="gap col-span-2 flex justify-between">
+              {!!form?.content && (
+                <span className="max-w-[48ch]">
+                  <RichText value={form.content} />
+                </span>
+              )}
+              <Button disabled={form?.state?.isSubmitting} type="submit">
+                {form?.cta ?? "Send"}
+              </Button>
+            </div>
           </div>
-        </div>
-      </form>
-    </div>
-  );
-});
+          {!!form?.message && (
+            <span className="block pt-4 text-sm text-neutral-900">
+              {form.message}
+            </span>
+          )}
+        </form>
+      </div>
+    );
+  },
+);
 
 ContactBlock.displayName = "ContactBlock";
 

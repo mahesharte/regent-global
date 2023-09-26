@@ -61,7 +61,7 @@ export type SanitySectionItem = {
 };
 
 export type SanityFormInput = {
-  type: "email" | "tel" | "text" | "textArea";
+  type: "email" | "tel" | "text" | "textarea";
   title?: string;
   placeholder?: string;
   required?: boolean;
