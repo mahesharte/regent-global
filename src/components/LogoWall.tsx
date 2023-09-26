@@ -21,10 +21,13 @@ const LogoWall = forwardRef<HTMLDivElement, Props>(
         )}
         ref={ref}
       >
-        <h2 className="pb-16 text-4xl md:text-5xl">{headline}</h2>
-        <ul className="mx-auto grid max-w-5xl grid-cols-4 justify-items-center gap-4">
+        <h2 className="pb-16 text-4xl font-black md:text-5xl">{headline}</h2>
+        <ul className="mx-auto flex max-w-5xl flex-wrap justify-center gap-4">
           {items.map((item, i) => (
-            <li key={i} className="mb-4 max-lg:col-span-2">
+            <li
+              key={i}
+              className="mb-4 basis-[calc(50%-16px)] lg:basis-[calc(25%-16px)]"
+            >
               <img alt={item.text} src={item.imageUrl} />
             </li>
           ))}

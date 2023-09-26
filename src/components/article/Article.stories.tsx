@@ -10,7 +10,7 @@ import { RelatedArticles } from "./RelatedArticles";
 import { SidebarLinks } from "./SidebarLinks";
 
 const meta = {
-  title: "Article/Article",
+  title: "Pages/Article",
 };
 export default meta;
 
