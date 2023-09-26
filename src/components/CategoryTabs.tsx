@@ -13,18 +13,20 @@ type Props = {
 
 const CategoryTabs = ({ categories, onSelect }: Props) => {
   return (
-    <div className="bg-neutral-100 text-neutral-900">
-      <ul className="container mx-auto flex h-20 items-stretch gap-14">
+    <div className="overflow-x-scroll text-neutral-900 md:bg-neutral-100">
+      <ul className="flex h-20 items-center gap-4 md:container max-md:px-4 md:mx-auto md:items-stretch md:gap-14">
         {categories.map((category) => (
           <li
             className={cn(
-              category.active && "bg-white font-bold",
-              "flex flex-col justify-center",
+              "radius flex flex-col justify-center  whitespace-nowrap rounded-full  md:rounded-none",
+              category.active
+                ? "bg-black text-white md:bg-white md:font-bold md:text-neutral-900"
+                : "max-md:bg-neutral-200",
             )}
             key={category.linkTo}
           >
             <Link
-              className="p-6"
+              className="px-4 py-2 md:p-6"
               href={category.linkTo}
               onClick={(event) => {
                 if (onSelect) {

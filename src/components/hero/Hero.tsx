@@ -25,11 +25,13 @@ const Hero = forwardRef<HTMLDivElement, Props>(
           />
         )}
         <div className="container mx-auto">
-          <h1 className="text-4xl font-black md:text-7xl lg:w-3/4">
-            {heading}
-          </h1>
+          {!!heading && (
+            <h1 className="text-4xl font-black md:text-7xl lg:w-3/4">
+              {heading}
+            </h1>
+          )}
+          {children}
         </div>
-        {children}
       </div>
     );
   },

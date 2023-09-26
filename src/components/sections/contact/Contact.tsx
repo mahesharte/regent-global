@@ -2,12 +2,14 @@ import type { SanitySection } from "@/sanity/types/documents";
 import type { FC } from "react";
 import Image from "next/image";
 import clsx from "clsx";
+import img from "@/assets/AdobeStock_166338789_Preview 3.jpg";
 
 import { useSectionStyles } from "../utils";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
 import { ContactBlock } from "@/components/ContactBlock";
 import RichText from "@/components/richtext/RichText";
 import useFormAction from "@/lib/hooks/useFormAction";
+import { useBreakpoint } from "@/lib/hooks/useBreakpoint";
 
 type Props = {
   section: SanitySection;
@@ -28,45 +30,27 @@ const Contact: FC<Props> = ({ section }) => {
     styleAlignment = "right",
   } = section;
   const styles = useSectionStyles(section, ["gradient", "margin", "padding"]);
+  const isMobile = !useBreakpoint("sm");
   const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
   const { formState, message, onSubmit, register } = useFormAction(form);
 
   return (
     <div ref={ref} className={className}>
       <div className="container mx-auto">
-        <div
-          className={clsx(
-            "flex pb-20",
-            styleAlignment === "center" ? "flex-col" : "flex-row",
-          )}
-        >
+        <div className="flex flex-col justify-between pb-20 max-md:px-4 md:flex-row">
           {!!content && (
-            <div
-              className={clsx(
-                "text-[18px] leading-[24px] text-white",
-                styleAlignment === "right" ? "order-0" : "order-1",
-                styleAlignment === "center"
-                  ? "pt-10 text-center"
-                  : "max-w-[670px] text-left",
-              )}
-            >
+            <div className="max-w-[64ch] text-white max-md:order-2 md:text-lg">
               <RichText value={content} />
             </div>
           )}
           {!!title && (
-            <h1
-              className={clsx(
-                "flex-grow text-[78px] font-black leading-[78px] text-white",
-                styleAlignment === "right" ? "order-1" : "order-0",
-                textAlignments[styleAlignment],
-              )}
-            >
+            <h1 className="flex-grow text-5xl font-black text-white max-md:order-1 max-md:pb-4 md:text-right md:text-7xl">
               {title}
             </h1>
           )}
         </div>
-        <div className="grid grid-cols-2 gap-0">
-          {!!image?.asset?.url && (
+        <div className="grid grid-cols-8 gap-0">
+          {!!image?.asset?.url && !isMobile && (
             <Image
               className={clsx(
                 "h-full w-full object-cover",
@@ -78,9 +62,13 @@ const Contact: FC<Props> = ({ section }) => {
               alt={title ?? ""}
             />
           )}
+          <img
+            src={img.src}
+            className="col-span-3 h-full w-full object-cover lg:col-span-4"
+          />
           <div
             className={clsx(
-              "bg-white px-14 pb-14 pt-12",
+              "col-span-8 bg-white px-4 py-10 md:col-span-5 md:px-14 md:pb-14 md:pt-12 lg:col-span-4",
               styleAlignment === "left" ? "order-0" : "order-1",
             )}
           >

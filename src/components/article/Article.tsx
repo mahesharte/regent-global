@@ -47,9 +47,9 @@ const Article: FC<ArticleProps> = ({ article }) => {
         author={author?.name ?? ""}
         authorImage={author?.photo?.asset?.url ?? ""}
       />
-      <div className="container mx-auto mt-20 w-full pb-40">
-        <div className="-ml-64 flex justify-center">
-          <aside>
+      <div className="container mx-auto mt-4 w-full pb-40 max-md:px-4 md:mt-20">
+        <div className="flex justify-center md:-ml-64">
+          <aside className="max-md:hidden">
             <SidebarLinks
               className="sticky top-4 ml-auto w-64"
               headings={headings.map((heading, index) => ({
@@ -66,12 +66,12 @@ const Article: FC<ArticleProps> = ({ article }) => {
           </aside>
           <main className="max-w-prose">
             <Link
-              className="mb-2 inline-flex items-center gap-2 text-sm"
+              className="mb-4 inline-flex items-center gap-2 text-sm max-md:mt-2"
               href={`${setting?.articlesHome?.slug?.current ?? "/"}`}
             >
               <ArrowLeft className="stroke-black" /> Back
             </Link>
-            <div className="flex flex-col gap-14">
+            <div className="flex flex-col gap-10 md:gap-14">
               <Prose ref={ref}>
                 {!!introduction && (
                   <RichText
@@ -84,7 +84,10 @@ const Article: FC<ArticleProps> = ({ article }) => {
                   />
                 )}
                 {!!featuredImage?.asset?.url && (
-                  <img src={featuredImage.asset.url} className="my-14 w-full" />
+                  <img
+                    src={featuredImage.asset.url}
+                    className="w-full md:my-14"
+                  />
                 )}
                 <RichText value={content} />
               </Prose>

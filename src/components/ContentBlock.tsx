@@ -36,8 +36,8 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
         )}
         ref={ref}
       >
-        <div className="basis-1/2 lg:basis-3/5">
-          <h3 className="md:text-lime-300xl pb-8 text-3xl font-black text-blue lg:text-5xl">
+        <div className="basis-1/2 max-md:px-4 lg:basis-3/5">
+          <h3 className="pb-8 text-3xl font-black text-blue md:text-3xl lg:text-5xl">
             {heading}
           </h3>
           {!!body && <div className="text-lg [&>p]:pb-8">{body}</div>}

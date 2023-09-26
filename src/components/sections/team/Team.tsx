@@ -22,14 +22,14 @@ const Team: FC<Props> = ({ section, team }) => {
   const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
   const directions = Object.keys(gradientDirections) as GradientDirection[];
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto scroll-m-10">
       <div ref={ref} className={className}>
         {!!section.title && (
-          <h2 className="text-center text-5xl font-black leading-[56px] text-blue">
+          <h2 className="text-center text-5xl font-black text-blue">
             {section.title}
           </h2>
         )}
-        <div className="grid grid-cols-4 gap-x-24 gap-y-20 pt-20">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-8 pt-20 md:grid-cols-3 md:gap-10 lg:grid-cols-4 lg:gap-20 xl:gap-24">
           {sortBy(team, "name").map((person, index) => (
             <TeamImage
               key={person._id}
