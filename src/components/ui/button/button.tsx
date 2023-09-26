@@ -1,8 +1,8 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import {cn} from '@/lib/utils';
+import { cn } from "@/lib/utils";
 import { ArrowCornerRight } from "@/components/Icons";
 
 const buttonVariants = cva(
@@ -10,7 +10,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-r from-red to-blue text-white  bg-[position:_50%] hover:bg-[position:_100%] bg-[size:_150%] transition-all duration-500",
+        default:
+          "bg-gradient-to-r from-red to-blue text-white  bg-[position:_50%] hover:bg-[position:_100%] bg-[size:_150%] transition-all duration-500",
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
@@ -26,35 +27,41 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
-)
+  },
+);
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  asChild?: boolean,
+  asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+    const Comp = asChild ? Slot : "button";
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />
-    )
-  }
-)
+    );
+  },
+);
 
-Button.displayName = "Button"
+Button.displayName = "Button";
 
-const Cta = ({children}: {children: React.ReactNode}) => (
-  <Button>
+const Cta = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <Button className={className}>
     {children}
-    <ArrowCornerRight className='ml-2'/>
+    <ArrowCornerRight className="ml-2" />
   </Button>
-)
+);
 
-export { Button, Cta}
+export { Button, Cta };

@@ -4,25 +4,31 @@ import clsx from "clsx";
 type Props = {
   children?: ReactNode;
   heading: string;
-  subheading?: string;
   className?: string;
   imageUrl?: string;
 };
 
 const Hero = forwardRef<HTMLDivElement, Props>(
-  ({ children, heading, subheading, className, imageUrl }, ref) => {
+  ({ children, heading, className, imageUrl }, ref) => {
     return (
       <div
         ref={ref}
-        className={clsx("relative px-14 py-28 text-white", className)}
+        className={clsx(
+          "relative flex items-center px-9 py-24 text-white md:px-16 md:py-36 lg:aspect-[2.5/1]",
+          className,
+        )}
       >
-        {!!imageUrl && (
+        {imageUrl && (
           <img
             className="absolute inset-0 -z-10 h-full w-full object-cover"
             src={imageUrl}
           />
         )}
-        {!!heading && <h1 className="text-hero">{heading}</h1>}
+        <div className="container mx-auto">
+          <h1 className="text-4xl font-black md:text-7xl lg:w-3/4">
+            {heading}
+          </h1>
+        </div>
         {children}
       </div>
     );

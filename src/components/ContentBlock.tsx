@@ -20,8 +20,8 @@ type ContentBlockProps = {
 
 const alignStyles: Record<string, string> = {
   left: "",
-  center: "justify-center",
-  right: "flex-row-reverse",
+  center: "md:justify-center",
+  right: "md:flex-row-reverse",
 };
 
 const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
@@ -30,23 +30,27 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
     return (
       <div
         className={cn(
-          "container mx-auto flex gap-4",
+          "container mx-auto flex flex-col items-center gap-4 md:flex-row",
           alignStyles[align],
           className,
         )}
         ref={ref}
       >
-        <div className="basis-3/5">
-          <h3 className="pb-8 text-6xl font-black text-blue">{heading}</h3>
+        <div className="basis-1/2 lg:basis-3/5">
+          <h3 className="md:text-lime-300xl pb-8 text-3xl font-black text-blue lg:text-5xl">
+            {heading}
+          </h3>
           {!!body && <div className="text-lg [&>p]:pb-8">{body}</div>}
-          <div className="flex justify-end gap-4">
+          <div className="flex flex-wrap justify-stretch gap-4 max-md:mb-4">
             {buttons.map(({ text }, index) => (
-              <Cta key={index}>{text}</Cta>
+              <Cta key={index} className="max-md:w-full">
+                {text}
+              </Cta>
             ))}
           </div>
         </div>
         {align !== "center" && (
-          <div className="basis-2/5">
+          <div className="basis-1/2 lg:basis-2/5">
             <img src={image} />
           </div>
         )}
