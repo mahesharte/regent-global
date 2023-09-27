@@ -89,6 +89,7 @@ export type SanitySection = SanityDocument & {
   styleMargin?: SanityMeasurements;
   stylePadding?: SanityMeasurements;
   styleGradient?: SanityGradient | null;
+  fullSizeToggle?: boolean;
 };
 
 export type SanityPage = SanityDocument & {

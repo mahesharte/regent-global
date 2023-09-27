@@ -41,6 +41,7 @@ const styleVerticalAlignments: { [value: string]: string } = {
   top: "Top",
   center: "Center",
   bottom: "Bottom",
+  stretch: "Stretch",
 };
 
 const DynamicListField: FC<StringInputProps> = (props) => {
@@ -379,6 +380,15 @@ export default defineType({
         !["bigNumbers", "contact", "hero", "logoWall", "multiColumn"].includes(
           (document?.component as string | undefined) ?? "",
         ),
+    }),
+    defineField({
+      name: "fullSizeToggle",
+      title: "Full width image",
+      type: "boolean",
+      fieldset: "style",
+      initialValue: false,
+      hidden: ({ document }) =>
+        !(document?.component === "hero" && document?.variant === "image"),
     }),
   ],
   preview: {

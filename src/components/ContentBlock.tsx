@@ -1,8 +1,9 @@
 import { forwardRef, type ReactNode } from "react";
 import isArray from "lodash/isArray";
-
+import Image from "next/image";
 import { Cta } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { SanityImage } from "@/sanity/types/documents";
 
 type CTA = {
   text: string;
@@ -11,9 +12,9 @@ type CTA = {
 
 type ContentBlockProps = {
   align: "left" | "right" | "center";
-  verticalAlign?: "top" | "center" | "bottom";
+  verticalAlign?: "top" | "center" | "bottom" | "stretch";
   className?: string;
-  image?: string;
+  image?: SanityImage;
   heading: string;
   body?: ReactNode;
   cta: CTA | CTA[];
@@ -21,14 +22,15 @@ type ContentBlockProps = {
 
 const alignStyles: Record<string, string> = {
   left: "",
-  center: "md:justify-center",
-  right: "md:flex-row-reverse",
+  center: "lg:justify-center",
+  right: "lg:flex-row-reverse",
 };
 
 const verticalAlignStyles: Record<string, string> = {
   top: "items-start",
   center: "items-center",
   bottom: "items-end",
+  stretch: "items-stretch",
 };
 
 const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
@@ -48,7 +50,7 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
     return (
       <div
         className={cn(
-          "container mx-auto flex flex-col gap-4 md:flex-row md:gap-10 lg:gap-20",
+          "container mx-auto flex flex-col gap-4 md:gap-10 lg:flex-row lg:gap-20",
           alignStyles[align],
           verticalAlignStyles[verticalAlign],
           className,
@@ -69,8 +71,23 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
           </div>
         </div>
         {align !== "center" && (
-          <div className="basis-1/2 lg:basis-2/5">
-            <img src={image} />
+          <div className="relative basis-1/2 lg:basis-2/5">
+            <Image
+              src={image?.asset?.url ?? ""}
+              objectFit="cover"
+              fill={verticalAlign === "stretch" ? true : false}
+              width={
+                verticalAlign !== "stretch"
+                  ? image?.asset?.metadata?.dimensions.width
+                  : undefined
+              }
+              height={
+                verticalAlign !== "stretch"
+                  ? image?.asset?.metadata?.dimensions.height
+                  : undefined
+              }
+              alt={""}
+            />
           </div>
         )}
       </div>
