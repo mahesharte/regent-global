@@ -1,0 +1,34 @@
+@keyframes squiggle {
+  0% {
+    filter: url(#displacementFilter0);
+  }
+  20% {
+    filter: url(#displacementFilter1);
+  }
+  40% {
+    filter: url(#displacementFilter2);
+  }
+  60% {
+    filter: url(#displacementFilter3);
+  }
+  80% {
+    filter: url(#displacementFilter4);
+  }
+  100% {
+    filter: url(#displacementFilter5);
+  }
+}
+
+.Illustration {
+  background-color: white;
+}
+
+.Illustration path {
+  animation: calc(var(--duration) * var(--animate)) linear infinite forwards
+    squiggle;
+  fill: none;
+  stroke: #0d3e62;
+  stroke-width: 3px;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc((1 - var(--pathLength, 1)) * var(--animate));
+}
