@@ -30,7 +30,7 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
     return (
       <div
         className={cn(
-          "container mx-auto flex flex-col items-center gap-4 md:flex-row",
+          "container mx-auto flex flex-col items-center gap-4 md:flex-row md:gap-10 lg:gap-20",
           alignStyles[align],
           className,
         )}

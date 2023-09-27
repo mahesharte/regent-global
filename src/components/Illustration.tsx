@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, CSSProperties } from "react";
 import styles from "./Illustration.module.css";
 import { cn } from "@/lib/utils";
 import { useScroll } from "framer-motion";
@@ -71,7 +71,7 @@ const Illustration = ({
 
   useEffect(() => {
     if (ref?.current) {
-      let path = ref.current.querySelector<HTMLElement>("path");
+      let path = ref.current.querySelector("path");
       if (path) {
         path.setAttribute("pathLength", "1");
         setPath(path.outerHTML);
@@ -92,7 +92,7 @@ const Illustration = ({
               "--pathLength": pathLength,
               "--animate": animate ? 1 : 0,
               "--duration": `${ANIMATION_DURATION}s`,
-            } as any
+            } as CSSProperties
           }
           dangerouslySetInnerHTML={{ __html: path + filters }}
         ></svg>

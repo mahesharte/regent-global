@@ -14,13 +14,13 @@ const Hero = forwardRef<HTMLDivElement, Props>(
       <div
         ref={ref}
         className={clsx(
-          "relative flex items-center px-9 py-24 text-white md:px-16 md:py-36 lg:aspect-[2.5/1]",
+          "relative flex w-screen items-center px-9 py-24 text-white md:px-16 md:py-36 lg:aspect-[2.5/1] xl:aspect-[3.5/1]",
           className,
         )}
       >
         {imageUrl && (
           <img
-            className="absolute inset-0 -z-10 h-full w-full object-cover"
+            className="absolute inset-0 -z-10 mx-auto h-full w-full object-cover"
             src={imageUrl}
           />
         )}
