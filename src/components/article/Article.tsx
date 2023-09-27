@@ -25,6 +25,7 @@ const Article: FC<ArticleProps> = ({ article }) => {
     featuredImage,
     introduction,
     relatedArticles,
+    slug,
     title,
   } = article;
 
@@ -91,7 +92,11 @@ const Article: FC<ArticleProps> = ({ article }) => {
                 )}
                 <RichText value={content} />
               </Prose>
-              <SocialShare url="foo"></SocialShare>
+              <SocialShare
+                url={`${
+                  process.env.NEXT_PUBLIC_HOST ?? "/"
+                }${articleSlugPrefix}${slug.current}`}
+              ></SocialShare>
               {!!author && (
                 <AboutAuthor
                   text={author?.description ?? ""}

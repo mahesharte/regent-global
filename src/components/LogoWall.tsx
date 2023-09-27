@@ -1,9 +1,12 @@
 import { forwardRef } from "react";
 import clsx from "clsx";
+import Link from "next/link";
 
 type Logo = {
   imageUrl: string;
   text: string;
+  href?: string;
+  target?: string;
 };
 type Props = {
   className?: string;
@@ -28,7 +31,13 @@ const LogoWall = forwardRef<HTMLDivElement, Props>(
               key={i}
               className="mb-4 basis-[calc(50%-16px)] lg:basis-[calc(25%-16px)]"
             >
-              <img alt={item.text} src={item.imageUrl} />
+              {!!item.href ? (
+                <Link href={item.href} target={item.target}>
+                  <img alt={item.text} src={item.imageUrl} />
+                </Link>
+              ) : (
+                <img alt={item.text} src={item.imageUrl} />
+              )}
             </li>
           ))}
         </ul>

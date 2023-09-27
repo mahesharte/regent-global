@@ -17,7 +17,7 @@ const ContactBlock = forwardRef<HTMLDivElement, Props>(
       <div className={cn(className, "container mx-auto max-md:px-4")} ref={ref}>
         {!!form?.title && (
           <h2 className="mb-14 text-center text-3xl font-black text-blue md:text-left">
-            Book a chat with our advisors
+            {form.title}
           </h2>
         )}
         <form method="post" onSubmit={form?.onSubmit}>
@@ -57,8 +57,7 @@ const ContactBlock = forwardRef<HTMLDivElement, Props>(
             <div className="gap col-span-2 flex justify-between gap-4 max-md:flex-col">
               {!!form?.content && (
                 <span className="max-w-[48ch]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                  aliquam volutpat ornare. Duis dui purus.
+                  <RichText value={form.content} />
                 </span>
               )}
               <Button disabled={form?.state?.isSubmitting} type="submit">

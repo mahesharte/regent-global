@@ -1,8 +1,14 @@
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+} from "react-share";
+
 import { cn } from "@/lib/utils";
 import { Facebook, LinkedIn, X } from "../Icons";
 
 const SocialShare = ({
-  url,
+  url = "/",
   className,
 }: {
   url?: string;
@@ -20,18 +26,27 @@ const SocialShare = ({
         <rect className="h-full w-full fill-blue" />
       </svg>
       <div className="mt-10 flex w-full justify-center">
-        <a className="flex basis-1/3 flex-col items-center gap-4">
+        <FacebookShareButton
+          className="flex basis-1/3 flex-col items-center gap-4"
+          url={url}
+        >
           <Facebook className="fill-blue" />
           <span>Facebook</span>
-        </a>
-        <a className="flex basis-1/3 flex-col items-center gap-4">
+        </FacebookShareButton>
+        <TwitterShareButton
+          className="flex basis-1/3 flex-col items-center gap-4"
+          url={url}
+        >
           <X className="fill-blue" />
           <span>X</span>
-        </a>
-        <a className="flex basis-1/3 flex-col items-center gap-4">
+        </TwitterShareButton>
+        <LinkedinShareButton
+          className="flex basis-1/3 flex-col items-center gap-4"
+          url={url}
+        >
           <LinkedIn className="fill-blue" />
           <span>LinkedIn</span>
-        </a>
+        </LinkedinShareButton>
       </div>
     </div>
   );

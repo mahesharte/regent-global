@@ -15,19 +15,32 @@ const pageFields = `
       ...,
       asset->
     },
-    links[]-> {
-      ...,
-      image {
-        ...,
-        asset->
-      }
-    },
     items[] {
       ...,
       image {
         ...,
         asset->
       }
+    },
+    links[]-> {
+      ...,
+      image {
+        ...,
+        asset->
+      },
+      reference->
+    },
+    people[]-> {
+      _id,
+      _type,
+      name,
+      photo {
+        ...,
+        asset->
+      },
+      title,
+      description,
+      groups[]
     },
     form->,
     styleGradient->

@@ -1,6 +1,5 @@
-import type { SanityPerson, SanitySection } from "@/sanity/types/documents";
+import type { SanitySection } from "@/sanity/types/documents";
 import type { FC } from "react";
-import sortBy from "lodash/sortBy";
 
 import {
   GradientDirection,
@@ -12,12 +11,11 @@ import { useSectionStyles } from "../utils";
 
 type Props = {
   section: SanitySection;
-  team: SanityPerson[];
 };
 
 const showGradient = false;
 
-const Team: FC<Props> = ({ section, team }) => {
+const Team: FC<Props> = ({ section }) => {
   const styles = useSectionStyles(section, ["margin", "padding"]);
   const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
   const directions = Object.keys(gradientDirections) as GradientDirection[];
@@ -30,7 +28,7 @@ const Team: FC<Props> = ({ section, team }) => {
           </h2>
         )}
         <div className="grid grid-cols-2 gap-x-4 gap-y-8 pt-20 md:grid-cols-3 md:gap-10 lg:grid-cols-4 lg:gap-20 xl:gap-24">
-          {sortBy(team, "name").map((person, index) => (
+          {(section.people ?? []).map((person, index) => (
             <TeamImage
               key={person._id}
               image={person.photo?.asset?.url ?? ""}

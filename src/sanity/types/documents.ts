@@ -79,6 +79,7 @@ export type SanitySection = SanityDocument & {
   buttons?: SanityButton[];
   links?: SanityLink[];
   items?: SanitySectionItem[];
+  people?: SanityPerson[];
   form?: SanityForm | null;
   styleAlignment?: "left" | "center" | "right";
   styleMargin?: SanityMeasurements;

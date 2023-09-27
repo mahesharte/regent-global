@@ -54,19 +54,22 @@ export default defineType({
   ],
   preview: {
     select: {
-      media: "photo",
-      title: "name",
       groups: "groups",
+      media: "photo",
+      name: "name",
+      title: "title",
     },
     prepare: ({
       groups = [],
       media,
+      name,
       title,
     }: Prepare & { groups: string[] }) => ({
       media,
-      title,
-      subtitle:
-        groups.map((group) => personGroups[group]).join(", ") || "(No group)",
+      title: name,
+      subtitle: `${
+        groups.map((group) => personGroups[group]).join(", ") || "(No group)"
+      }${title ? ` - ${title}` : ""}`,
     }),
   },
 });

@@ -46,7 +46,7 @@ const Sections: FC<Props> = ({ sections, variables }) => (
             case "multiColumn":
               return <MultiColumn section={section} />;
             case "team":
-              return <Team section={section} team={variables.team ?? []} />;
+              return <Team section={section} />;
             default:
               return <></>;
           }

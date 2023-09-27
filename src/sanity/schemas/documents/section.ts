@@ -235,6 +235,34 @@ export default defineType({
         }),
     }),
     defineField({
+      name: "people",
+      title: "People",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [
+            {
+              type: "person",
+            },
+          ],
+        },
+      ],
+      hidden: ({ document }) =>
+        !["team"].includes(
+          (document?.component as string | undefined) ?? "",
+        ),
+      validation: (rule) =>
+        rule.custom((field, context) => {
+          switch (context.document?.component) {
+            case "team":
+              return !isUndefined(field) || "People are required";
+            default:
+              return true;
+          }
+        }),
+    }),
+    defineField({
       name: "form",
       title: "Form",
       type: "reference",

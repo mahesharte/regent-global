@@ -13,7 +13,7 @@ type Options = {
   prefixes?: Prefixes;
 };
 
-const getReferenceUrl = (
+export const getReferenceUrl = (
   reference?: SanityArticle | SanityPage | null,
   prefixes: Prefixes = {}
 ): string => {

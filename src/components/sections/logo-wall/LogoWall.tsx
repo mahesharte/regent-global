@@ -3,6 +3,7 @@ import type { FC } from "react";
 
 import { LogoWall as LogoWallComponent } from "@/components/LogoWall";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
+import getLinkAttributes from "@/sanity/utils/getLinkAttributes";
 import { useSectionStyles } from "../utils";
 
 type Props = {
@@ -20,6 +21,7 @@ const LogoWall: FC<Props> = ({ section }) => {
       items={(section.links ?? []).map((link) => ({
         imageUrl: link.image?.asset?.url ?? "",
         text: link.title ?? "",
+        ...getLinkAttributes(link),
       }))}
     />
   );
