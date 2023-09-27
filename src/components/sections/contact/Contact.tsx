@@ -50,10 +50,10 @@ const Contact: FC<Props> = ({ section }) => {
           )}
         </div>
         <div className="grid grid-cols-8 gap-0">
-          {!!image?.asset?.url && !isMobile && (
+          {!!image?.asset?.url && (
             <Image
               className={clsx(
-                "h-full w-full object-cover",
+                "h-full w-full object-cover max-md:hidden",
                 styleAlignment === "left" ? "order-1" : "order-0",
               )}
               src={image.asset.url}
@@ -62,13 +62,9 @@ const Contact: FC<Props> = ({ section }) => {
               alt={title ?? ""}
             />
           )}
-          <img
-            src={img.src}
-            className="col-span-3 h-full w-full object-cover lg:col-span-4"
-          />
           <div
             className={clsx(
-              "col-span-8 bg-white px-4 py-10 md:col-span-5 md:px-14 md:pb-14 md:pt-12 lg:col-span-4",
+              "bg-white px-4 py-10 max-md:col-span-8 md:col-span-4 md:col-span-5 md:px-14 md:pb-14 md:pt-12",
               styleAlignment === "left" ? "order-0" : "order-1",
             )}
           >
