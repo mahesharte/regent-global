@@ -41,7 +41,7 @@ const Contact: FC<Props> = ({ section }) => {
         <div className="flex flex-col justify-between pb-20 max-md:px-4 md:flex-row">
           {!!content && (
             <div className="max-w-[64ch] text-white max-md:order-2 md:text-lg">
-              <RichText value={content} />
+              <RichText value={content} defaultClassNames="standard" />
             </div>
           )}
           {!!title && (

@@ -5,6 +5,7 @@ import type { SanityFooter } from "../types/documents";
 
 const getFooterQuery = groq`
   *[_type == "footer"][0] {
+    ...,
     links[]-> {
       ...,
       reference->

@@ -18,9 +18,12 @@ const ContentBlock: FC<Props> = ({ section }) => {
       ref={ref}
       className={className}
       align={section.styleAlignment ?? "left"}
+      verticalAlign={section.styleVerticalAlignment}
       heading={section.title ?? ""}
       image={section.image?.asset?.url}
-      body={<RichText value={section.content ?? []} />}
+      body={
+        <RichText value={section.content ?? []} defaultClassNames="standard" />
+      }
       cta={(section.buttons ?? []).map((button) => ({
         text: button.title ?? button.link?.title,
         url: button.link?.url ?? "",

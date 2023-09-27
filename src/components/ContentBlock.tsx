@@ -11,6 +11,7 @@ type CTA = {
 
 type ContentBlockProps = {
   align: "left" | "right" | "center";
+  verticalAlign?: "top" | "center" | "bottom";
   className?: string;
   image?: string;
   heading: string;
@@ -24,14 +25,32 @@ const alignStyles: Record<string, string> = {
   right: "md:flex-row-reverse",
 };
 
+const verticalAlignStyles: Record<string, string> = {
+  top: "items-start",
+  center: "items-center",
+  bottom: "items-end",
+};
+
 const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
-  ({ className, heading, body, image, align = "left", cta }, ref) => {
+  (
+    {
+      className,
+      heading,
+      body,
+      image,
+      align = "left",
+      verticalAlign = "center",
+      cta,
+    },
+    ref,
+  ) => {
     const buttons = isArray(cta) ? cta : cta ? [cta] : [];
     return (
       <div
         className={cn(
-          "container mx-auto flex flex-col items-center gap-4 md:flex-row md:gap-10 lg:gap-20",
+          "container mx-auto flex flex-col gap-4 md:flex-row md:gap-10 lg:gap-20",
           alignStyles[align],
+          verticalAlignStyles[verticalAlign],
           className,
         )}
         ref={ref}
@@ -40,7 +59,7 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
           <h3 className="pb-8 text-3xl font-black text-blue md:text-3xl lg:text-5xl">
             {heading}
           </h3>
-          {!!body && <div className="text-lg [&>p]:pb-8">{body}</div>}
+          {!!body && <div className="text-lg [&>p]:pb-4">{body}</div>}
           <div className="flex flex-wrap justify-stretch gap-4 max-md:mb-4">
             {buttons.map(({ text }, index) => (
               <Cta key={index} className="max-md:w-full">

@@ -2,6 +2,21 @@ import { PortableTextBlock } from "@portabletext/types";
 
 import { SanityGradient, SanityImage, SanityLink } from "./documents";
 
+export const existingBlockStyles = {
+  normal: "Normal",
+  h1: "H1",
+  h2: "H2",
+  h3: "H3",
+  h4: "H4",
+  h5: "H5",
+  h6: "H6",
+  blockquote: "Quote",
+};
+
+export type Attachment = "image";
+export type BlockStyle = keyof typeof existingBlockStyles;
+export type ListItemType = "bullet" | "number";
+
 export type SanityKeyValueType =
   | "string"
   | "number"

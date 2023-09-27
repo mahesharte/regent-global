@@ -5,6 +5,7 @@ import { Logo } from "@/components/Logo";
 import RichText from "@/components/richtext/RichText";
 import { Button } from "@/components/ui/button";
 import { FormProps } from "@/lib/hooks/useFormAction";
+import { SanityRichtext } from "@/sanity/types/objects";
 import { cn } from "@/lib/utils";
 import { LinkList } from "./Navbar";
 
@@ -12,9 +13,10 @@ type NavbarProps = {
   form?: FormProps;
   formTitle?: string;
   links: LinkList[];
+  copyrightText?: SanityRichtext;
 };
 
-const Footer: React.FC<NavbarProps> = ({ form, links }) => (
+const Footer: React.FC<NavbarProps> = ({ form, links, copyrightText }) => (
   <div className="bg-gradient bg-gradient-to-r from-blue to-red">
     <div className="px-4 lg:container lg:mx-auto lg:px-0">
       <div className="flex flex-col-reverse items-start justify-start gap-14 pb-10 pt-10 md:flex-row md:gap-4 md:pb-16 md:pt-10 lg:gap-24 lg:pb-24 lg:pt-14">
@@ -82,6 +84,11 @@ const Footer: React.FC<NavbarProps> = ({ form, links }) => (
           </form>
         </div>
       </div>
+      {!!copyrightText && (
+        <div className="pb-8 text-center text-sm text-white md:text-left">
+          <RichText value={copyrightText} defaultClassNames="standard" />
+        </div>
+      )}
     </div>
   </div>
 );

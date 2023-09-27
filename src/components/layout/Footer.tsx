@@ -43,6 +43,7 @@ const Footer: FC<Props> = ({ footer }) => {
           title: footer?.form?.title,
         }}
         links={links}
+        copyrightText={footer?.copyrightText}
       />
       {preview.active && !inIframe() && <Banner loading={preview.loading} />}
     </footer>

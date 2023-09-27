@@ -1,6 +1,8 @@
 import { DocumentsIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
+import defineRichtextField from "../helpers/richtext";
+
 export default defineType({
   type: "document",
   name: "footer",
@@ -31,6 +33,10 @@ export default defineType({
           type: "form",
         },
       ],
+    }),
+    defineRichtextField({
+      name: "copyrightText",
+      title: "Copyright Text",
     }),
   ],
   preview: {

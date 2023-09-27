@@ -37,6 +37,12 @@ const styleAlignments: { [value: string]: string } = {
   right: "Right",
 };
 
+const styleVerticalAlignments: { [value: string]: string } = {
+  top: "Top",
+  center: "Center",
+  bottom: "Bottom",
+};
+
 const DynamicListField: FC<StringInputProps> = (props) => {
   const document = useFormValue([]);
   // @ts-ignore
@@ -249,9 +255,7 @@ export default defineType({
         },
       ],
       hidden: ({ document }) =>
-        !["team"].includes(
-          (document?.component as string | undefined) ?? "",
-        ),
+        !["team"].includes((document?.component as string | undefined) ?? ""),
       validation: (rule) =>
         rule.custom((field, context) => {
           switch (context.document?.component) {
@@ -288,7 +292,7 @@ export default defineType({
     defineField({
       name: "styleAlignment",
       type: "string",
-      title: "Alignment",
+      title: "Horizontal Alignment",
       fieldset: "style",
       options: {
         layout: "radio",
@@ -299,6 +303,23 @@ export default defineType({
       },
       hidden: ({ document }) =>
         !["contact", "contentBlock"].includes(
+          (document?.component as string | undefined) ?? "",
+        ),
+    }),
+    defineField({
+      name: "styleVerticalAlignment",
+      type: "string",
+      title: "Vertical Alignment",
+      fieldset: "style",
+      options: {
+        layout: "radio",
+        list: Object.keys(styleVerticalAlignments).map((value) => ({
+          title: styleVerticalAlignments[value],
+          value,
+        })),
+      },
+      hidden: ({ document }) =>
+        !["contentBlock"].includes(
           (document?.component as string | undefined) ?? "",
         ),
     }),

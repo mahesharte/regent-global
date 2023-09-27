@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export const ArrowCornerRight = ({ className }: { className?: string }) => (
   <svg
     className={className}
@@ -78,7 +80,13 @@ export const SpaceRocketEarth = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const ArrowLeft = ({ className }: { className?: string }) => (
+export const ArrowLeft = ({
+  className,
+  onClick,
+}: {
+  className?: string;
+  onClick?: MouseEventHandler<SVGSVGElement>;
+}) => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"
@@ -86,6 +94,7 @@ export const ArrowLeft = ({ className }: { className?: string }) => (
     height="15"
     viewBox="0 0 23 15"
     fill="none"
+    onClick={onClick}
   >
     <path
       d="M21.4766 7.5L1.00037 7.5"
@@ -104,7 +113,13 @@ export const ArrowLeft = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const ArrowRight = ({ className }: { className?: string }) => (
+export const ArrowRight = ({
+  className,
+  onClick,
+}: {
+  className?: string;
+  onClick?: MouseEventHandler<SVGSVGElement>;
+}) => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"
@@ -112,6 +127,7 @@ export const ArrowRight = ({ className }: { className?: string }) => (
     height="15"
     viewBox="0 0 23 15"
     fill="none"
+    onClick={onClick}
   >
     <path
       d="M1.52344 7.60352L21.9996 7.60351"
