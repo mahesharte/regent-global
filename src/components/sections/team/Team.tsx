@@ -27,7 +27,7 @@ const Team: FC<Props> = ({ section }) => {
             {section.title}
           </h2>
         )}
-        <div className="grid grid-cols-2 gap-x-4 gap-y-8 pt-20 md:grid-cols-3 md:gap-10 lg:grid-cols-4 lg:gap-20 xl:gap-24">
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-8 pt-20 max-md:px-4 md:gap-16 lg:gap-20 [&>*]:basis-[calc(50%-8px)] [&>*]:md:basis-1/3 [&>*]:lg:basis-1/4">
           {(section.people ?? []).map((person, index) => (
             <TeamImage
               key={person._id}

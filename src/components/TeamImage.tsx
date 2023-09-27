@@ -23,7 +23,7 @@ const TeamImage = ({
   fadeToTransparent?: boolean;
 }) => {
   return (
-    <div className="itme-center flex max-w-xs flex-col text-center text-sm font-bold">
+    <div className="flex max-w-xs flex-col text-center text-sm font-bold">
       <div className="relative mb-5 aspect-square bg-green-200 [clip-path:circle(50%)]">
         <img className="absolute inset-0 z-10 block w-full" src={image} />
         {!!gradientDirection && (
