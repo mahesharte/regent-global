@@ -10,6 +10,7 @@ import { ContactBlock } from "@/components/ContactBlock";
 import RichText from "@/components/richtext/RichText";
 import useFormAction from "@/lib/hooks/useFormAction";
 import { useBreakpoint } from "@/lib/hooks/useBreakpoint";
+import { cn } from "@/lib/utils";
 
 type Props = {
   section: SanitySection;
@@ -53,7 +54,7 @@ const Contact: FC<Props> = ({ section }) => {
           {!!image?.asset?.url && (
             <Image
               className={clsx(
-                "h-full w-full object-cover max-md:hidden",
+                "col-span-3 h-full w-full object-cover max-md:hidden lg:col-span-4",
                 styleAlignment === "left" ? "order-1" : "order-0",
               )}
               src={image.asset.url}
@@ -63,8 +64,9 @@ const Contact: FC<Props> = ({ section }) => {
             />
           )}
           <div
-            className={clsx(
-              "bg-white px-4 py-10 max-md:col-span-8 md:col-span-4 md:col-span-5 md:px-14 md:pb-14 md:pt-12",
+            className={cn(
+              "col-span-8 bg-white px-4 py-10 md:col-span-5 md:px-14 md:pb-14 md:pt-12 lg:col-span-4",
+              !image?.asset?.url && "md:col-span-8 lg:col-span-8",
               styleAlignment === "left" ? "order-0" : "order-1",
             )}
           >
