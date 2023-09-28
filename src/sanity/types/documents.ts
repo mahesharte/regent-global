@@ -11,6 +11,7 @@ import type {
   SanitySectionItem,
 } from "./objects";
 
+export type Theme = "dark" | "light";
 export type HorizontalAlignment = "left" | "center" | "right";
 export type VerticalAlignment = "top" | "center" | "bottom";
 
@@ -84,12 +85,13 @@ export type SanitySection = SanityDocument & {
   items?: SanitySectionItem[];
   people?: SanityPerson[];
   form?: SanityForm | null;
+  styleTheme?: Theme;
   styleAlignment?: HorizontalAlignment;
   styleVerticalAlignment?: VerticalAlignment;
   styleMargin?: SanityMeasurements;
   stylePadding?: SanityMeasurements;
   styleGradient?: SanityGradient | null;
-  fullSizeToggle?: boolean;
+  styleFullSizeToggle?: boolean;
 };
 
 export type SanityPage = SanityDocument & {

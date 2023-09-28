@@ -59,7 +59,9 @@ const Hero: FC<Props> = ({ section }) => {
           <div ref={ref} className={cn("container mx-auto overflow-hidden")}>
             <Image
               className={cn(
-                section?.fullSizeToggle ? "object-contain" : "object-cover",
+                section?.styleFullSizeToggle
+                  ? "object-contain"
+                  : "object-cover",
                 className,
               )}
               src={section.image.asset.url}
