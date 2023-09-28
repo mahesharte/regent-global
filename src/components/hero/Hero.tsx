@@ -1,37 +1,42 @@
 import { ReactNode, forwardRef } from "react";
 import clsx from "clsx";
+import Image from "next/image";
+import { SanityImage } from "@/sanity/types/documents";
 
 type Props = {
   children?: ReactNode;
-  heading: string;
+  heading?: string;
   className?: string;
-  imageUrl?: string;
+  image?: SanityImage;
 };
 
 const Hero = forwardRef<HTMLDivElement, Props>(
-  ({ children, heading, className, imageUrl }, ref) => {
+  ({ children, heading, className, image }, ref) => {
     return (
       <div
         ref={ref}
         className={clsx(
-          "relative flex w-screen items-center px-9 py-24 text-white md:px-16 md:py-36 lg:aspect-[2.5/1] xl:aspect-[3.5/1]",
+          "relative flex items-center px-9 py-24 text-white md:px-16 md:py-36",
           className,
         )}
       >
-        {imageUrl && (
-          <img
-            className="absolute inset-0 -z-10 mx-auto h-full w-full object-cover"
-            src={imageUrl}
+        {image?.asset?.url && (
+          <Image
+            className="-z-10"
+            src={image?.asset?.url ?? ""}
+            fill={true}
+            objectFit="cover"
+            alt={image?.asset?.title || ""}
           />
         )}
-        <div className="container mx-auto">
-          {!!heading && (
+        {!!heading && (
+          <div className="container mx-auto">
             <h1 className="text-4xl font-black md:text-7xl lg:w-3/4">
               {heading}
             </h1>
-          )}
-          {children}
-        </div>
+          </div>
+        )}
+        {children}
       </div>
     );
   },

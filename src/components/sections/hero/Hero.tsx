@@ -5,6 +5,8 @@ import { BigText } from "@/components/bigtext";
 import { Hero as HeroComponent } from "@/components/hero";
 import useDynamicStyles, { DynamicStyles } from "@/lib/hooks/useDynamicStyles";
 import { StyleName, useSectionStyles } from "../utils";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type Props = {
   section: SanitySection;
@@ -41,24 +43,45 @@ const Hero: FC<Props> = ({ section }) => {
   }, [section, styles, variant]);
   const { ref, className } = useDynamicStyles<HTMLDivElement>(withExtraStyles);
 
-  if (variant === "bigText") {
-    return (
-      <BigText
-        ref={ref}
-        className={className}
-        heading={section.title ?? ""}
-        subheading={section.subtitle}
-      />
-    );
+  switch (variant) {
+    case "bigText":
+      return (
+        <BigText
+          ref={ref}
+          className={className}
+          heading={section.title ?? ""}
+          subheading={section.subtitle}
+        />
+      );
+    case "image":
+      return (
+        section.image?.asset?.url && (
+          <div ref={ref} className={cn("container mx-auto overflow-hidden")}>
+            <Image
+              className={cn(
+                section?.styleFullSizeToggle
+                  ? "object-contain"
+                  : "object-cover",
+                className,
+              )}
+              src={section.image.asset.url}
+              width={section.image.asset.metadata.dimensions.width}
+              height={section.image.asset.metadata.dimensions.height}
+              alt={section.title ?? ""}
+            />
+          </div>
+        )
+      );
+    default:
+      return (
+        <HeroComponent
+          ref={ref}
+          className={className}
+          heading={section.title ?? ""}
+          image={section.image ?? undefined}
+        />
+      );
   }
-  return (
-    <HeroComponent
-      ref={ref}
-      className={className}
-      heading={section.title ?? ""}
-      imageUrl={section.image?.asset?.url}
-    />
-  );
 };
 
 export default Hero;

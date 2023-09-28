@@ -20,7 +20,7 @@ const ContentBlock: FC<Props> = ({ section }) => {
       align={section.styleAlignment ?? "left"}
       verticalAlign={section.styleVerticalAlignment}
       heading={section.title ?? ""}
-      image={section.image?.asset?.url}
+      image={section.image ?? undefined}
       body={
         <RichText value={section.content ?? []} defaultClassNames="standard" />
       }

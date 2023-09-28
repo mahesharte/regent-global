@@ -31,6 +31,11 @@ const variants: { [variant: string]: { [value: string]: string } } = {
   },
 };
 
+const styleThemes: { [value: string]: string } = {
+  dark: "Dark",
+  light: "Light",
+};
+
 const styleAlignments: { [value: string]: string } = {
   left: "Left",
   center: "Center",
@@ -41,6 +46,7 @@ const styleVerticalAlignments: { [value: string]: string } = {
   top: "Top",
   center: "Center",
   bottom: "Bottom",
+  stretch: "Stretch",
 };
 
 const DynamicListField: FC<StringInputProps> = (props) => {
@@ -290,6 +296,23 @@ export default defineType({
         }),
     }),
     defineField({
+      name: "styleTheme",
+      type: "string",
+      title: "Theme",
+      fieldset: "style",
+      options: {
+        layout: "radio",
+        list: Object.keys(styleThemes).map((value) => ({
+          title: styleThemes[value],
+          value,
+        })),
+      },
+      hidden: ({ document }) =>
+        !["bigNumbers", "contact", "hero", "logoWall", "multiColumn"].includes(
+          (document?.component as string | undefined) ?? "",
+        ),
+    }),
+    defineField({
       name: "styleAlignment",
       type: "string",
       title: "Horizontal Alignment",
@@ -379,6 +402,15 @@ export default defineType({
         !["bigNumbers", "contact", "hero", "logoWall", "multiColumn"].includes(
           (document?.component as string | undefined) ?? "",
         ),
+    }),
+    defineField({
+      name: "styleFullSizeToggle",
+      title: "Full width image",
+      type: "boolean",
+      fieldset: "style",
+      initialValue: false,
+      hidden: ({ document }) =>
+        !(document?.component === "hero" && document?.variant === "image"),
     }),
   ],
   preview: {
