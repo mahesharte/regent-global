@@ -18,6 +18,7 @@ const BigNumbers: FC<Props> = ({ section }) => {
       ref={ref}
       className={className}
       headline={section.title ?? ""}
+      theme={section.styleTheme}
       items={(section.items ?? []).map((item) => ({
         number: item.title,
         imageUrl: item.image?.asset?.url ?? "",

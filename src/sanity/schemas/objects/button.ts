@@ -1,36 +1,39 @@
-import { defineField, defineType } from 'sanity';
+import { defineField, defineType } from "sanity";
 
-import { Prepare } from '../../types/utils';
+import { Prepare } from "../../types/utils";
 
 const buttonVariants: { [value: string]: string } = {
-  primary: 'Primary',
+  primary: "Primary",
 };
 
 const buttonAlignments: { [value: string]: string } = {
-  left: 'Left',
-  right: 'Right',
+  left: "Left",
+  right: "Right",
 };
 
 const buttonSizes: { [value: string]: string } = {
-  medium: 'Medium',
+  medium: "Medium",
 };
 
 export default defineType({
-  type: 'object',
-  name: 'button',
-  title: 'Button',
+  type: "object",
+  name: "button",
+  title: "Button",
+  options: {
+    collapsible: true,
+  },
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Title",
+      type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'variant',
-      type: 'string',
-      title: 'Variant',
-      initialValue: 'primary',
+      name: "variant",
+      type: "string",
+      title: "Variant",
+      initialValue: "primary",
       validation: (rule) => rule.required(),
       options: {
         list: Object.keys(buttonVariants).map((value) => ({
@@ -40,25 +43,25 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'link',
-      title: 'Link',
-      type: 'reference',
+      name: "link",
+      title: "Link",
+      type: "reference",
       to: [
         {
-          type: 'link',
+          type: "link",
         },
       ],
     }),
     defineField({
-      name: 'icon',
-      title: 'Icon',
-      type: 'image',
+      name: "icon",
+      title: "Icon",
+      type: "image",
     }),
     defineField({
-      name: 'alignment',
-      type: 'string',
-      title: 'Alignment',
-      initialValue: 'left',
+      name: "alignment",
+      type: "string",
+      title: "Alignment",
+      initialValue: "left",
       options: {
         list: Object.keys(buttonAlignments).map((value) => ({
           title: buttonAlignments[value],
@@ -67,10 +70,10 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'size',
-      type: 'string',
-      title: 'Size',
-      initialValue: 'medium',
+      name: "size",
+      type: "string",
+      title: "Size",
+      initialValue: "medium",
       options: {
         list: Object.keys(buttonSizes).map((value) => ({
           title: buttonSizes[value],
@@ -81,8 +84,8 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title',
-      variant: 'variant',
+      title: "title",
+      variant: "variant",
     },
     prepare: ({ title, variant }: Prepare) => {
       return {

@@ -1,18 +1,24 @@
 import { ReactNode, forwardRef } from "react";
 import clsx from "clsx";
+import { Theme } from "@/sanity/types/documents";
 
 type Props = {
   children?: ReactNode;
   heading: string;
   subheading?: string;
   className?: string;
+  theme?: Theme;
 };
 
 const BigText = forwardRef<HTMLDivElement, Props>(
-  ({ children, heading, subheading, className }, ref) => {
+  ({ children, heading, subheading, className, theme }, ref) => {
     return (
       <div
-        className={clsx("px-14 text-center text-white", className)}
+        className={clsx(
+          "px-14 text-center",
+          theme === "light" ? "text-blue" : "text-white",
+          className,
+        )}
         ref={ref}
       >
         {subheading && <span className="text-xl uppercase">{subheading}</span>}

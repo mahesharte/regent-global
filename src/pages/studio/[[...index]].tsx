@@ -68,7 +68,6 @@ const StudioPage: FC = () => {
         if (path !== status.path) {
           // eslint-disable-next-line
           status.path = path;
-          console.log(path);
           // Page preview
           if (
             path.startsWith("/studio/desk/page") &&

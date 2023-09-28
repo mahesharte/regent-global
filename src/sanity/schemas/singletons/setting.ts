@@ -1,5 +1,7 @@
 import { DocumentsIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
+
+import { components, componentsWithPadding } from "../documents/section";
 
 export default defineType({
   type: "document",
@@ -18,6 +20,10 @@ export default defineType({
     {
       name: "theme",
       title: "Theme",
+    },
+    {
+      name: "style",
+      title: "Style",
     },
   ],
   fields: [
@@ -50,6 +56,45 @@ export default defineType({
         },
       ],
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "styleSectionPadding",
+      title: "Default Section Padding",
+      group: "style",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({
+              name: "component",
+              title: "Component",
+              type: "string",
+              validation: (rule) => rule.required(),
+              options: {
+                list: componentsWithPadding.map((value) => ({
+                  title: components[value],
+                  value,
+                })),
+              },
+            }),
+            defineField({
+              name: "value",
+              title: "Padding",
+              type: "measurements",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              component: "component",
+            },
+            prepare: ({ component }) => ({
+              title: components[component],
+            }),
+          },
+        }),
+      ],
     }),
   ],
   preview: {

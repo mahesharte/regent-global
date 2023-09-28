@@ -51,6 +51,7 @@ const Hero: FC<Props> = ({ section }) => {
           className={className}
           heading={section.title ?? ""}
           subheading={section.subtitle}
+          theme={section.styleTheme}
         />
       );
     case "image":
@@ -79,6 +80,7 @@ const Hero: FC<Props> = ({ section }) => {
           className={className}
           heading={section.title ?? ""}
           image={section.image ?? undefined}
+          theme={section.styleTheme}
         />
       );
   }

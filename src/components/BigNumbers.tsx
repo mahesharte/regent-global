@@ -1,5 +1,6 @@
 import { type ReactNode, forwardRef } from "react";
 import { cn } from "@/lib/utils";
+import { Theme } from "@/sanity/types/documents";
 
 type NumberData = {
   imageUrl: string;
@@ -10,19 +11,28 @@ type Props = {
   className?: string;
   headline: string;
   items: NumberData[];
+  theme?: Theme;
 };
 
 const BigNumbers = forwardRef<HTMLDivElement, Props>(
-  ({ className, headline, items }, ref) => {
+  ({ className, headline, items, theme = "dark" }, ref) => {
+    const textColor = theme === "light" ? "text-black" : "text-white";
     return (
       <div className="pb-10 pt-10 md:pb-28 md:pt-20">
         <div
-          className={cn("container mx-auto text-center text-white", className)}
+          className={cn("container mx-auto text-center", className)}
           ref={ref}
         >
           <div className="">
-            <h2 className="pb-16 text-4xl md:text-5xl">{headline}</h2>
-            <ul className="mx-auto flex max-w-6xl flex-col justify-between md:flex-row">
+            <h2 className={cn("pb-16 text-4xl md:text-5xl", textColor)}>
+              {headline}
+            </h2>
+            <ul
+              className={cn(
+                "mx-auto flex max-w-6xl flex-col justify-between md:flex-row",
+                textColor,
+              )}
+            >
               {items.map((item, i) => (
                 <li
                   key={i}
@@ -37,7 +47,12 @@ const BigNumbers = forwardRef<HTMLDivElement, Props>(
                   </span>
                   <div className="col-start-3 row-start-2 row-end-3 flex flex-col">
                     <svg className="mb-4 mt-3 h-1 w-12">
-                      <rect className="h-full w-full fill-white" />
+                      <rect
+                        className={cn(
+                          "h-full w-full",
+                          theme === "light" ? "fill-black" : "fill-white",
+                        )}
+                      />
                     </svg>
                     <span className="text-left text-sm">{item.subText}</span>
                   </div>

@@ -12,7 +12,7 @@ import isUndefined from "lodash/isUndefined";
 import defineRichtextField from "../helpers/richtext";
 import { Prepare } from "../../types/utils";
 
-const components: { [value: string]: string } = {
+export const components: { [value: string]: string } = {
   articles: "Articles",
   bigNumbers: "Big Numbers",
   contact: "Contact",
@@ -23,13 +23,29 @@ const components: { [value: string]: string } = {
   team: "Team",
 };
 
-const variants: { [variant: string]: { [value: string]: string } } = {
+export const variants: { [variant: string]: { [value: string]: string } } = {
   hero: {
     default: "Default",
     bigText: "Big Text",
     image: "Image",
   },
+  multiColumn: {
+    default: "Default",
+    blocks: "Blocks",
+    cards: "Cards",
+  },
 };
+
+export const componentsWithPadding = [
+  "articles",
+  "bigNumbers",
+  "contact",
+  "contentBlock",
+  "hero",
+  "logoWall",
+  "multiColumn",
+  "team",
+];
 
 const styleThemes: { [value: string]: string } = {
   dark: "Dark",
@@ -179,6 +195,14 @@ export default defineType({
           !["default", "image"].includes(
             (document?.variant as string | undefined) ?? "",
           )),
+    }),
+    defineField({
+      name: "animateImage",
+      title: "Animate Image",
+      type: "boolean",
+      hidden: ({ document }) =>
+        ((document?.image as any)?.asset?._ref ?? "").split("-").pop() !==
+        "svg",
     }),
     defineField({
       name: "buttons",
@@ -373,16 +397,9 @@ export default defineType({
       type: "measurements",
       fieldset: "style",
       hidden: ({ document }) =>
-        ![
-          "articles",
-          "bigNumbers",
-          "contact",
-          "contentBlock",
-          "hero",
-          "logoWall",
-          "multiColumn",
-          "team",
-        ].includes((document?.component as string | undefined) ?? "") ||
+        !componentsWithPadding.includes(
+          (document?.component as string | undefined) ?? "",
+        ) ||
         (document?.component === "hero" &&
           !["default", "bigText"].includes(
             (document?.variant as string | undefined) ?? "",

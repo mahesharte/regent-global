@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import isUndefined from "lodash/isUndefined";
 
-import { SanitySection } from "@/sanity/types/documents";
+import { SanityGradient, SanitySection } from "@/sanity/types/documents";
 import { DynamicStyles } from "@/lib/hooks/useDynamicStyles";
+import { useAppContext } from "@/components/app/context";
 
 export type StyleName = "gradient" | "margin" | "padding";
 export type StylePair = [property: string, className: string];
@@ -100,21 +101,33 @@ const paddingStyles: {
   },
 };
 
+export const applyGradientStyles = (
+  dynamicStyles: DynamicStyles,
+  gradient?: SanityGradient | null,
+): DynamicStyles => {
+  if (!gradient) {
+    return dynamicStyles;
+  }
+  dynamicStyles[gradientStyles.gradient[1]] = [
+    gradientStyles.gradient[0],
+    `to right, ${(gradient?.colors ?? []).map(
+      (color) =>
+        `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
+    )}`,
+  ];
+  return dynamicStyles;
+};
+
 export const useSectionStyles = (
   section: SanitySection,
   styleNames: StyleName[] = ["gradient", "margin", "padding"],
-): DynamicStyles =>
-  useMemo<DynamicStyles>(() => {
+): DynamicStyles => {
+  const [{ setting }] = useAppContext();
+  return useMemo<DynamicStyles>(() => {
     const dynamicStyles: DynamicStyles = {};
     if (styleNames.includes("gradient") && section.styleGradient) {
       if (section.styleGradient) {
-        dynamicStyles[gradientStyles.gradient[1]] = [
-          gradientStyles.gradient[0],
-          `to right, ${(section.styleGradient?.colors ?? []).map(
-            (color) =>
-              `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
-          )}`,
-        ];
+        applyGradientStyles(dynamicStyles, section.styleGradient);
       }
     }
     if (styleNames.includes("margin") && section.styleMargin) {
@@ -135,23 +148,29 @@ export const useSectionStyles = (
         },
       );
     }
-    if (styleNames.includes("padding") && section.stylePadding) {
-      (section.stylePadding.breakpoints ?? []).forEach(
-        ({ size, top, bottom }) => {
-          if (!isUndefined(top)) {
-            dynamicStyles[paddingStyles[size].top[1]] = [
-              paddingStyles[size].top[0],
-              top,
-            ];
-          }
-          if (!isUndefined(bottom)) {
-            dynamicStyles[paddingStyles[size].bottom[1]] = [
-              paddingStyles[size].bottom[0],
-              bottom,
-            ];
-          }
-        },
+    if (styleNames.includes("padding")) {
+      const globalSectionPadding = (setting?.styleSectionPadding ?? []).find(
+        (item) => item.component === section.component,
       );
+      (
+        section.stylePadding?.breakpoints ??
+        globalSectionPadding?.value?.breakpoints ??
+        []
+      ).forEach(({ size, top, bottom }) => {
+        if (!isUndefined(top)) {
+          dynamicStyles[paddingStyles[size].top[1]] = [
+            paddingStyles[size].top[0],
+            top,
+          ];
+        }
+        if (!isUndefined(bottom)) {
+          dynamicStyles[paddingStyles[size].bottom[1]] = [
+            paddingStyles[size].bottom[0],
+            bottom,
+          ];
+        }
+      });
     }
     return dynamicStyles;
-  }, [section, styleNames]);
+  }, [section, setting, styleNames]);
+};

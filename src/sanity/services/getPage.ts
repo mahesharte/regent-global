@@ -15,11 +15,29 @@ const pageFields = `
       ...,
       asset->
     },
+    buttons[] {
+      ...,
+      link-> {
+        ...,
+        reference->
+      }
+    },
     items[] {
       ...,
       image {
         ...,
         asset->
+      },
+      button {
+        ...,
+        icon {
+          ...,
+          asset->
+        },
+        link-> {
+          ...,
+          reference->
+        }
       }
     },
     links[]-> {

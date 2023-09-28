@@ -70,9 +70,11 @@ export type SanityMeasurements = {
 };
 
 export type SanitySectionItem = {
+  _key: string;
   title: string;
   image?: SanityImage | null;
   content?: SanityRichtext;
+  button?: SanityButton | null;
 };
 
 export type SanityFormInput = {

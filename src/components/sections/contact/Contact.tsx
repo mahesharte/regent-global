@@ -29,23 +29,35 @@ const Contact: FC<Props> = ({ section }) => {
     title = "",
     form,
     styleAlignment = "right",
+    styleTheme = "dark",
   } = section;
   const styles = useSectionStyles(section, ["gradient", "margin", "padding"]);
   const isMobile = !useBreakpoint("sm");
   const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
   const { formState, message, onSubmit, register } = useFormAction(form);
+  const textColor = styleTheme === "light" ? "text-black" : "text-white";
 
   return (
     <div ref={ref} className={className}>
       <div className="container mx-auto">
         <div className="flex flex-col justify-between pb-20 max-md:px-4 md:flex-row">
           {!!content && (
-            <div className="max-w-[64ch] text-white max-md:order-2 md:text-lg">
+            <div
+              className={cn(
+                "max-w-[64ch] max-md:order-2 md:text-lg",
+                textColor,
+              )}
+            >
               <RichText value={content} defaultClassNames="standard" />
             </div>
           )}
           {!!title && (
-            <h1 className="flex-grow text-5xl font-black text-white max-md:order-1 max-md:pb-4 md:text-right md:text-7xl">
+            <h1
+              className={cn(
+                "flex-grow text-5xl font-black max-md:order-1 max-md:pb-4 md:text-right md:text-7xl",
+                styleTheme === "light" ? "text-blue" : "text-white",
+              )}
+            >
               {title}
             </h1>
           )}

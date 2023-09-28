@@ -3,27 +3,32 @@ import styles from "./Illustration.module.css";
 import { cn } from "@/lib/utils";
 import { useScroll } from "framer-motion";
 
+import "external-svg-loader";
+
 const ANIMATION_DURATION = 0.3;
 const BASE_FREQUENCY = 0.028;
 const OCTAVES = 4;
 const SCALE = 4;
 
-const Illustration = ({
-  children,
+export const Illustration = ({
+  children = <></>,
   animate = true,
   entryOffset = 0.5,
   leaveOffset = 0.8,
   width,
   height,
+  svgImageUrl,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   animate?: boolean;
   entryOffset?: number;
   leaveOffset?: number;
   width: number;
   height: number;
+  svgImageUrl?: string;
 }) => {
   const [path, setPath] = useState<string>();
+  const [ready, setReady] = useState(false);
   const [pathLength, setPathLength] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -67,26 +72,44 @@ const Illustration = ({
     return () => {
       unmount();
     };
-  }, []);
+  }, [scrollYProgress]);
 
   useEffect(() => {
     if (ref?.current) {
-      let path = ref.current.querySelector("path");
-      if (path) {
-        path.setAttribute("pathLength", "1");
-        setPath(path.outerHTML);
-      }
+      const init = async () => {
+        if (svgImageUrl) {
+          const svg = ref.current?.querySelector("svg");
+          if (!svg) {
+            return;
+          }
+          if (!ref.current?.querySelector("path")) {
+            await new Promise((resolve) => {
+              svg.addEventListener("iconload", resolve);
+            });
+          }
+        }
+        let path = ref.current?.querySelector("path");
+        if (path) {
+          path.setAttribute("pathLength", "1");
+          setPath(path.outerHTML);
+        }
+      };
+      init();
     }
-  }, [ref, children]);
+  }, [ref, children, svgImageUrl]);
 
-  if (path)
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (animate && path) {
     return (
       <div ref={ref}>
         <svg
           width={width}
           height={height}
           xmlns="http://www.w3.org/2000/svg"
-          className={cn(styles.Illustration)}
+          className={cn(styles.Illustration, "max-w-full")}
           style={
             {
               "--pathLength": pathLength,
@@ -98,10 +121,26 @@ const Illustration = ({
         ></svg>
       </div>
     );
-
-  return <div ref={ref}>{children}</div>;
+  }
+  return (
+    <div ref={ref}>
+      {svgImageUrl ? (
+        <>
+          {ready && (
+            <svg
+              className="max-w-full"
+              data-src={svgImageUrl}
+              fill="currentColor"
+            />
+          )}
+        </>
+      ) : (
+        children
+      )}
+    </div>
+  );
 };
 
 Illustration.displayName = "Illustration";
 
-export { Illustration };
+export default Illustration;

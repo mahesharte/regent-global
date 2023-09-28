@@ -80,6 +80,7 @@ export type SanitySection = SanityDocument & {
   subtitle?: string;
   content?: SanityRichtext;
   image?: SanityImage | null;
+  animateImage?: boolean;
   buttons?: SanityButton[];
   links?: SanityLink[];
   items?: SanitySectionItem[];
@@ -113,10 +114,16 @@ export type SanityFooter = SanityDocument & {
   copyrightText?: SanityRichtext;
 };
 
+export type SanitySectionPadding = {
+  component: SanitySectionComponent;
+  value: SanityMeasurements;
+};
+
 export type SanitySetting = SanityDocument & {
   articlesHome?: SanityPage | null;
   servicesGtmId?: string;
   themeGlobalGradient?: SanityGradient | null;
+  styleSectionPadding?: SanitySectionPadding[];
 };
 
 export type SanityForm = SanityDocument & {

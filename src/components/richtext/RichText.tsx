@@ -64,10 +64,10 @@ const defaultClassNamesDefinitions: Record<
   standard: {
     block: {
       normal: "mb-1 last-of-type:mb-0",
-      h1: "text-3xl mb-4",
-      h2: "text-2xl mb-3",
-      h3: "text-xl mb-2",
-      h4: "text-lg mb-2",
+      h1: "text-3xl font-bold mb-4",
+      h2: "text-2xl font-semibold mb-3",
+      h3: "text-xl font-medium mb-2",
+      h4: "text-lg font-medium mb-2",
       h5: "text-md mb-1",
       h6: "text-sm mb-1",
     },

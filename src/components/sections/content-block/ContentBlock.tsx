@@ -21,6 +21,7 @@ const ContentBlock: FC<Props> = ({ section }) => {
       verticalAlign={section.styleVerticalAlignment}
       heading={section.title ?? ""}
       image={section.image ?? undefined}
+      animateImage={section.animateImage}
       body={
         <RichText value={section.content ?? []} defaultClassNames="standard" />
       }
