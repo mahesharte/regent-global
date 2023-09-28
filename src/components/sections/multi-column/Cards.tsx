@@ -28,49 +28,56 @@ const basis = [
 
 const Cards = forwardRef<HTMLDivElement, Props>(
   ({ className, section }, ref) => (
-    <div className={cn("container mx-auto", className)} ref={ref}>
-      {!!section.title && (
-        <h2 className="mb-20 px-4 text-center text-[48px] font-black leading-[56px] text-blue md:px-0">
-          {section.title}
-        </h2>
-      )}
-      <div className="flex flex-col gap-4 sm:flex-row">
-        {section.items?.map((item) => (
-          <div
+    <div className={className} ref={ref}>
+      <div className="container mx-auto">
+        {!!section.title && (
+          <h2
             className={cn(
-              "flex basis-full flex-col rounded-[4px] bg-white px-4 py-8 text-center shadow-[0px_4px_16px_0px_rgba(0,_0,_0,_0.15)]",
-              basis[(section.items?.length ?? 1) - 1],
+              "mb-20 px-4 text-center text-[48px] font-black leading-[56px] md:px-0",
+              section.styleTheme === "dark" ? "text-white" : "text-blue",
             )}
-            key={item._key}
           >
-            {!!item.image?.asset?.url && (
-              <div className="mb-6 h-16">
-                <Image
-                  className="h-full w-full object-contain"
-                  src={item.image.asset.url}
-                  width={item.image.asset.metadata.dimensions.width}
-                  height={item.image.asset.metadata.dimensions.height}
-                  alt={item.title}
-                />
-              </div>
-            )}
-            {!!item.title && (
-              <h2 className="mb-4 px-4 text-2xl font-bold leading-8 text-blue">
-                {item.title}
-              </h2>
-            )}
-            {!!item.content && (
-              <div className="px-4 text-sm leading-6 md:px-0 [&>p:last-of-type]:pb-0 [&>p]:pb-4">
-                <RichText value={item.content} defaultClassNames="standard" />
-              </div>
-            )}
-            {!!item.button && (
-              <div className="pt-6">
-                <Button button={item.button} />
-              </div>
-            )}
-          </div>
-        ))}
+            {section.title}
+          </h2>
+        )}
+        <div className="flex flex-col gap-4 sm:flex-row">
+          {section.items?.map((item) => (
+            <div
+              className={cn(
+                "flex basis-full flex-col rounded-[4px] bg-white px-4 py-8 text-center shadow-[0px_4px_16px_0px_rgba(0,_0,_0,_0.15)]",
+                basis[(section.items?.length ?? 1) - 1],
+              )}
+              key={item._key}
+            >
+              {!!item.image?.asset?.url && (
+                <div className="mb-6 h-16">
+                  <Image
+                    className="h-full w-full object-contain"
+                    src={item.image.asset.url}
+                    width={item.image.asset.metadata.dimensions.width}
+                    height={item.image.asset.metadata.dimensions.height}
+                    alt={item.title}
+                  />
+                </div>
+              )}
+              {!!item.title && (
+                <h2 className="mb-4 px-4 text-2xl font-bold leading-8 text-blue">
+                  {item.title}
+                </h2>
+              )}
+              {!!item.content && (
+                <div className="px-4 text-sm leading-6 md:px-0 [&>p:last-of-type]:pb-0 [&>p]:pb-4">
+                  <RichText value={item.content} defaultClassNames="standard" />
+                </div>
+              )}
+              {!!item.button && (
+                <div className="pt-6">
+                  <Button button={item.button} />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   ),
