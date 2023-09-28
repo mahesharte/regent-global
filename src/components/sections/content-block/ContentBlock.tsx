@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { ContentBlock as ContentBlockComponent } from "@/components/ContentBlock";
 import RichText from "@/components/richtext/RichText";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
+import { SanityButton } from "@/sanity/types/objects";
 import { useSectionStyles } from "../utils";
 
 type Props = {
@@ -25,10 +26,7 @@ const ContentBlock: FC<Props> = ({ section }) => {
       body={
         <RichText value={section.content ?? []} defaultClassNames="standard" />
       }
-      cta={(section.buttons ?? []).map((button) => ({
-        text: button.title ?? button.link?.title,
-        url: button.link?.url ?? "",
-      }))}
+      cta={section.buttons as SanityButton[]}
     />
   );
 };

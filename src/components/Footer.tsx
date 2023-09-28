@@ -60,24 +60,26 @@ const Footer: React.FC<NavbarProps> = ({ form, links, copyrightText }) => (
             onSubmit={form?.onSubmit}
           >
             {!!form?.inputs?.[0] && (
-              <input
-                className="h-full w-full rounded-full pl-5 pr-28 text-sm"
-                disabled={form?.state?.isSubmitting}
-                placeholder={form.inputs[0].placeholder}
-                required={form.inputs[0].required}
-                type={form.inputs[0].type ?? "email"}
-                {...form?.register?.(
-                  camelCase(form?.inputs?.[0]?.title ?? "email"),
-                )}
-              />
+              <>
+                <input
+                  className="h-full w-full rounded-full pl-5 pr-28 text-sm"
+                  disabled={form?.state?.isSubmitting}
+                  placeholder={form.inputs[0].placeholder}
+                  required={form.inputs[0].required}
+                  type={form.inputs[0].type ?? "email"}
+                  {...form?.register?.(
+                    camelCase(form?.inputs?.[0]?.title ?? "email"),
+                  )}
+                />
+                <Button
+                  className="absolute right-2 top-2"
+                  disabled={form?.state?.isSubmitting}
+                  type="submit"
+                >
+                  {form?.cta ?? "Submit"}
+                </Button>
+              </>
             )}
-            <Button
-              className="absolute right-2 top-2"
-              disabled={form?.state?.isSubmitting}
-              type="submit"
-            >
-              {form?.cta ?? "Submit"}
-            </Button>
             <span className="block pt-3 text-white">
               {form?.message || <>&nbsp;</>}
             </span>

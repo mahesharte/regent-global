@@ -27,14 +27,12 @@ export default defineType({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "variant",
       type: "string",
       title: "Variant",
       initialValue: "primary",
-      validation: (rule) => rule.required(),
       options: {
         list: Object.keys(buttonVariants).map((value) => ({
           title: buttonVariants[value],

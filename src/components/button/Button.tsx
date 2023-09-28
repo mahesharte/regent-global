@@ -11,18 +11,22 @@ import Image from "next/image";
 
 type Props = {
   button: SanityButton;
+  className?: string;
 };
 
-const Button: FC<Props> = ({ button }) => {
+const Button: FC<Props> = ({ button, className }) => {
   const [{ setting }] = useAppContext();
   const dynamicStyles: DynamicStyles = {};
   applyGradientStyles(dynamicStyles, setting?.themeGlobalGradient);
-  const { className, ref } = useDynamicStyles<HTMLAnchorElement>(dynamicStyles);
+  const { className: dynamicClassName, ref } =
+    useDynamicStyles<HTMLAnchorElement>(dynamicStyles);
   return (
     <Link
       ref={ref}
       className={cn(
-        "ring-offset-background transition-background focus-visible:ring-ring inline-flex items-center justify-center rounded-full px-8 py-[14px] text-sm font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "ring-offset-background transition-background focus-visible:ring-ring inline-flex items-center justify-center rounded-full px-8 py-[14px] text-sm",
+        "font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        dynamicClassName,
         className,
       )}
       {...getLinkAttributes(button.link)}

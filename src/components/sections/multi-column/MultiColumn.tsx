@@ -29,18 +29,14 @@ const MultiColumn: FC<Props> = ({ section }) => {
           theme={section.styleTheme}
           columns={(section.items ?? []).map((item) => ({
             headline: item.title,
-            icon: (
-              <>
-                {!!item.image && (
-                  <Image
-                    className="inline"
-                    src={item.image.asset?.url ?? ""}
-                    alt={item.title ?? ""}
-                    width={24}
-                    height={24}
-                  />
-                )}
-              </>
+            icon: !item.image ? undefined : (
+              <Image
+                className="inline"
+                src={item.image.asset?.url ?? ""}
+                alt={item.title ?? ""}
+                width={24}
+                height={24}
+              />
             ),
             body: (
               <RichText

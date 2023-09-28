@@ -15,6 +15,10 @@ const gradientStyles: {
     "--section-linear-gradient",
     "bg-[linear-gradient(var(--section-linear-gradient))]",
   ],
+  hoverGradient: [
+    "--section-linear-gradient-hover",
+    "hover:bg-[linear-gradient(var(--section-linear-gradient-hover))]",
+  ],
 };
 const marginStyles: {
   [size: string]: {
@@ -104,6 +108,7 @@ const paddingStyles: {
 export const applyGradientStyles = (
   dynamicStyles: DynamicStyles,
   gradient?: SanityGradient | null,
+  applyHoverStyle = false,
 ): DynamicStyles => {
   if (!gradient) {
     return dynamicStyles;
@@ -115,6 +120,15 @@ export const applyGradientStyles = (
         `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
     )}`,
   ];
+  if (applyHoverStyle) {
+    dynamicStyles[gradientStyles.hoverGradient[1]] = [
+      gradientStyles.hoverGradient[0],
+      `to left, ${(gradient?.colors ?? []).map(
+        (color) =>
+          `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`,
+      )}`,
+    ];
+  }
   return dynamicStyles;
 };
 

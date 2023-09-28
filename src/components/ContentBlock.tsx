@@ -1,10 +1,12 @@
-import { forwardRef, type ReactNode } from "react";
+import { forwardRef, Fragment, type ReactNode } from "react";
 import isArray from "lodash/isArray";
 import Image from "next/image";
 import { Cta } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { SanityImage } from "@/sanity/types/documents";
+import { SanityButton } from "@/sanity/types/objects";
 import { Illustration } from "./Illustration";
+import Button from "./button/Button";
 
 type CTA = {
   text: string;
@@ -19,7 +21,7 @@ type ContentBlockProps = {
   animateImage?: boolean;
   heading: string;
   body?: ReactNode;
-  cta: CTA | CTA[];
+  cta: CTA | SanityButton | CTA[] | SanityButton[];
 };
 
 const alignStyles: Record<string, string> = {
@@ -70,11 +72,18 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
             </div>
           )}
           {buttons.length > 0 && (
-            <div className="flex flex-wrap justify-stretch gap-4 mt-8 max-md:mb-4">
-              {buttons.map(({ text }, index) => (
-                <Cta key={index} className="max-md:w-full">
-                  {text}
-                </Cta>
+            <div className="mt-8 flex flex-wrap justify-stretch gap-4 max-md:mb-4">
+              {buttons.map((button, index) => (
+                <Fragment key={index}>
+                  {(button as CTA).text ? (
+                    <Cta className="max-md:w-full">{(button as CTA).text}</Cta>
+                  ) : (
+                    <Button
+                      button={button as SanityButton}
+                      className="max-md:w-full"
+                    />
+                  )}
+                </Fragment>
               ))}
             </div>
           )}

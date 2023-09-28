@@ -66,11 +66,11 @@ const Cards = forwardRef<HTMLDivElement, Props>(
                 </h2>
               )}
               {!!item.content && (
-                <div className="px-4 text-sm leading-6 md:px-0 [&>p:last-of-type]:pb-0 [&>p]:pb-4">
+                <div className="flex-grow px-4 text-sm leading-6 md:px-0 [&>p:last-of-type]:pb-0 [&>p]:pb-4">
                   <RichText value={item.content} defaultClassNames="standard" />
                 </div>
               )}
-              {!!item.button && (
+              {!!item.button?.title && (
                 <div className="pt-6">
                   <Button button={item.button} />
                 </div>
