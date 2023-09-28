@@ -28,7 +28,7 @@ const FourColumns = forwardRef<HTMLDivElement, Props>(
           {columns.map((column, i) => (
             <div key={i}>
               <div className="flex items-center gap-2 pb-2 lg:gap-4 lg:pb-6">
-                <span>{column.icon}</span>
+                {!!column.icon && <span>{column.icon}</span>}
                 <h3
                   className={clsx(
                     "text-xl font-bold lg:text-2xl",
