@@ -29,7 +29,7 @@ const Hero: FC<Props> = ({ section }) => {
       const height = section.image.asset?.metadata?.dimensions?.height;
       extraStyles["h-[var(--hero-image-height-xs)]"] = [
         "--hero-image-height-xs",
-        "50vh",
+        section?.styleFullSizeToggle ? "auto" : "25vh",
       ];
       extraStyles["md:h-[var(--hero-image-height-md)]"] = [
         "--hero-image-height-md",

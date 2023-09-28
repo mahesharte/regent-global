@@ -54,7 +54,7 @@ const Contact: FC<Props> = ({ section }) => {
           {!!title && (
             <h1
               className={cn(
-                "flex-grow text-5xl font-black max-md:order-1 max-md:pb-4 md:text-right md:text-7xl",
+                "flex-grow text-5xl font-black max-md:order-1 max-md:pb-4 md:text-right md:text-5xl lg:text-7xl",
                 styleTheme === "light" ? "text-blue" : "text-white",
               )}
             >

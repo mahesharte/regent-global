@@ -17,7 +17,7 @@ const Hero = forwardRef<HTMLDivElement, Props>(
       <div
         ref={ref}
         className={clsx(
-          "relative flex items-center px-9 py-24 md:px-16 md:py-36",
+          "relative flex aspect-[3/1] max-w-full items-center px-9 py-24 md:px-16 md:py-36",
           theme === "light" ? "text-black" : "text-white",
           className,
         )}
@@ -35,7 +35,7 @@ const Hero = forwardRef<HTMLDivElement, Props>(
           <div className="container mx-auto">
             <h1
               className={clsx(
-                "text-4xl font-black md:text-7xl lg:w-3/4",
+                "text-4xl font-black md:text-5xl lg:w-3/4 lg:text-7xl",
                 theme === "light" ? "text-blue" : "text-white",
               )}
             >

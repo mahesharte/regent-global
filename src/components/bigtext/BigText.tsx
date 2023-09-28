@@ -22,7 +22,9 @@ const BigText = forwardRef<HTMLDivElement, Props>(
         ref={ref}
       >
         {subheading && <span className="text-xl uppercase">{subheading}</span>}
-        <h1 className="text-4xl font-black md:text-7xl">{heading}</h1>
+        <h1 className="text-4xl font-black md:text-5xl lg:text-7xl">
+          {heading}
+        </h1>
         {children}
       </div>
     );
