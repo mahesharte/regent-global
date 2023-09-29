@@ -40,7 +40,7 @@ const Cards = forwardRef<HTMLDivElement, Props>(
             {section.title}
           </h2>
         )}
-        <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="flex flex-col gap-4 lg:flex-row">
           {section.items?.map((item) => (
             <div
               className={cn(
