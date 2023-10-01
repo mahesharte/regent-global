@@ -5,7 +5,7 @@ type Tag = {
 };
 
 const Tag = ({ title }: { title: string }) => (
-  <div className="inline rounded-sm bg-red p-1 text-xs font-medium uppercase leading-none text-white">
+  <div className="inline-block rounded-sm bg-red p-1 text-xs font-medium uppercase leading-none text-white">
     {title}
   </div>
 );
@@ -32,10 +32,10 @@ const ArticleCard = ({
           />
         </Link>
       </div>
-      <div className="mb-4 mt-6 flex h-5 justify-center gap-3 tracking-wide">
+      <div className="mb-4 mt-6 flex flex-wrap justify-center gap-3 px-4 tracking-wide">
         {tags && tags.map((tag, i) => <Tag key={i} title={tag.title} />)}
       </div>
-      <div className="mb-12 text-center text-2xl">
+      <div className="mb-12 text-center text-2xl px-4">
         <Link href={url}>{title}</Link>
       </div>
     </div>
