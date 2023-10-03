@@ -8,6 +8,7 @@ import { getClient } from "@/sanity/client";
 import {
   BlockStyle,
   ListItemType,
+  Mark,
   SanityRichtext,
 } from "@/sanity/types/objects";
 import Image from "next/image";
@@ -17,6 +18,7 @@ type RichTextClassNames = {
   block?: Partial<Record<BlockStyle, string>>;
   list?: Partial<Record<ListItemType, string>>;
   listItem?: Partial<Record<ListItemType, string>>;
+  marks?: Partial<Record<Mark, string>>;
 };
 type DefaultClassNames = "standard";
 type Props = {
@@ -27,6 +29,14 @@ type Props = {
 type BlockComponentProps = {
   children: ReactNode;
   className?: string;
+};
+type LinkProps = {
+  href: string;
+};
+type MarkComponentProps = {
+  children: ReactNode;
+  className?: string;
+  value: LinkProps;
 };
 const blockComponents: Record<BlockStyle, FC<BlockComponentProps>> = {
   normal: ({ children, className }) => <p className={className}>{children}</p>,
@@ -56,6 +66,13 @@ const listItemComponents: Record<ListItemType, FC<BlockComponentProps>> = {
     <li className={className}>{children}</li>
   ),
 };
+const marksComponents: Record<Mark, FC<MarkComponentProps>> = {
+  link: ({ children, className, value }) => (
+    <a className={className} href={value.href}>
+      {children}
+    </a>
+  ),
+};
 
 const defaultClassNamesDefinitions: Record<
   DefaultClassNames,
@@ -78,6 +95,9 @@ const defaultClassNamesDefinitions: Record<
     listItem: {
       bullet: "mb-1",
       number: "mb-1",
+    },
+    marks: {
+      link: "underline",
     },
   },
 };
@@ -139,10 +159,24 @@ const getComponents = (
       },
     ]),
   );
+  const marks: PortableTextReactComponents["marks"] = fromPairs(
+    Object.keys(classNames.marks ?? {}).map((mark) => [
+      mark,
+      ({ children, value }) => {
+        const Component = marksComponents[mark as Mark];
+        return (
+          <Component className={classNames.marks?.[mark as Mark]} value={value}>
+            {children}
+          </Component>
+        );
+      },
+    ]),
+  );
   return {
     ...(isEmpty(block) ? {} : { block }),
     ...(isEmpty(list) ? {} : { list }),
     ...(isEmpty(listItem) ? {} : { listItem }),
+    ...(isEmpty(marks) ? {} : { marks }),
     types: {
       image: ({ value, isInline }) => {
         const imgSrc = getImgSrc(value, isInline);

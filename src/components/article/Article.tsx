@@ -49,7 +49,7 @@ const Article: FC<ArticleProps> = ({ article }) => {
         authorImage={author?.photo?.asset?.url ?? ""}
       />
       <div className="container mx-auto mt-4 w-full pb-40 max-md:px-4 md:mt-20">
-        <div className="flex justify-center md:-ml-64">
+        <div className="flex justify-center md:px-4 lg:px-0 xl:-ml-64">
           <aside className="max-md:hidden">
             <SidebarLinks
               className="sticky top-4 ml-auto w-64"

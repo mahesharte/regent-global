@@ -27,11 +27,21 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     setMenuopen(false);
   }, [asPath]);
 
+  useEffect(() => {
+    if (isMobile && menuOpen) {
+      const prevOverflow = document.body.style.overflowY || "visible";
+      document.body.style.overflowY = "hidden";
+      return () => {
+        document.body.style.overflowY = prevOverflow;
+      };
+    }
+  }, [isMobile, menuOpen]);
+
   return (
     <div className={!menuOpen ? "bg-white" : ""}>
       <div
         className={cn(
-          "relative mx-auto bg-white px-4 pt-1 lg:container md:py-4 lg:px-0 lg:py-9",
+          "relative mx-auto bg-white px-4 pt-1 lg:container md:py-4 lg:py-9",
         )}
       >
         <nav className="flex h-12 items-center justify-between py-3 md:py-0">

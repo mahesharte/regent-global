@@ -26,6 +26,8 @@ const Sections: FC<Props> = ({ sections, variables }) => {
           key={`${section?._id}-${index}`}
           data-id={preview.active ? section?._id : undefined}
           className={preview.active ? "scroll-my-5" : undefined}
+          data-component={section.component}
+          data-variant={section.variant}
         >
           {(() => {
             switch (section?.component) {

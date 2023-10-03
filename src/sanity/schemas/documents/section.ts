@@ -143,11 +143,7 @@ export default defineType({
           "logoWall",
           "multiColumn",
           "team",
-        ].includes((document?.component as string | undefined) ?? "") ||
-        (document?.component === "hero" &&
-          !["default", "bigText"].includes(
-            (document?.variant as string | undefined) ?? "",
-          )),
+        ].includes((document?.component as string | undefined) ?? ""),
       validation: (rule) =>
         rule.custom((field, context) => {
           switch (context.document?.component) {

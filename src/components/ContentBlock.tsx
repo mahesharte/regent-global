@@ -62,7 +62,7 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
         )}
         ref={ref}
       >
-        <div className="basis-1/2 max-md:px-4 lg:basis-3/5">
+        <div className="basis-1/2 px-4 lg:basis-3/5">
           <h3 className="pb-8 text-3xl font-black text-blue md:text-3xl lg:text-5xl">
             {heading}
           </h3>

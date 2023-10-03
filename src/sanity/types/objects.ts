@@ -16,6 +16,7 @@ export const existingBlockStyles = {
 export type Attachment = "image";
 export type BlockStyle = keyof typeof existingBlockStyles;
 export type ListItemType = "bullet" | "number";
+export type Mark = "link";
 
 export type SanityKeyValueType =
   | "string"

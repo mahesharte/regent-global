@@ -40,7 +40,7 @@ const FourColumns = forwardRef<HTMLDivElement, Props>(
         )}
         ref={ref}
       >
-        <div className="container mx-auto flex flex-col gap-4 lg:flex-row">
+        <div className="container mx-auto flex flex-col gap-4 px-4 lg:flex-row">
           {columns.map((column, i) => (
             <div
               className={cn("basis-full", basis[columns.length - 1])}
