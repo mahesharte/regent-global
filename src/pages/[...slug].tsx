@@ -59,6 +59,10 @@ export const getStaticProps: GetStaticProps<CatchAllProps> = async (
       client,
       slug.substring(articleSlugPrefix.length),
     );
+    // Use featured image as og image if not set
+    if (!!document?.featuredImage && !document.pageMeta?.image) {
+      document.pageMeta.image = document.featuredImage;
+    }
   }
   if (!document) {
     return {
