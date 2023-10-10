@@ -62,14 +62,14 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           </Button>
           <div
             className={cn(
-              "absolute left-0 right-0 top-16 z-50 px-3 text-gray-900 md:relative md:top-auto md:flex md:justify-end md:px-0",
+              "absolute left-0 right-0 top-16 z-50 px-3 text-gray-900 md:relative md:top-auto md:flex md:justify-end md:gap-4 md:px-0",
               !menuOpen && isMobile && "hidden",
             )}
           >
             {links.map((link, i) => (
               <Link
                 key={i}
-                className="items-center gap-5  max-md:flex"
+                className="items-center gap-5 max-md:flex"
                 href={link.url}
                 onClick={() => setMenuopen(false)}
               >
@@ -78,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                   className={cn([
                     "block py-3 underline decoration-transparent decoration-4 underline-offset-8 transition-all md:px-3 md:py-3 md:first:ps-0 md:last:pe-0 lg:px-5",
                     link.currentPage
-                      ? "md:text-900 underline-offset-10 md:decoration-red"
+                      ? "md:text-900 underline-offset-10 md:decoration-blue"
                       : "hover:underline-offset-10 md:hover:decoration-red",
                     "max-md:text-white",
                   ])}

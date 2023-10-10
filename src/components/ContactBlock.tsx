@@ -54,9 +54,9 @@ const ContactBlock = forwardRef<HTMLDivElement, Props>(
                   );
               }
             })}
-            <div className="gap col-span-2 flex justify-between gap-4 max-md:flex-col">
+            <div className="gap col-span-2 flex items-end justify-between gap-4 max-md:flex-col md:pt-4">
               {!!form?.content && (
-                <span className="max-w-[48ch]">
+                <span className="max-w-[64ch]">
                   <RichText value={form.content} />
                 </span>
               )}

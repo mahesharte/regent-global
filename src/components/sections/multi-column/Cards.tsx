@@ -26,6 +26,12 @@ const basis = [
   "md:basis-1/12",
 ];
 
+const aligntment = {
+  left: "",
+  center: "text-center",
+  right: "text-right",
+};
+
 const Cards = forwardRef<HTMLDivElement, Props>(
   ({ className, section }, ref) => (
     <div className={className} ref={ref}>
@@ -33,7 +39,7 @@ const Cards = forwardRef<HTMLDivElement, Props>(
         {!!section.title && (
           <h2
             className={cn(
-              "mb-20 px-4 text-center text-[48px] font-black leading-[56px] md:px-0",
+              "mb-20 px-4  text-[48px] font-black leading-[56px] md:px-0",
               section.styleTheme === "dark" ? "text-white" : "text-blue",
             )}
           >
@@ -44,8 +50,9 @@ const Cards = forwardRef<HTMLDivElement, Props>(
           {section.items?.map((item) => (
             <div
               className={cn(
-                "flex basis-full flex-col rounded-[4px] bg-white px-4 py-8 text-center shadow-[0px_4px_16px_0px_rgba(0,_0,_0,_0.15)]",
+                "flex basis-full flex-col rounded-[4px] bg-white px-10 py-8 shadow-[0px_4px_16px_0px_rgba(0,_0,_0,_0.15)]",
                 basis[(section.items?.length ?? 1) - 1],
+                section.styleAlignment && aligntment[section.styleAlignment],
               )}
               key={item._key}
             >
@@ -61,12 +68,12 @@ const Cards = forwardRef<HTMLDivElement, Props>(
                 </div>
               )}
               {!!item.title && (
-                <h2 className="mb-4 px-4 text-2xl font-bold leading-8 text-blue">
+                <h2 className="mb-4 text-2xl font-bold leading-8 text-blue">
                   {item.title}
                 </h2>
               )}
               {!!item.content && (
-                <div className="flex-grow px-4 text-sm leading-6 md:px-0 [&>p:last-of-type]:pb-0 [&>p]:pb-4">
+                <div className="flex-grow text-sm leading-6 md:px-0 [&>p:last-of-type]:pb-0 [&>p]:pb-4">
                   <RichText value={item.content} defaultClassNames="standard" />
                 </div>
               )}

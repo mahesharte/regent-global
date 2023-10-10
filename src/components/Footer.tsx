@@ -18,11 +18,11 @@ type NavbarProps = {
 
 const Footer: React.FC<NavbarProps> = ({ form, links, copyrightText }) => (
   <div className="bg-gradient bg-gradient-to-r from-blue to-red">
-    <div className="px-4 lg:container lg:mx-auto lg:px-0">
+    <div className="px-8 lg:container lg:mx-auto lg:px-0">
       <div className="flex flex-col-reverse items-start justify-start gap-14 pb-10 pt-10 md:flex-row md:gap-4 md:pb-16 md:pt-10 lg:gap-24 lg:pb-24 lg:pt-14">
         <div className="mx-auto md:basis-1/2 lg:basis-3/5">
           <nav className="flex flex-col-reverse items-center gap-14 text-gray-900 md:flex-row md:items-start md:gap-4">
-            <Link href="/" className="lg:basis-1/3">
+            <Link href="/" className="md:basis-1/3">
               <Logo fill="white" className="h-14" />
             </Link>
             <div className="flex flex-wrap md:basis-2/3">

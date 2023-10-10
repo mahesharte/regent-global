@@ -345,7 +345,7 @@ export default defineType({
         })),
       },
       hidden: ({ document }) =>
-        !["contact", "contentBlock"].includes(
+        !["contact", "contentBlock", "multiColumn"].includes(
           (document?.component as string | undefined) ?? "",
         ),
     }),
