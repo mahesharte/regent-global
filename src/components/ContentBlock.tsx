@@ -5,6 +5,7 @@ import { Cta } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { SanityImage } from "@/sanity/types/documents";
 import { SanityButton } from "@/sanity/types/objects";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 import { Illustration } from "./Illustration";
 import Button from "./button/Button";
 
@@ -101,7 +102,7 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
                   />
                 ) : (
                   <Image
-                    src={image.asset.url}
+                    src={imageUrlBuilder(image).url()}
                     objectFit="cover"
                     fill={verticalAlign === "stretch" ? true : false}
                     width={

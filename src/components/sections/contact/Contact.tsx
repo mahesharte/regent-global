@@ -2,15 +2,15 @@ import type { SanitySection } from "@/sanity/types/documents";
 import type { FC } from "react";
 import Image from "next/image";
 import clsx from "clsx";
-import img from "@/assets/AdobeStock_166338789_Preview 3.jpg";
 
-import { useSectionStyles } from "../utils";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
 import { ContactBlock } from "@/components/ContactBlock";
 import RichText from "@/components/richtext/RichText";
 import useFormAction from "@/lib/hooks/useFormAction";
 import { useBreakpoint } from "@/lib/hooks/useBreakpoint";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 import { cn } from "@/lib/utils";
+import { useSectionStyles } from "../utils";
 
 type Props = {
   section: SanitySection;
@@ -69,7 +69,7 @@ const Contact: FC<Props> = ({ section }) => {
                 "col-span-3 h-full w-full object-cover max-md:hidden lg:col-span-4",
                 styleAlignment === "left" ? "order-1" : "order-0",
               )}
-              src={image.asset.url}
+              src={imageUrlBuilder(image).url()}
               width={image.asset.metadata.dimensions.width}
               height={image.asset.metadata.dimensions.height}
               alt={title ?? ""}

@@ -4,6 +4,7 @@ import { useMemo, type FC } from "react";
 import { BigText } from "@/components/bigtext";
 import { Hero as HeroComponent } from "@/components/hero";
 import useDynamicStyles, { DynamicStyles } from "@/lib/hooks/useDynamicStyles";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 import { StyleName, useSectionStyles } from "../utils";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -65,7 +66,7 @@ const Hero: FC<Props> = ({ section }) => {
                   : "object-cover",
                 className,
               )}
-              src={section.image.asset.url}
+              src={imageUrlBuilder(section.image).url()}
               width={section.image.asset.metadata.dimensions.width}
               height={section.image.asset.metadata.dimensions.height}
               alt={section.title ?? ""}

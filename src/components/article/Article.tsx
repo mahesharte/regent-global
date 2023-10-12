@@ -1,9 +1,9 @@
 import { useRef, type FC, useEffect, useState } from "react";
 import Link from "next/link";
-import isUndefined from "lodash/isUndefined";
 
 import RichText from "@/components/richtext/RichText";
 import getArticleSlugPrefix from "@/sanity/utils/getArticleSlugPrefix";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 import { Header } from "./Header";
 import { Prose } from "./Prose";
 import { ArrowLeft } from "../Icons";
@@ -86,7 +86,7 @@ const Article: FC<ArticleProps> = ({ article }) => {
                 )}
                 {!!featuredImage?.asset?.url && (
                   <img
-                    src={featuredImage.asset.url}
+                    src={imageUrlBuilder(featuredImage).url()}
                     className="w-full md:my-14"
                   />
                 )}
@@ -107,7 +107,9 @@ const Article: FC<ArticleProps> = ({ article }) => {
               {(relatedArticles ?? []).length > 0 && (
                 <RelatedArticles
                   articles={(relatedArticles ?? []).map((relatedArticle) => ({
-                    image: relatedArticle.featuredImage?.asset?.url ?? "",
+                    image: !relatedArticle.featuredImage?.asset?.url
+                      ? ""
+                      : imageUrlBuilder(relatedArticle.featuredImage).url(),
                     title: relatedArticle.title ?? "",
                     url: `${articleSlugPrefix}${
                       relatedArticle.slug.current ?? ""

@@ -2,6 +2,7 @@ import { ReactNode, forwardRef } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import { SanityImage, Theme } from "@/sanity/types/documents";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 
 type Props = {
   children?: ReactNode;
@@ -25,7 +26,7 @@ const Hero = forwardRef<HTMLDivElement, Props>(
         {image?.asset?.url && (
           <Image
             className="-z-10"
-            src={image?.asset?.url ?? ""}
+            src={imageUrlBuilder(image).url()}
             fill={true}
             objectFit="cover"
             alt={image?.asset?.title || ""}

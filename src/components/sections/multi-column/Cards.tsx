@@ -5,6 +5,7 @@ import { SanitySection } from "@/sanity/types/documents";
 import { cn } from "@/lib/utils";
 import RichText from "@/components/richtext/RichText";
 import Button from "@/components/button/Button";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 
 type Props = {
   className?: string;
@@ -60,7 +61,7 @@ const Cards = forwardRef<HTMLDivElement, Props>(
                 <div className="mb-6 h-16">
                   <Image
                     className="h-full w-full object-contain"
-                    src={item.image.asset.url}
+                    src={imageUrlBuilder(item.image).url()}
                     width={item.image.asset.metadata.dimensions.width}
                     height={item.image.asset.metadata.dimensions.height}
                     alt={item.title}

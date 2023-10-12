@@ -4,6 +4,7 @@ import Image from "next/image";
 import { SanitySection } from "@/sanity/types/documents";
 import { cn } from "@/lib/utils";
 import RichText from "@/components/richtext/RichText";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 
 type Props = {
   className?: string;
@@ -42,7 +43,7 @@ const Blocks = forwardRef<HTMLDivElement, Props>(
                 <div className="mb-14 h-[386px]">
                   <Image
                     className="h-full w-full object-cover"
-                    src={item.image.asset.url}
+                    src={imageUrlBuilder(item.image).url()}
                     width={item.image.asset.metadata.dimensions.width}
                     height={item.image.asset.metadata.dimensions.height}
                     alt={item.title}

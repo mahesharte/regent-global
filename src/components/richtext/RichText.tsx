@@ -1,18 +1,17 @@
 import type { FC, ReactNode } from "react";
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
-import urlBuilder from "@sanity/image-url";
+import Image from "next/image";
 import fromPairs from "lodash/fromPairs";
+import isEmpty from "lodash/isEmpty";
 import merge from "lodash/merge";
 
-import { getClient } from "@/sanity/client";
 import {
   BlockStyle,
   ListItemType,
   Mark,
   SanityRichtext,
 } from "@/sanity/types/objects";
-import Image from "next/image";
-import isEmpty from "lodash/isEmpty";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 
 type RichTextClassNames = {
   block?: Partial<Record<BlockStyle, string>>;
@@ -104,8 +103,7 @@ const defaultClassNamesDefinitions: Record<
 
 const getImgSrc = (value: any, isInline: boolean): string => {
   try {
-    return urlBuilder(getClient())
-      .image(value)
+    return imageUrlBuilder(value)
       .width(isInline ? 200 : 1200)
       .fit("max")
       .auto("format")

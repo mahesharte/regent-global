@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FourColumns } from "@/components/FourColumns";
 import RichText from "@/components/richtext/RichText";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 import Blocks from "./Blocks";
 import Cards from "./Cards";
 import { useSectionStyles } from "../utils";
@@ -32,7 +33,7 @@ const MultiColumn: FC<Props> = ({ section }) => {
             icon: !item.image ? undefined : (
               <Image
                 className="inline"
-                src={item.image.asset?.url ?? ""}
+                src={imageUrlBuilder(item.image).url()}
                 alt={item.title ?? ""}
                 width={24}
                 height={24}

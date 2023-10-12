@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 
 import { useAppContext } from "@/components/app/context";
 import { GlobalPageProps } from "@/types/global";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -35,7 +36,10 @@ const Layout: FC<Props> = ({ children, footer, header, router }) => {
           </>
         )}
         {!!pageMeta?.image?.asset?.url && (
-          <meta property="og:image" content={pageMeta.image.asset.url} />
+          <meta
+            property="og:image"
+            content={imageUrlBuilder(pageMeta.image).url()}
+          />
         )}
       </Head>
       <style jsx global>

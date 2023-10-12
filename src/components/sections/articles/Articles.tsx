@@ -12,6 +12,7 @@ import {
 } from "@/sanity/types/documents";
 import getArticleSlugPrefix from "@/sanity/utils/getArticleSlugPrefix";
 import { useAppContext } from "@/components/app/context";
+import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
 import { useSectionStyles } from "../utils";
 
 type Props = {
@@ -71,7 +72,11 @@ const Articles: FC<Props> = ({ section, articles }) => {
           {filtered.map((article, index) => (
             <ArticleCard
               key={article.slug?.current ?? index}
-              image={article.featuredImage?.asset?.url ?? ""}
+              image={
+                !article.featuredImage?.asset?.url
+                  ? ""
+                  : imageUrlBuilder(article.featuredImage).url()
+              }
               title={article.title}
               tags={(article.tags ?? []).map(({ title }) => ({
                 title: title ?? "-",

@@ -35,6 +35,9 @@ export default defineType({
       name: "featuredImage",
       title: "Featured Image",
       type: "image",
+      options: {
+        hotspot: true,
+      },
       validation: (rule) => rule.required(),
     }),
     defineRichtextField({

@@ -183,6 +183,9 @@ export default defineType({
       name: "image",
       title: "Image",
       type: "image",
+      options: {
+        hotspot: true,
+      },
       hidden: ({ document }) =>
         !["contact", "contentBlock", "hero"].includes(
           (document?.component as string | undefined) ?? "",
