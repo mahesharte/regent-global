@@ -97,7 +97,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                   {/* Dropdown (desktop only) */}
                   {hasChildren && (
                     <div className="absolute left-0 z-50 mt-1 hidden w-max max-w-[90vw] overflow-hidden bg-white text-black shadow-lg group-hover:block">
-                      {link.children.map((child, j) => (
+                      {link.children?.map((child, j) => (
                         <Link
                           key={j}
                           href={child.url}
@@ -113,7 +113,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                   {/* Dropdown (mobile only) */}
                   {menuOpen && isMobile && hasChildren && (
                     <div className="pl-6">
-                      {link.children.map((child, j) => (
+                      {link.children?.map((child, j) => (
                         <Link
                           key={j}
                           href={child.url}

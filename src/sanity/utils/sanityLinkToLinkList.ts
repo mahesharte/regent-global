@@ -45,9 +45,9 @@ const sanityLinkToLinkList = (
     currentPage: options?.currentPath?.startsWith(url) ?? false,
 
     // ✅ NEW: recursively map children (if present)
-    children: (children ?? []).map((child) =>
-      sanityLinkToLinkList(child, options)
-    ),
+  children: (children ?? []).map((child: any) =>
+  sanityLinkToLinkList(child, options)
+),
   };
 };
 
