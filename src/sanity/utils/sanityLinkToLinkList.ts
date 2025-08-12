@@ -8,6 +8,7 @@ import {
 type Prefixes = {
   [type: string]: string;
 };
+
 type Options = {
   currentPath?: string;
   prefixes?: Prefixes;
@@ -30,17 +31,23 @@ export const getReferenceUrl = (
 };
 
 const sanityLinkToLinkList = (
-  { reference, title, type, url: linkUrl }: SanityLink,
+  { reference, title, type, url: linkUrl, children }: SanityLink,
   options?: Options
 ): LinkList => {
   const url =
     (type === 'url'
       ? linkUrl
       : getReferenceUrl(reference, options?.prefixes)) ?? '';
+
   return {
     name: title,
     url,
     currentPage: options?.currentPath?.startsWith(url) ?? false,
+
+    // ✅ NEW: recursively map children (if present)
+    children: (children ?? []).map((child) =>
+      sanityLinkToLinkList(child, options)
+    ),
   };
 };
 

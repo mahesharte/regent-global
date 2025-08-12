@@ -89,6 +89,19 @@ export default defineType({
       title: 'Image',
       type: 'image',
     }),
+
+    // ✅ Added for dropdown support
+    defineField({
+      name: 'children',
+      title: 'Sub-links (Optional)',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'link' }],
+        },
+      ],
+    }),
   ],
   preview: {
     select: {
