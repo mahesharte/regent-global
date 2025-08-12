@@ -148,16 +148,16 @@ const Articles: FC<Props> = ({ section, articles }) => {
                       setMode("byTag");
                       setShowAll(false);
                     }}
-                    className={`rounded-full border px-3 py-2 text-left text-sm ${
+                    className={`rounded-full border px-3 py-2 text-left text-sm text-center ${
                       isActive
-                        ? "border-black bg-black text-white"
-                        : "border-gray-300 hover:bg-gray-50"
+                        ? "border-black bg-gray-400 text-white"
+                        : "border-gray-500 hover:bg-gray"
                     }`}
                     title={s ? `#${s}` : ""}
                   >
                     <span className="block">{title}</span>
                     {s && (
-                      <span className="block text-xs text-neutral-500">#{s}</span>
+                      <span className="block text-xs text-neutral-800">#{s}</span>
                     )}
                   </button>
                 );
