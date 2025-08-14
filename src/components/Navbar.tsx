@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type React from "react"; // ✅ for React.MouseEvent
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -8,35 +9,53 @@ import { Button } from "./ui/button";
 import { ArrowRight, Close, Menu } from "./Icons";
 import { useBreakpoint } from "@/lib/hooks/useBreakpoint";
 
+// Exported type so other files (e.g., Footer.tsx) can import it
 export type LinkList = {
   name: string;
   url: string;
   currentPage: boolean;
-  children?: LinkList[]; // ✅ Added for dropdown support
+  children?: LinkList[];
 };
 
+// ✅ Missing before: define props that use LinkList
 type NavbarProps = {
   links: LinkList[];
 };
 
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const [menuOpen, setMenuopen] = useState(false);
+  const [mobileOpenIndex, setMobileOpenIndex] = useState<number | null>(null);
+  const [hydrated, setHydrated] = useState(false);
   const isMobile = !useBreakpoint("md");
   const { asPath } = useRouter();
 
+  useEffect(() => setHydrated(true), []);
+  const mobile = hydrated ? isMobile : false;
+
   useEffect(() => {
     setMenuopen(false);
+    setMobileOpenIndex(null);
   }, [asPath]);
 
   useEffect(() => {
-    if (isMobile && menuOpen) {
-      const prevOverflow = document.body.style.overflowY || "visible";
-      document.body.style.overflowY = "hidden";
-      return () => {
-        document.body.style.overflowY = prevOverflow;
-      };
+    if (hydrated) {
+      setMenuopen(false);
+      setMobileOpenIndex(null);
     }
-  }, [isMobile, menuOpen]);
+  }, [mobile, hydrated]);
+
+  const onParentClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    hasChildren: boolean,
+    idx: number,
+  ) => {
+    if (mobile && hasChildren) {
+      e.preventDefault();
+      setMobileOpenIndex((cur) => (cur === idx ? null : idx));
+      return;
+    }
+    setMenuopen(false);
+  };
 
   return (
     <div className={!menuOpen ? "bg-white" : ""}>
@@ -55,6 +74,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             variant="ghost"
             onClick={() => setMenuopen((state) => !state)}
             aria-label="Menu"
+            aria-expanded={menuOpen}
+            aria-controls="primary-nav"
           >
             {menuOpen ? (
               <Close className="stroke-white" />
@@ -64,21 +85,21 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           </Button>
 
           <div
+            id="primary-nav"
             className={cn(
               "absolute left-0 right-0 top-16 z-50 px-3 text-gray-900 md:relative md:top-auto md:flex md:justify-end md:gap-4 md:px-0",
-              !menuOpen && isMobile && "hidden",
+              !menuOpen && mobile && "hidden",
             )}
           >
             {links.map((link, i) => {
-              const hasChildren = link.children && link.children.length > 0;
+              const hasChildren = !!(link.children && link.children.length > 0);
 
               return (
                 <div key={i} className="group relative md:inline-block">
-                  {/* Parent link */}
                   <Link
                     className="items-center gap-5 max-md:flex"
                     href={link.url}
-                    onClick={() => setMenuopen(false)}
+                    onClick={(e) => onParentClick(e, hasChildren, i)}
                   >
                     <ArrowRight className="ml-1 h-4 w-4 stroke-white md:hidden" />
                     <span
@@ -94,9 +115,9 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                     </span>
                   </Link>
 
-                  {/* Dropdown (desktop only) */}
-                  {hasChildren && (
-                    <div className="absolute left-0 z-50 mt-1 hidden w-max max-w-[90vw] overflow-hidden bg-white text-black shadow-lg group-hover:block">
+                  {/* Desktop dropdown (desktop only) */}
+                  {!mobile && hasChildren && (
+                    <div className="absolute left-0 z-50  hidden w-max max-w-[90vw] overflow-hidden bg-white text-black shadow-lg group-hover:block">
                       {link.children?.map((child, j) => (
                         <Link
                           key={j}
@@ -110,27 +131,31 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                     </div>
                   )}
 
-                  {/* Dropdown (mobile only) */}
-                  {menuOpen && isMobile && hasChildren && (
-                    <div className="pl-6">
-                      {link.children?.map((child, j) => (
-                        <Link
-                          key={j}
-                          href={child.url}
-                          className="block py-2 text-white"
-                          onClick={() => setMenuopen(false)}
-                        >
-                          ↳ {child.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+                  {/* Mobile sublinks (only when that parent is opened) */}
+                  {menuOpen &&
+                    mobile &&
+                    hasChildren &&
+                    mobileOpenIndex === i && (
+                      <div className="pl-6">
+                        {link.children?.map((child, j) => (
+                          <Link
+                            key={j}
+                            href={child.url}
+                            className="block py-2 text-white"
+                            onClick={() => setMenuopen(false)}
+                          >
+                            ↳ &nbsp;{child.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                 </div>
               );
             })}
           </div>
 
-          {menuOpen && isMobile && (
+          {/* Gradient overlay (mobile only, after hydrate) */}
+          {menuOpen && mobile && (
             <div className="absolute left-0 top-0 z-10 h-screen w-screen bg-gradient-to-r from-blue to-red" />
           )}
         </nav>

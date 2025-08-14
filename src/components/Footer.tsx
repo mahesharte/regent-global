@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FormProps } from "@/lib/hooks/useFormAction";
 import { SanityRichtext } from "@/sanity/types/objects";
 import { cn } from "@/lib/utils";
-import { LinkList } from "./Navbar";
+import type { LinkList } from "./Navbar";
 
 type NavbarProps = {
   form?: FormProps;

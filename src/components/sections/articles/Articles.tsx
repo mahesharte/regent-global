@@ -18,8 +18,16 @@ type Props = { section: SanitySection; articles: SanityArticle[] };
 
 type Mode = "recent" | "byTag";
 
-const TAB_ALL_TOPICS: CategoryTabItem = { title: "All topics", linkTo: "#all", active: false };
-const TAB_MOST_RECENT: CategoryTabItem = { title: "Most recent", linkTo: "recent", active: false };
+const TAB_ALL_TOPICS: CategoryTabItem = {
+  title: "All topics",
+  linkTo: "#all",
+  active: false,
+};
+const TAB_MOST_RECENT: CategoryTabItem = {
+  title: "Most recent",
+  linkTo: "recent",
+  active: false,
+};
 
 const Articles: FC<Props> = ({ section, articles }) => {
   const [mode, setMode] = useState<Mode>("recent");
@@ -37,18 +45,23 @@ const Articles: FC<Props> = ({ section, articles }) => {
       sortBy(
         uniqBy(
           articles.flatMap((a) => a.tags ?? []),
-        (t) => t?.slug?.current ?? ""
+          (t) => t?.slug?.current ?? "",
         ),
-        "title"
+        "title",
       ),
-    [articles]
+    [articles],
   );
 
   // Compute up to 5 most recently used tags (by latest article date containing the tag)
   const recentTags = useMemo(() => {
-    const map = new Map<string, { title: string; slug: string; latest: number }>();
+    const map = new Map<
+      string,
+      { title: string; slug: string; latest: number }
+    >();
     for (const a of articles) {
-      const d = new Date(a.datePublished ?? a._updatedAt ?? a._createdAt ?? 0).getTime();
+      const d = new Date(
+        a.datePublished ?? a._updatedAt ?? a._createdAt ?? 0,
+      ).getTime();
       for (const t of a.tags ?? []) {
         const slug = t?.slug?.current ?? "";
         if (!slug) continue;
@@ -67,20 +80,24 @@ const Articles: FC<Props> = ({ section, articles }) => {
     const base =
       mode === "byTag" && activeTag
         ? articles.filter((a) =>
-            (a.tags ?? []).some((t) => t?.slug?.current === activeTag)
+            (a.tags ?? []).some((t) => t?.slug?.current === activeTag),
           )
         : articles;
 
     return [...base].sort((a, b) => {
-      const ad = new Date(a.datePublished ?? a._updatedAt ?? a._createdAt ?? 0).getTime();
-      const bd = new Date(b.datePublished ?? b._updatedAt ?? b._createdAt ?? 0).getTime();
+      const ad = new Date(
+        a.datePublished ?? a._updatedAt ?? a._createdAt ?? 0,
+      ).getTime();
+      const bd = new Date(
+        b.datePublished ?? b._updatedAt ?? b._createdAt ?? 0,
+      ).getTime();
       return bd - ad;
     });
   }, [articles, mode, activeTag]);
 
   // Build tabs: All topics, Most recent, then recent tag tabs
   const tagTabs: CategoryTabItem[] = recentTags.map(({ title, slug }) => ({
-    title,                           // keep short to avoid overflow
+    title, // keep short to avoid overflow
     linkTo: `tag:${slug}`,
     active: mode === "byTag" && activeTag === slug,
   }));
@@ -94,7 +111,7 @@ const Articles: FC<Props> = ({ section, articles }) => {
   return (
     <div className={className} ref={ref}>
       {/* Sticky tabs bar */}
-      <div className="sticky top-0 z-20 bg-white/80 backdrop-blur">
+      <div className="sticky top-0  bg-white/80 backdrop-blur">
         <CategoryTabs
           categories={categories}
           onSelect={({ linkTo }) => {
@@ -148,16 +165,18 @@ const Articles: FC<Props> = ({ section, articles }) => {
                       setMode("byTag");
                       setShowAll(false);
                     }}
-                    className={`rounded-full border px-3 py-2 text-left text-sm text-center ${
+                    className={`rounded-full border px-3 py-2 text-left text-center text-sm ${
                       isActive
                         ? "border-black bg-gray-400 text-white"
-                        : "border-gray-500 hover:bg-gray"
+                        : "hover:bg-gray border-gray-500"
                     }`}
                     title={s ? `#${s}` : ""}
                   >
                     <span className="block">{title}</span>
                     {s && (
-                      <span className="block text-xs text-neutral-800">#{s}</span>
+                      <span className="block text-xs text-neutral-800">
+                        #{s}
+                      </span>
                     )}
                   </button>
                 );
