@@ -55,9 +55,8 @@ const Cards = forwardRef<HTMLDivElement, Props>(
                 basis[(section.items?.length ?? 1) - 1],
                 section.styleAlignment && aligntment[section.styleAlignment],
               )}
-              key={item._key}
-            >
-              {!!item.image?.asset?.url && (
+              key={item._key}>
+              {/* {!!item.image?.asset?.url && (
                 <div className="mb-6 h-16">
                   <Image
                     className="h-full w-full object-contain"
@@ -67,7 +66,20 @@ const Cards = forwardRef<HTMLDivElement, Props>(
                     alt={item.title}
                   />
                 </div>
+              )} */}
+              {!!item.image?.asset?.url && (
+                <div
+                  className="mb-4 w-full rounded-sm"
+                  style={{
+                    height: "180px",
+                    backgroundImage: `url(${imageUrlBuilder(item.image).width(1600).auto("format").url()})`,
+                    backgroundSize: "contain",     // entire image visible, may not reach full width
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat"
+                  }}
+                />
               )}
+
               {!!item.title && (
                 <h2 className="mb-4 text-2xl font-bold leading-8 text-blue">
                   {item.title}
