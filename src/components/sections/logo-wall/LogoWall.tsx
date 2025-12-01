@@ -18,6 +18,7 @@ const LogoWall: FC<Props> = ({ section }) => {
       ref={ref}
       className={className}
       headline={section.title ?? ""}
+      body={section.content ?? []}  // ✅ must be present
       theme={section.styleTheme}
       items={(section.links ?? []).map((link) => ({
         imageUrl: link.image?.asset?.url ?? "",

@@ -171,7 +171,7 @@ export default defineType({
         name: "content",
         title: "Content",
         hidden: ({ document }) =>
-          !["contact", "contentBlock"].includes(
+          !["contact", "contentBlock", "logoWall"].includes(
             (document?.component as string | undefined) ?? "",
           ),
       },
@@ -259,7 +259,7 @@ export default defineType({
         !["logoWall"].includes(
           (document?.component as string | undefined) ?? "",
         ),
-      validation: (rule) =>
+    /*  validation: (rule) =>
         rule.custom((field, context) => {
           switch (context.document?.component) {
             case "logoWall":
@@ -267,7 +267,7 @@ export default defineType({
             default:
               return true;
           }
-        }),
+        }),*/
     }),
     defineField({
       name: "people",
