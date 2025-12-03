@@ -42,14 +42,14 @@ export const LogoWall = forwardRef<HTMLDivElement, LogoWallProps>(
       {/* LEFT: Heading + rich text */}
       <div className="text-center mx-auto max-w-2xl">
         {headline && (
-          <h2
+          <h3
             className={cn(
-              "mb-6 text-3xl font-bold md:text-4xl",
+              "mb-6 text-3xl font-bold md:text-4xl lg:text-5xl",
               isDark ? "text-white" : "text-blue"
             )}
           >
             {headline}
-          </h2>
+          </h3>
         )}
 
         {body && (
@@ -111,14 +111,14 @@ export const LogoWall = forwardRef<HTMLDivElement, LogoWallProps>(
        --------------------------------------------- */
     <div className="text-center mx-auto max-w-2xl py-10">
       {headline && (
-        <h2
+        <h3
           className={cn(
-            "mb-6 text-3xl font-bold md:text-4xl",
+            "mb-6 text-3xl font-bold md:text-4xl lg:text-5xl",
             isDark ? "text-white" : "text-blue"
           )}
         >
           {headline}
-        </h2>
+        </h3>
       )}
 
       {body && (
