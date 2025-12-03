@@ -12,6 +12,9 @@ type AppState = {
     loading: boolean;
   };
   setting: SanitySetting | null;
+  ui?: {
+    menuOpen?: boolean;
+  };
 };
 type AppContextValue = [AppState, Dispatch<SetStateAction<AppState>>];
 type AppProviderProps = {

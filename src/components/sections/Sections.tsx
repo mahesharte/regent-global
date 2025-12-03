@@ -1,3 +1,4 @@
+// components/sections/Sections.tsx
 import { FC } from "react";
 
 import { useAppContext } from "@/components/app/context";
@@ -7,10 +8,14 @@ import BigNumbers from "./big-numbers/BigNumbers";
 import Contact from "./contact/Contact";
 import ContentBlock from "./content-block/ContentBlock";
 import Hero from "./hero/Hero";
+import HeroCarouselSection from "./heroCarousel";
 import LogoWall from "./logo-wall/LogoWall";
 import MultiColumn from "./multi-column/MultiColumn";
 import Team from "./team/Team";
 import { SectionVariables } from "./types";
+
+// TODO: uncomment after creating the HeroCarousel component
+// import HeroCarouselSection from "./hero-carousel/HeroCarousel";
 
 type Props = {
   sections: SanitySection[];
@@ -46,6 +51,8 @@ const Sections: FC<Props> = ({ sections, variables }) => {
                 return <ContentBlock section={section} />;
               case "hero":
                 return <Hero section={section} />;
+              case "heroCarousel":
+                return <HeroCarouselSection section={section} />;
               case "logoWall":
                 return <LogoWall section={section} />;
               case "multiColumn":

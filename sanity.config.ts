@@ -25,6 +25,7 @@ import people from "@/sanity/schemas/documents/people";
 import section from "@/sanity/schemas/documents/section";
 import button from "@/sanity/schemas/objects/button";
 import formInput from "@/sanity/schemas/objects/form-input";
+import heroSlide from "@/sanity/schemas/objects/hero-slide";
 import keyValue from "@/sanity/schemas/objects/key-value";
 import measurements from "@/sanity/schemas/objects/measurements";
 import pageMeta from "@/sanity/schemas/objects/page-meta";
@@ -62,6 +63,7 @@ export default defineConfig({
       // Objects
       button,
       formInput,
+      heroSlide,
       keyValue,
       measurements,
       pageMeta,

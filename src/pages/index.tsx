@@ -13,6 +13,14 @@ import getSectionVariables from "@/sanity/utils/getSectionVariables";
 import { GlobalPageProps } from "@/types/global";
 import { SectionVariables } from "@/components/sections/types";
 
+import dynamic from "next/dynamic";
+
+const HeroCarousel = dynamic(
+  () => import("@/components/hero/HeroCarousel"),
+  { ssr: false }
+);
+
+
 export type HomeProps = GlobalPageProps & {
   page: SanityPage | null;
   sectionVariables?: SectionVariables;

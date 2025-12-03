@@ -15,12 +15,20 @@ export type Theme = "dark" | "light";
 export type HorizontalAlignment = "left" | "center" | "right";
 export type VerticalAlignment = "top" | "center" | "bottom";
 
+export type Slide = {
+  image: SanityImage;
+  alt?: string;
+  caption?: string;
+  order?: number;
+};
+
 export type SanitySectionComponent =
   | "articles"
   | "bigNumbers"
   | "contact"
   | "contentBlock"
   | "hero"
+  | "heroCarousel"
   | "logoWall"
   | "multiColumn"
   | "team";
@@ -86,6 +94,10 @@ export type SanitySection = SanityDocument & {
   items?: SanitySectionItem[];
   people?: SanityPerson[];
   form?: SanityForm | null;
+  heroCarousel?: Slide[];
+  
+  minSlides?: number;
+  autoplayDelay?: number;
   styleTheme?: Theme;
   styleAlignment?: HorizontalAlignment;
   styleVerticalAlignment?: VerticalAlignment;

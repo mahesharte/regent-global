@@ -53,6 +53,7 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
     ref,
   ) => {
     const buttons = isArray(cta) ? cta : cta ? [cta] : [];
+
     return (
       <div
         className={cn(

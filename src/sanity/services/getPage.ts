@@ -61,7 +61,14 @@ const pageFields = `
       groups[]
     },
     form->,
-    styleGradient->
+    styleGradient->,
+    heroCarousel[] {
+      ...,
+      image {
+        ...,
+        asset->
+      }
+    }
   },
   pageMeta {
     ...,

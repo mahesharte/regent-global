@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type React from "react"; // ✅ for React.MouseEvent
 import { useEffect, useState } from "react";
+import { useAppContext } from "@/components/app/context";
 import { useRouter } from "next/router";
 
 import { Logo } from "@/components/Logo";
@@ -29,17 +30,24 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
   const isMobile = !useBreakpoint("md");
   const { asPath } = useRouter();
 
+  const [, setAppState] = useAppContext();
+
+  const syncMenu = (next: boolean) => {
+    setMenuopen(next);
+    setAppState((prev) => ({ ...prev, ui: { ...(prev.ui || {}), menuOpen: next } }));
+  };
+
   useEffect(() => setHydrated(true), []);
   const mobile = hydrated ? isMobile : false;
 
   useEffect(() => {
-    setMenuopen(false);
+    syncMenu(false);
     setMobileOpenIndex(null);
   }, [asPath]);
 
   useEffect(() => {
     if (hydrated) {
-      setMenuopen(false);
+      syncMenu(false);
       setMobileOpenIndex(null);
     }
   }, [mobile, hydrated]);
@@ -54,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
       setMobileOpenIndex((cur) => (cur === idx ? null : idx));
       return;
     }
-    setMenuopen(false);
+    syncMenu(false);
   };
 
   return (
@@ -72,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
           <Button
             className="z-20 p-0 md:hidden"
             variant="ghost"
-            onClick={() => setMenuopen((state) => !state)}
+            onClick={() => syncMenu(!menuOpen)}
             aria-label="Menu"
             aria-expanded={menuOpen}
             aria-controls="primary-nav"
@@ -123,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                           key={j}
                           href={child.url}
                           className="block px-4 py-2 text-sm hover:bg-gray-100"
-                          onClick={() => setMenuopen(false)}
+                          onClick={() => syncMenu(false)}
                         >
                           {child.name}
                         </Link>
@@ -142,7 +150,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                             key={j}
                             href={child.url}
                             className="block py-2 text-white"
-                            onClick={() => setMenuopen(false)}
+                            onClick={() => syncMenu(false)}
                           >
                             ↳ &nbsp;{child.name}
                           </Link>

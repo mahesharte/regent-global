@@ -18,6 +18,7 @@ export const components: { [value: string]: string } = {
   contact: "Contact",
   contentBlock: "Content Block",
   hero: "Hero",
+  heroCarousel: "Hero Carousel",
   logoWall: "Logo Wall",
   multiColumn: "Multi Column",
   team: "Team",
@@ -42,6 +43,7 @@ export const componentsWithPadding = [
   "contact",
   "contentBlock",
   "hero",
+  "heroCarousel",
   "logoWall",
   "multiColumn",
   "team",
@@ -140,6 +142,7 @@ export default defineType({
           "contact",
           "contentBlock",
           "hero",
+          "heroCarousel",
           "logoWall",
           "multiColumn",
           "team",
@@ -195,6 +198,39 @@ export default defineType({
             (document?.variant as string | undefined) ?? "",
           )),
     }),
+    defineField({
+      name: "heroCarousel",
+      title: "Hero Carousel Slides",
+      type: "array",
+      of: [
+        {
+          type: "heroSlide",
+        },
+      ],
+      hidden: ({ document }) =>
+        (document?.component as string | undefined) !== "heroCarousel",
+    }),
+
+    defineField({
+      name: "minSlides",
+      title: "Minimum slides to activate carousel",
+      type: "number",
+      description: "Minimum number of slides required to enable carousel behaviour (default 3)",
+      hidden: ({ document }) =>
+        (document?.component as string | undefined) !== "heroCarousel",
+      initialValue: 3,
+    }),
+
+    defineField({
+      name: "autoplayDelay",
+      title: "Autoplay delay (ms)",
+      type: "number",
+      description: "Autoplay delay in milliseconds (default 5000)",
+      hidden: ({ document }) =>
+        (document?.component as string | undefined) !== "heroCarousel",
+      initialValue: 5000,
+    }),
+    
     defineField({
       name: "animateImage",
       title: "Animate Image",
@@ -331,7 +367,7 @@ export default defineType({
         })),
       },
       hidden: ({ document }) =>
-        !["bigNumbers", "contact", "hero", "logoWall", "multiColumn"].includes(
+        !["bigNumbers", "contact", "hero", "heroCarousel", "logoWall", "multiColumn"].includes(
           (document?.component as string | undefined) ?? "",
         ),
     }),
@@ -381,6 +417,7 @@ export default defineType({
           "contact",
           "contentBlock",
           "hero",
+          "heroCarousel",
           "logoWall",
           "multiColumn",
           "team",
@@ -415,7 +452,7 @@ export default defineType({
         },
       ],
       hidden: ({ document }) =>
-        !["bigNumbers", "contact", "hero", "logoWall", "multiColumn"].includes(
+!["bigNumbers", "contact", "hero", "heroCarousel", "logoWall", "multiColumn"].includes(
           (document?.component as string | undefined) ?? "",
         ),
     }),
@@ -445,6 +482,7 @@ export default defineType({
         case "contentBlock":
         case "form":
         case "hero":
+        case "heroCarousel":
         case "logoWall":
         case "multiColumn":
         case "team":
