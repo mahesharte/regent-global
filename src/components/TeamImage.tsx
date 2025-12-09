@@ -92,7 +92,7 @@ const TeamImage = ({
               onClick={handleViewBio}
               className="rounded-full bg-white px-5 py-2 text-xs font-bold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 inline-block hover:bg-gray-100"
             >
-              Read Bio
+              Read bio
             </button>
           </div>
         )}
