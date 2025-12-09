@@ -58,6 +58,7 @@ const pageFields = `
       },
       title,
       description,
+      slug,
       groups[]
     },
     form->,
@@ -118,5 +119,29 @@ const getPage = async (
   client.fetch<SanityPage | null>(queryBy[by], {
     [by]: query,
   });
+
+export const getPersonBySlugQuery = groq`
+  *[_type == "person" && slug.current == $slug][0] {
+    _id,
+    _type,
+    name,
+    photo {
+      ...,
+      asset->
+    },
+    title,
+    description,
+    bio,
+    linkedinUrl,
+    slug,
+    groups[]
+  }
+`;
+
+export const getPerson = async (
+  client: SanityClient,
+  slug: string,
+): Promise<any | null> =>
+  client.fetch<any | null>(getPersonBySlugQuery, { slug });
 
 export default getPage;

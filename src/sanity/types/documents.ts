@@ -45,6 +45,9 @@ export type SanityPerson = SanityDocument & {
   photo?: SanityImage | null;
   title?: string;
   description?: string;
+  bio?: SanityRichtext;
+  linkedinUrl?: string;
+  slug?: Slug;
   groups?: SanityPersonGroup[];
 };
 

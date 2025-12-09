@@ -95,6 +95,7 @@ const Team: FC<Props> = ({ section }) => {
               image={person.photo?.asset?.url ?? ""}
               name={person.name ?? ""}
               title={person.title ?? ""}
+              slug={person.slug?.current}
               gradientDirection={
                 showGradient ? directions[index % 4] : undefined
               }

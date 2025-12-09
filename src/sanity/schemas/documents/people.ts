@@ -2,6 +2,7 @@ import { DocumentsIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 import { Prepare } from "../../types/utils";
+import defineRichtextField from "../helpers/richtext";
 
 const personGroups: { [value: string]: string } = {
   author: "Author",
@@ -34,6 +35,25 @@ export default defineType({
       name: "description",
       title: "Description",
       type: "string",
+    }),
+    defineRichtextField({
+      name: "bio",
+      title: "Bio",
+    }),
+    defineField({
+      name: "linkedinUrl",
+      title: "LinkedIn Profile URL",
+      type: "url",
+    }),
+    defineField({
+      name: "slug",
+      title: "URL Slug",
+      type: "slug",
+      options: {
+        source: "name",
+        maxLength: 96,
+      },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "groups",
