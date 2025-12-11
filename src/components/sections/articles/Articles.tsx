@@ -23,6 +23,7 @@ const TAB_ALL_TOPICS: CategoryTabItem = {
   linkTo: "#all",
   active: false,
 };
+
 const TAB_MOST_RECENT: CategoryTabItem = {
   title: "Most recent",
   linkTo: "recent",
@@ -39,15 +40,12 @@ const Articles: FC<Props> = ({ section, articles }) => {
   const [{ setting }] = useAppContext();
   const articleSlugPrefix = getArticleSlugPrefix(setting);
 
-  // Just for debug once: see what tags are coming in
-  // console.log("SECTION FILTER TAGS", section.filterTags);
-
-  // ✅ SECTION-LEVEL FILTER: base article list
+  // Base article list, optionally filtered by section.filterTags
   const baseArticles = useMemo(() => {
     const selectedSlugs =
-      section.filterTags
-        ?.map((t) => t.slug || "")
-        .filter((s): s is string => !!s) ?? [];
+  section.filterTags
+    ?.map((t: { slug?: string | null }) => t.slug ?? "")
+    .filter((s: string | null | undefined): s is string => !!s) ?? [];
 
     if (!selectedSlugs.length) return articles; // no filter set → all
 
@@ -61,7 +59,7 @@ const Articles: FC<Props> = ({ section, articles }) => {
     );
   }, [articles, section.filterTags]);
 
-  // All tags (unique, for modal) – based on filtered list
+  // All tags (unique, sorted) from the filtered articles
   const allTags = useMemo(
     () =>
       sortBy(
@@ -80,24 +78,31 @@ const Articles: FC<Props> = ({ section, articles }) => {
       string,
       { title: string; slug: string; latest: number }
     >();
+
     for (const a of baseArticles) {
       const d = new Date(
         a.datePublished ?? a._updatedAt ?? a._createdAt ?? 0,
       ).getTime();
+
       for (const t of a.tags ?? []) {
         const slug = t?.slug?.current ?? "";
         if (!slug) continue;
+
         const title = t?.title ?? slug;
         const prev = map.get(slug);
-        if (!prev || d > prev.latest) map.set(slug, { title, slug, latest: d });
+
+        if (!prev || d > prev.latest) {
+          map.set(slug, { title, slug, latest: d });
+        }
       }
     }
+
     return Array.from(map.values())
       .sort((a, b) => b.latest - a.latest)
       .slice(0, 5);
   }, [baseArticles]);
 
-  // Visible list (tag tab / recent)
+  // Visible list based on current mode + activeTag
   const visible = useMemo(() => {
     const base =
       mode === "byTag" && activeTag
