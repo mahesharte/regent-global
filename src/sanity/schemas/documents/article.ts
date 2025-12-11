@@ -31,6 +31,17 @@ export default defineType({
       },
       validation: (rule) => rule.required(),
     }),
+
+    defineField({
+      name: "filterTags",
+      title: "Filter by Tags (optional)",
+      description:
+        "If empty, this section shows all articles. If tags are selected, only articles containing at least one of these tags are shown.",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "articleTag" }] }],
+    }),
+ 
+
     defineField({
       name: "featuredImage",
       title: "Featured Image",

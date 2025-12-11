@@ -39,26 +39,48 @@ const Articles: FC<Props> = ({ section, articles }) => {
   const [{ setting }] = useAppContext();
   const articleSlugPrefix = getArticleSlugPrefix(setting);
 
-  // All tags (unique, for modal)
+  // Just for debug once: see what tags are coming in
+  // console.log("SECTION FILTER TAGS", section.filterTags);
+
+  // ✅ SECTION-LEVEL FILTER: base article list
+  const baseArticles = useMemo(() => {
+    const selectedSlugs =
+      section.filterTags
+        ?.map((t) => t.slug || "")
+        .filter((s): s is string => !!s) ?? [];
+
+    if (!selectedSlugs.length) return articles; // no filter set → all
+
+    const allowed = new Set(selectedSlugs);
+
+    return articles.filter((a) =>
+      (a.tags ?? []).some((t) => {
+        const slug = t?.slug?.current;
+        return slug && allowed.has(slug);
+      }),
+    );
+  }, [articles, section.filterTags]);
+
+  // All tags (unique, for modal) – based on filtered list
   const allTags = useMemo(
     () =>
       sortBy(
         uniqBy(
-          articles.flatMap((a) => a.tags ?? []),
+          baseArticles.flatMap((a) => a.tags ?? []),
           (t) => t?.slug?.current ?? "",
         ),
         "title",
       ),
-    [articles],
+    [baseArticles],
   );
 
-  // Compute up to 5 most recently used tags (by latest article date containing the tag)
+  // Compute up to 5 most recently used tags
   const recentTags = useMemo(() => {
     const map = new Map<
       string,
       { title: string; slug: string; latest: number }
     >();
-    for (const a of articles) {
+    for (const a of baseArticles) {
       const d = new Date(
         a.datePublished ?? a._updatedAt ?? a._createdAt ?? 0,
       ).getTime();
@@ -73,16 +95,16 @@ const Articles: FC<Props> = ({ section, articles }) => {
     return Array.from(map.values())
       .sort((a, b) => b.latest - a.latest)
       .slice(0, 5);
-  }, [articles]);
+  }, [baseArticles]);
 
-  // Visible article list (filter by tag if selected), always newest → oldest
+  // Visible list (tag tab / recent)
   const visible = useMemo(() => {
     const base =
       mode === "byTag" && activeTag
-        ? articles.filter((a) =>
+        ? baseArticles.filter((a) =>
             (a.tags ?? []).some((t) => t?.slug?.current === activeTag),
           )
-        : articles;
+        : baseArticles;
 
     return [...base].sort((a, b) => {
       const ad = new Date(
@@ -93,11 +115,10 @@ const Articles: FC<Props> = ({ section, articles }) => {
       ).getTime();
       return bd - ad;
     });
-  }, [articles, mode, activeTag]);
+  }, [baseArticles, mode, activeTag]);
 
-  // Build tabs: All topics, Most recent, then recent tag tabs
   const tagTabs: CategoryTabItem[] = recentTags.map(({ title, slug }) => ({
-    title, // keep short to avoid overflow
+    title,
     linkTo: `tag:${slug}`,
     active: mode === "byTag" && activeTag === slug,
   }));
@@ -110,8 +131,8 @@ const Articles: FC<Props> = ({ section, articles }) => {
 
   return (
     <div className={className} ref={ref}>
-      {/* Sticky tabs bar */}
-      <div className="sticky top-0  bg-white/80 backdrop-blur">
+      {/* Tabs */}
+      <div className="sticky top-0 bg-white/80 backdrop-blur">
         <CategoryTabs
           categories={categories}
           onSelect={({ linkTo }) => {
@@ -134,7 +155,7 @@ const Articles: FC<Props> = ({ section, articles }) => {
         />
       </div>
 
-      {/* All topics modal - full tag list */}
+      {/* All topics modal */}
       {showAll && (
         <div
           className="fixed inset-0 z-[9999] bg-black/40 p-4"

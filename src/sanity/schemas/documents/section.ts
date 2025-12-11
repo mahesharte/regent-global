@@ -150,7 +150,6 @@ export default defineType({
       validation: (rule) =>
         rule.custom((field, context) => {
           switch (context.document?.component) {
-            // Add required validation here
             // case 'hero':
             //   return !isUndefined(field) || 'Title is required';
             default:
@@ -158,6 +157,19 @@ export default defineType({
           }
         }),
     }),
+
+    // 🔽 NEW: only visible when Component = "articles"
+    defineField({
+      name: "filterTags",
+      title: "Filter by Tags (optional)",
+      description:
+        "If empty, this section shows all articles. If tags are selected, only articles containing at least one of these tags are shown.",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "articleTag" }] }],
+      hidden: ({ document }) =>
+        (document?.component as string | undefined) !== "articles",
+    }),
+
     defineField({
       name: "subtitle",
       title: "Subtitle",
@@ -202,25 +214,20 @@ export default defineType({
       name: "heroCarousel",
       title: "Hero Carousel Slides",
       type: "array",
-      of: [
-        {
-          type: "heroSlide",
-        },
-      ],
+      of: [{ type: "heroSlide" }],
       hidden: ({ document }) =>
         (document?.component as string | undefined) !== "heroCarousel",
     }),
-
     defineField({
       name: "minSlides",
       title: "Minimum slides to activate carousel",
       type: "number",
-      description: "Minimum number of slides required to enable carousel behaviour (default 3)",
+      description:
+        "Minimum number of slides required to enable carousel behaviour (default 3)",
       hidden: ({ document }) =>
         (document?.component as string | undefined) !== "heroCarousel",
       initialValue: 3,
     }),
-
     defineField({
       name: "autoplayDelay",
       title: "Autoplay delay (ms)",
@@ -230,7 +237,6 @@ export default defineType({
         (document?.component as string | undefined) !== "heroCarousel",
       initialValue: 5000,
     }),
-    
     defineField({
       name: "animateImage",
       title: "Animate Image",
@@ -243,11 +249,7 @@ export default defineType({
       name: "buttons",
       title: "Buttons",
       type: "array",
-      of: [
-        {
-          type: "button",
-        },
-      ],
+      of: [{ type: "button" }],
       hidden: ({ document }) =>
         !["contentBlock"].includes(
           (document?.component as string | undefined) ?? "",
@@ -257,11 +259,7 @@ export default defineType({
       name: "items",
       title: "Items",
       type: "array",
-      of: [
-        {
-          type: "sectionItem",
-        },
-      ],
+      of: [{ type: "sectionItem" }],
       hidden: ({ document }) =>
         !["bigNumbers", "contentBlock", "multiColumn"].includes(
           (document?.component as string | undefined) ?? "",
@@ -284,26 +282,13 @@ export default defineType({
       of: [
         {
           type: "reference",
-          to: [
-            {
-              type: "link",
-            },
-          ],
+          to: [{ type: "link" }],
         },
       ],
       hidden: ({ document }) =>
         !["logoWall"].includes(
           (document?.component as string | undefined) ?? "",
         ),
-    /*  validation: (rule) =>
-        rule.custom((field, context) => {
-          switch (context.document?.component) {
-            case "logoWall":
-              return !isUndefined(field) || "Links are required";
-            default:
-              return true;
-          }
-        }),*/
     }),
     defineField({
       name: "people",
@@ -312,11 +297,7 @@ export default defineType({
       of: [
         {
           type: "reference",
-          to: [
-            {
-              type: "person",
-            },
-          ],
+          to: [{ type: "person" }],
         },
       ],
       hidden: ({ document }) =>
@@ -335,11 +316,7 @@ export default defineType({
       name: "form",
       title: "Form",
       type: "reference",
-      to: [
-        {
-          type: "form",
-        },
-      ],
+      to: [{ type: "form" }],
       hidden: ({ document }) =>
         !["contact"].includes(
           (document?.component as string | undefined) ?? "",
@@ -367,9 +344,14 @@ export default defineType({
         })),
       },
       hidden: ({ document }) =>
-        !["bigNumbers", "contact", "hero", "heroCarousel", "logoWall", "multiColumn"].includes(
-          (document?.component as string | undefined) ?? "",
-        ),
+        ![
+          "bigNumbers",
+          "contact",
+          "hero",
+          "heroCarousel",
+          "logoWall",
+          "multiColumn",
+        ].includes((document?.component as string | undefined) ?? ""),
     }),
     defineField({
       name: "styleAlignment",
@@ -446,15 +428,16 @@ export default defineType({
       title: "Gradient",
       type: "reference",
       fieldset: "style",
-      to: [
-        {
-          type: "gradient",
-        },
-      ],
+      to: [{ type: "gradient" }],
       hidden: ({ document }) =>
-!["bigNumbers", "contact", "hero", "heroCarousel", "logoWall", "multiColumn"].includes(
-          (document?.component as string | undefined) ?? "",
-        ),
+        ![
+          "bigNumbers",
+          "contact",
+          "hero",
+          "heroCarousel",
+          "logoWall",
+          "multiColumn",
+        ].includes((document?.component as string | undefined) ?? ""),
     }),
     defineField({
       name: "styleFullSizeToggle",

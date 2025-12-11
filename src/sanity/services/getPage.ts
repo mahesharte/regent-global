@@ -11,6 +11,12 @@ const pageFields = `
   slug,
   sections[]-> {
     ...,
+     "filterTags": filterTags[]->{
+      _id,
+      title,
+      "slug": slug.current
+    },
+
     image {
       ...,
       asset->
