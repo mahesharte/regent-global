@@ -58,15 +58,10 @@ const HeroCarouselSection: FC<Props> = ({ section }) => {
   // Transform slides to match HeroCarousel Slide type
   const slides = rawSlides.map((slide) => ({
     image: slide.image,
-    alt: slide.alt,
-    caption: slide.caption,
+    alt: slide.alt ?? "",
+    caption: slide.caption ?? "",
     order: slide.order ?? 0,
   }));
-
-  // Debug: log the slides to console
-  if (slides.length > 0) {
-    console.log("HeroCarouselSection slides:", slides);
-  }
 
   switch (variant) {
     case "bigText":

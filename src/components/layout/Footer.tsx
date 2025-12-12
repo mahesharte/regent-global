@@ -44,6 +44,9 @@ const Footer: FC<Props> = ({ footer }) => {
         }}
         links={links}
         copyrightText={footer?.copyrightText}
+        socialLinks={footer?.socialLinks}
+        socialIcons={footer?.socialIcons}
+        legalLinks={footer?.legalLinks}
       />
       {preview.active && !inIframe() && <Banner loading={preview.loading} />}
     </footer>

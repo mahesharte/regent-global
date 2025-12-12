@@ -104,7 +104,7 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
                 ) : (
                   <Image
                     src={imageUrlBuilder(image).url()}
-                    objectFit="cover"
+                    className="object-cover"
                     fill={verticalAlign === "stretch" ? true : false}
                     width={
                       verticalAlign !== "stretch"

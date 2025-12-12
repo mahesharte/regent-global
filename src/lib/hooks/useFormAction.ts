@@ -1,3 +1,5 @@
+'use client';
+
 import { UseFormReturn, useForm } from "react-hook-form";
 import { FormEventHandler, useCallback, useState } from "react";
 import axios from "axios";

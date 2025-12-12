@@ -40,6 +40,25 @@ export type SanityImage = {
   asset: ImageAsset | null;
 };
 
+export type SanitySocialLinks = {
+  facebook?: string | null;
+  instagram?: string | null;
+  tiktok?: string | null;
+  linkedin?: string | null;
+};
+
+export type SanitySocialIcons = {
+  facebook?: SanityImage | null;
+  instagram?: SanityImage | null;
+  tiktok?: SanityImage | null;
+  linkedin?: SanityImage | null;
+};
+
+export type SanityLegalLinks = {
+  cookies?: string | null;
+  privacy?: string | null;
+};
+
 export type SanityPerson = SanityDocument & {
   name: string;
   photo?: SanityImage | null;
@@ -127,6 +146,9 @@ export type SanityFooter = SanityDocument & {
   links?: SanityLink[];
   form?: SanityForm;
   copyrightText?: SanityRichtext;
+  socialLinks?: SanitySocialLinks;
+  socialIcons?: SanitySocialIcons;
+  legalLinks?: SanityLegalLinks;
 };
 
 export type SanitySectionPadding = {

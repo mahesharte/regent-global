@@ -25,10 +25,9 @@ const Hero = forwardRef<HTMLDivElement, Props>(
       >
         {image?.asset?.url && (
           <Image
-            className="-z-10"
+            className="-z-10 object-cover"
             src={imageUrlBuilder(image).url()}
             fill={true}
-            objectFit="cover"
             alt={image?.asset?.title || ""}
           />
         )}
