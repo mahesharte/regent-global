@@ -13,7 +13,7 @@ export const existingBlockStyles = {
   blockquote: "Quote",
 };
 
-export type Attachment = "image";
+export type Attachment = "image" | "video";
 export type BlockStyle = keyof typeof existingBlockStyles;
 export type ListItemType = "bullet" | "number";
 export type Mark = "link";

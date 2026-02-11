@@ -211,6 +211,90 @@ export default defineType({
           )),
     }),
     defineField({
+      name: "video",
+      title: "Video",
+      type: "object",
+      fields: [
+        defineField({
+          name: "mediaType",
+          title: "Media Type",
+          type: "string",
+          options: {
+            list: [
+              { title: "Image", value: "image" },
+              { title: "Video File", value: "videoFile" },
+              { title: "Video URL", value: "videoUrl" },
+            ],
+          },
+        }),
+        defineField({
+          name: "videoFile",
+          title: "Video File",
+          type: "file",
+          options: {
+            accept: "video/mp4,video/webm,.mp4,.webm",
+          },
+          hidden: ({ parent }) => (parent as any)?.mediaType !== "videoFile",
+          validation: (rule) =>
+            rule.custom((value, context) => {
+              const mediaType = (context.parent as any)?.mediaType;
+              if (mediaType === "videoFile" && !value) {
+                return "Video file is required when mediaType is videoFile";
+              }
+              return true;
+            }),
+        }),
+        defineField({
+          name: "videoUrl",
+          title: "Video URL (YouTube/Vimeo)",
+          type: "url",
+          hidden: ({ parent }) => (parent as any)?.mediaType !== "videoUrl",
+          validation: (rule) =>
+            rule.custom((value, context) => {
+              const mediaType = (context.parent as any)?.mediaType;
+              if (mediaType === "videoUrl" && !value) {
+                return "URL is required when mediaType is videoUrl";
+              }
+              if (mediaType === "videoUrl" && value) {
+                const validDomains = ["youtube.com", "youtu.be", "vimeo.com"];
+                const isValid = validDomains.some((domain) =>
+                  value.includes(domain),
+                );
+                if (!isValid) {
+                  return "URL must be from YouTube or Vimeo";
+                }
+              }
+              return true;
+            }),
+        }),
+        defineField({
+          name: "posterImage",
+          title: "Poster Image (Optional)",
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+          hidden: ({ parent }) =>
+            !["videoFile", "videoUrl"].includes(
+              (parent as any)?.mediaType,
+            ),
+        }),
+        defineField({
+          name: "caption",
+          title: "Caption / Alt Text (Optional)",
+          type: "string",
+          hidden: ({ parent }) =>
+            !["videoFile", "videoUrl"].includes(
+              (parent as any)?.mediaType,
+            ),
+        }),
+      ],
+      hidden: ({ document }) =>
+        !["contentBlock"].includes(
+          (document?.component as string | undefined) ?? "",
+        ),
+    }),
+    defineField({
       name: "heroCarousel",
       title: "Hero Carousel Slides",
       type: "array",

@@ -62,7 +62,7 @@ export default defineType({
         validation: (rule) => rule.required(),
       },
       {
-        attachments: ["image"],
+        attachments: ["image", "video"],
       },
     ),
     defineField({

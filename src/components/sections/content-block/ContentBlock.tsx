@@ -3,6 +3,7 @@ import type { FC } from "react";
 
 import { ContentBlock as ContentBlockComponent } from "@/components/ContentBlock";
 import RichText from "@/components/richtext/RichText";
+import VideoRenderer from "@/components/VideoRenderer";
 import useDynamicStyles from "@/lib/hooks/useDynamicStyles";
 import { SanityButton } from "@/sanity/types/objects";
 import { useSectionStyles } from "../utils";
@@ -14,6 +15,14 @@ type Props = {
 const ContentBlock: FC<Props> = ({ section }) => {
   const styles = useSectionStyles(section, ["margin", "padding"]);
   const { className, ref } = useDynamicStyles<HTMLDivElement>(styles);
+
+  // Determine media to display: video takes precedence over image if both exist
+  const media = section.video?.mediaType ? (
+    <VideoRenderer video={section.video} className="w-full" />
+  ) : section.image ? (
+    section.image
+  ) : undefined;
+
   return (
     <ContentBlockComponent
       ref={ref}
@@ -21,7 +30,7 @@ const ContentBlock: FC<Props> = ({ section }) => {
       align={section.styleAlignment ?? "left"}
       verticalAlign={section.styleVerticalAlignment}
       heading={section.title ?? ""}
-      image={section.image ?? undefined}
+      image={media as any}
       animateImage={section.animateImage}
       body={
         <RichText value={section.content ?? []} defaultClassNames="standard" />

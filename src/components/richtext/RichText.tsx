@@ -1,6 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import fromPairs from "lodash/fromPairs";
 import isEmpty from "lodash/isEmpty";
 import merge from "lodash/merge";
@@ -12,6 +13,11 @@ import {
   SanityRichtext,
 } from "@/sanity/types/objects";
 import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
+
+// Lazy load VideoRenderer since it uses 'use client' and has interactivity
+const VideoRenderer = dynamic(() => import("@/components/VideoRenderer"), {
+  ssr: false,
+});
 
 type RichTextClassNames = {
   block?: Partial<Record<BlockStyle, string>>;
@@ -73,49 +79,45 @@ const marksComponents: Record<Mark, FC<MarkComponentProps>> = {
   ),
 };
 
-const defaultClassNamesDefinitions: Record<
-  DefaultClassNames,
-  RichTextClassNames
-> = {
+const defaultClassNamesDefinitions = {
   standard: {
     block: {
-      normal: "mb-1 last-of-type:mb-0",
-      h1: "text-3xl font-bold mb-4",
-      h2: "text-2xl font-semibold mb-3",
-      h3: "text-xl font-medium mb-2",
-      h4: "text-lg font-medium mb-2",
-      h5: "text-md mb-1",
-      h6: "text-sm mb-1",
+      normal: "py-4 leading-6",
+      h1: "text-4xl font-bold my-6",
+      h2: "text-3xl font-bold my-4",
+      h3: "text-2xl font-bold my-3",
+      h4: "text-xl font-bold my-2",
+      h5: "text-lg font-bold my-2",
+      h6: "text-base font-bold my-1",
+      blockquote: "border-l-4 border-gray-400 pl-4 italic my-4 text-gray-600",
     },
     list: {
-      bullet: "list-disc pl-6 mb-4",
-      number: "list-decimal pl-6 mb-4",
+      bullet: "list-disc list-inside my-3",
+      number: "list-decimal list-inside my-3",
     },
     listItem: {
-      bullet: "mb-1",
-      number: "mb-1",
+      bullet: "",
+      number: "",
     },
     marks: {
-      link: "underline",
+      link: "text-blue-600 underline hover:text-blue-800",
     },
   },
 };
 
-const getImgSrc = (value: any, isInline: boolean): string => {
-  try {
-    return imageUrlBuilder(value)
-      .width(isInline ? 200 : 1200)
-      .fit("max")
-      .auto("format")
-      .url();
-  } catch (exception) {
+const getImgSrc = (value: { asset?: any }, isInline: boolean) => {
+  if (!value?.asset) {
     return "";
   }
+
+  if (isInline) {
+    return imageUrlBuilder(value as any).width(100).fit("max").auto("format").url();
+  }
+
+  return imageUrlBuilder(value as any).width(1200).fit("max").auto("format").url();
 };
 
-const getComponents = (
-  classNames: RichTextClassNames,
-): Partial<PortableTextReactComponents> => {
+const getComponents = (classNames: RichTextClassNames): Partial<PortableTextReactComponents> => {
   const block: PortableTextReactComponents["block"] = fromPairs(
     Object.keys(classNames.block ?? {}).map((block) => [
       block,
@@ -191,6 +193,18 @@ const getComponents = (
           />
         );
       },
+      videoBlock: ({ value }) => {
+        if (!value) return <></>;
+        // Transform videoBlock to SanityVideo format for VideoRenderer
+        const video = {
+          mediaType: value.mediaType,
+          videoFile: value.videoFile ? { asset: value.videoFile.asset } : undefined,
+          videoUrl: value.videoUrl,
+          posterImage: value.posterImage ? { asset: value.posterImage.asset } : undefined,
+          caption: value.caption,
+        };
+        return <VideoRenderer video={video} className="my-6" />;
+      },
     },
   };
 };
@@ -198,11 +212,11 @@ const getComponents = (
 const RichText: FC<Props> = ({ classNames = {}, defaultClassNames, value }) => (
   <PortableText
     value={value}
-    components={getComponents(
+      components={getComponents(
       defaultClassNames
         ? merge(defaultClassNamesDefinitions[defaultClassNames], classNames)
         : classNames,
-    )}
+      ) as PortableTextReactComponents}
   />
 );
 

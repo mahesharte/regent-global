@@ -59,14 +59,94 @@ const defineRichtextField = (
                     },
                   ],
                 });
+              case "video":
+                return defineArrayMember({
+                  type: "object",
+                  name: "videoBlock",
+                  title: "Video",
+                  fields: [
+                    {
+                      name: "mediaType",
+                      title: "Media Type",
+                      type: "string",
+                      options: {
+                        list: [
+                          { title: "Video File", value: "videoFile" },
+                          { title: "Video URL", value: "videoUrl" },
+                        ],
+                      },
+                    },
+                    {
+                      name: "videoFile",
+                      title: "Video File",
+                      type: "file",
+                      options: {
+                        accept: "video/mp4,video/webm,.mp4,.webm",
+                      },
+                      hidden: ({ parent }) => (parent as any)?.mediaType !== "videoFile",
+                      validation: (rule) =>
+                        rule.custom((value, context) => {
+                          const mediaType = (context.parent as any)?.mediaType;
+                          if (mediaType === "videoFile" && !value) {
+                            return "Video file is required when mediaType is videoFile";
+                          }
+                          return true;
+                        }),
+                    },
+                    {
+                      name: "videoUrl",
+                      title: "Video URL (YouTube/Vimeo)",
+                      type: "url",
+                      hidden: ({ parent }) => (parent as any)?.mediaType !== "videoUrl",
+                      validation: (rule) =>
+                        rule.custom((value, context) => {
+                          const mediaType = (context.parent as any)?.mediaType;
+                          const urlValue = (context.parent as any)?.videoUrl as string | undefined;
+                          if (mediaType === "videoUrl" && !value) {
+                            return "URL is required when mediaType is videoUrl";
+                          }
+                          if (mediaType === "videoUrl" && urlValue) {
+                            const val = String(urlValue);
+                            const validDomains = ["youtube.com", "youtu.be", "vimeo.com"];
+                            const isValid = validDomains.some((domain) => val.includes(domain));
+                            if (!isValid) {
+                              return "URL must be from YouTube or Vimeo";
+                            }
+                          }
+                          return true;
+                        }),
+                    },
+                    {
+                      name: "posterImage",
+                      title: "Poster Image (Optional)",
+                      type: "image",
+                      options: {
+                        hotspot: true,
+                      },
+                      hidden: ({ parent }) =>
+                        !["videoFile", "videoUrl"].includes(
+                          (parent as any)?.mediaType,
+                        ),
+                    },
+                    {
+                      name: "caption",
+                      title: "Caption / Alt Text (Optional)",
+                      type: "string",
+                      hidden: ({ parent }) =>
+                        !["videoFile", "videoUrl"].includes(
+                          (parent as any)?.mediaType,
+                        ),
+                    },
+                  ],
+                });
               default:
                 return undefined;
             }
           })
           .filter((arrayMember) => !isUndefined(arrayMember)),
-      ],
-    } as SchemaField,
-    defineOptions as DefineOptions,
-  );
+       ],
+     } as SchemaField,
+     defineOptions as DefineOptions,
+   );
 
-export default defineRichtextField;
+ export default defineRichtextField;

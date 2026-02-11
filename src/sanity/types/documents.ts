@@ -40,6 +40,18 @@ export type SanityImage = {
   asset: ImageAsset | null;
 };
 
+export type SanityVideoFile = {
+  asset: ImageAsset | null;
+};
+
+export type SanityVideo = {
+  mediaType?: "image" | "videoFile" | "videoUrl";
+  videoFile?: SanityVideoFile | null;
+  videoUrl?: string | null;
+  posterImage?: SanityImage | null;
+  caption?: string | null;
+};
+
 export type SanitySocialLinks = {
   facebook?: string | null;
   instagram?: string | null;
@@ -110,6 +122,7 @@ export type SanitySection = SanityDocument & {
   subtitle?: string;
   content?: SanityRichtext;
   image?: SanityImage | null;
+  video?: SanityVideo | null;
   animateImage?: boolean;
   buttons?: SanityButton[];
   links?: SanityLink[];

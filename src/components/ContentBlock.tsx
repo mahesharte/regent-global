@@ -18,7 +18,7 @@ type ContentBlockProps = {
   align: "left" | "right" | "center";
   verticalAlign?: "top" | "center" | "bottom" | "stretch";
   className?: string;
-  image?: SanityImage;
+  image?: SanityImage | ReactNode;
   animateImage?: boolean;
   heading: string;
   body?: ReactNode;
@@ -53,6 +53,53 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
     ref,
   ) => {
     const buttons = isArray(cta) ? cta : cta ? [cta] : [];
+
+    // Check if image is a SanityImage or a React node
+    const isSanityImage = (img: any): img is SanityImage =>
+      img && typeof img === "object" && "asset" in img;
+
+    const renderMedia = () => {
+      if (!image) return null;
+
+      // If it's a React node (like VideoRenderer output), render it directly
+      if (!isSanityImage(image)) {
+        return image;
+      }
+
+      // Otherwise, render the SanityImage
+      const sanityImg = image as SanityImage;
+      if (!sanityImg?.asset?.url) return null;
+
+      return (
+        <>
+          {sanityImg?.asset?.extension === "svg" ? (
+            <Illustration
+              width={sanityImg.asset.metadata.dimensions.width}
+              height={sanityImg.asset.metadata.dimensions.height}
+              svgImageUrl={sanityImg.asset.url}
+              animate={animateImage}
+            />
+          ) : (
+            <Image
+              src={imageUrlBuilder(sanityImg).url()}
+              className="object-cover"
+              fill={verticalAlign === "stretch" ? true : false}
+              width={
+                verticalAlign !== "stretch"
+                  ? sanityImg?.asset?.metadata?.dimensions.width
+                  : undefined
+              }
+              height={
+                verticalAlign !== "stretch"
+                  ? sanityImg?.asset?.metadata?.dimensions.height
+                  : undefined
+              }
+              alt={""}
+            />
+          )}
+        </>
+      );
+    };
 
     return (
       <div
@@ -92,35 +139,7 @@ const ContentBlock = forwardRef<HTMLDivElement, ContentBlockProps>(
         </div>
         {align !== "center" && (
           <div className="relative basis-1/2 lg:basis-2/5">
-            {!!image?.asset?.url && (
-              <>
-                {image?.asset?.extension === "svg" ? (
-                  <Illustration
-                    width={image.asset.metadata.dimensions.width}
-                    height={image.asset.metadata.dimensions.height}
-                    svgImageUrl={image.asset.url}
-                    animate={animateImage}
-                  />
-                ) : (
-                  <Image
-                    src={imageUrlBuilder(image).url()}
-                    className="object-cover"
-                    fill={verticalAlign === "stretch" ? true : false}
-                    width={
-                      verticalAlign !== "stretch"
-                        ? image?.asset?.metadata?.dimensions.width
-                        : undefined
-                    }
-                    height={
-                      verticalAlign !== "stretch"
-                        ? image?.asset?.metadata?.dimensions.height
-                        : undefined
-                    }
-                    alt={""}
-                  />
-                )}
-              </>
-            )}
+            {renderMedia()}
           </div>
         )}
       </div>

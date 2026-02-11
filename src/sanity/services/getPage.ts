@@ -21,6 +21,17 @@ const pageFields = `
       ...,
       asset->
     },
+    video {
+      ...,
+      videoFile {
+        ...,
+        asset->
+      },
+      posterImage {
+        ...,
+        asset->
+      }
+    },
     buttons[] {
       ...,
       link-> {

@@ -13,7 +13,20 @@ const articleFields = `
     asset->
   },
   introduction,
-  content,
+  content[] {
+    ...,
+    videoBlock {
+      ...,
+      videoFile {
+        ...,
+        asset->
+      },
+      posterImage {
+        ...,
+        asset->
+      }
+    }
+  },
   excerpt,
   author-> {
     ...,
