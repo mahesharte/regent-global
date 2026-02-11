@@ -64,6 +64,20 @@ const defineRichtextField = (
                   type: "object",
                   name: "videoBlock",
                   title: "Video",
+                  preview: {
+                    select: {
+                      mediaType: "mediaType",
+                      videoUrl: "videoUrl",
+                      videoFileName: "videoFile.asset.originalFilename",
+                    },
+                    prepare({ mediaType, videoUrl, videoFileName }) {
+                      const subtitle = mediaType === "videoUrl" ? videoUrl : videoFileName || "Video File";
+                      return {
+                        title: "🎬 Video",
+                        subtitle,
+                      };
+                    },
+                  },
                   fields: [
                     {
                       name: "mediaType",
