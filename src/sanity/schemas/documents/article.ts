@@ -80,7 +80,6 @@ export default defineType({
           type: "person",
         },
       ],
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "tags",
