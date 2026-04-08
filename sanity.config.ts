@@ -23,6 +23,7 @@ import link from "@/sanity/schemas/documents/link";
 import page from "@/sanity/schemas/documents/page";
 import people from "@/sanity/schemas/documents/people";
 import section from "@/sanity/schemas/documents/section";
+import pdfGateSubmission from "@/sanity/schemas/documents/pdf-gate-submission";
 import button from "@/sanity/schemas/objects/button";
 import formInput from "@/sanity/schemas/objects/form-input";
 import heroSlide from "@/sanity/schemas/objects/hero-slide";
@@ -60,6 +61,7 @@ export default defineConfig({
       page,
       people,
       section,
+      pdfGateSubmission,
       // Objects
       button,
       formInput,

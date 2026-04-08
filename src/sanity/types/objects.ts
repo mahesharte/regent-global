@@ -16,7 +16,7 @@ export const existingBlockStyles = {
 export type Attachment = "image" | "video";
 export type BlockStyle = keyof typeof existingBlockStyles;
 export type ListItemType = "bullet" | "number";
-export type Mark = "link";
+export type Mark = "link" | "gatedPdfLink";
 
 export type SanityKeyValueType =
   | "string"
@@ -59,6 +59,7 @@ export type SanityButton = {
   icon?: SanityImage | null;
   alignment?: "left" | "right";
   size?: "medium";
+  isGated?: boolean;
 };
 
 export type SanityMeasurementBreakpoint = {
@@ -83,4 +84,15 @@ export type SanityFormInput = {
   title?: string;
   placeholder?: string;
   required?: boolean;
+};
+
+export type SanityAsset = {
+  _ref: string;
+  _type: "reference";
+};
+
+export type GatedPdfLink = {
+  pdfFile?: SanityAsset;
+  pdfExternalUrl?: string;
+  label?: string;
 };

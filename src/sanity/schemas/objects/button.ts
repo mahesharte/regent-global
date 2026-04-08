@@ -79,6 +79,13 @@ export default defineType({
         })),
       },
     }),
+    defineField({
+      name: "isGated",
+      type: "boolean",
+      title: "Make this a gated PDF link",
+      description: "When enabled, users must submit their organization and email before accessing the PDF",
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {

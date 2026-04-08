@@ -1,4 +1,8 @@
+'use client';
+
 import type { FC, ReactNode } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { PortableText, PortableTextReactComponents } from "@portabletext/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -11,8 +15,10 @@ import {
   ListItemType,
   Mark,
   SanityRichtext,
+  GatedPdfLink,
 } from "@/sanity/types/objects";
 import imageUrlBuilder from "@/sanity/utils/imageUrlBuilder";
+import AccessGateModal from "@/components/AccessGateModal";
 
 // Lazy load VideoRenderer since it uses 'use client' and has interactivity
 const VideoRenderer = dynamic(() => import("@/components/VideoRenderer"), {
@@ -30,18 +36,22 @@ type Props = {
   classNames?: RichTextClassNames;
   defaultClassNames?: DefaultClassNames;
   value: SanityRichtext;
+  pageSlug?: string;
 };
 type BlockComponentProps = {
   children: ReactNode;
   className?: string;
 };
 type LinkProps = {
-  href: string;
+  href?: string;
+};
+type GatedPdfLinkProps = GatedPdfLink & {
+  _key?: string;
 };
 type MarkComponentProps = {
   children: ReactNode;
   className?: string;
-  value: LinkProps;
+  value: LinkProps | GatedPdfLinkProps;
 };
 const blockComponents: Record<BlockStyle, FC<BlockComponentProps>> = {
   normal: ({ children, className }) => <p className={className}>{children}</p>,
@@ -71,9 +81,39 @@ const listItemComponents: Record<ListItemType, FC<BlockComponentProps>> = {
     <li className={className}>{children}</li>
   ),
 };
-const marksComponents: Record<Mark, FC<MarkComponentProps>> = {
+
+// GatedPdfLink mark component - needs interactivity so defined outside marksComponents
+type GatedPdfLinkMarkProps = {
+  children: ReactNode;
+  className?: string;
+  value: GatedPdfLinkProps;
+  onOpen: (pdfData: GatedPdfLinkProps) => void;
+};
+const GatedPdfLinkMark: FC<GatedPdfLinkMarkProps> = ({
+  children,
+  className,
+  value,
+  onOpen,
+}) => {
+  console.log('🎯 GatedPdfLinkMark component rendered with value:', value);
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        console.log('👆 PDF link clicked!', value);
+        onOpen(value);
+      }}
+      className={`${className} cursor-pointer bg-transparent p-0 font-inherit text-inherit underline`}
+      aria-label="Download gated PDF"
+    >
+      {children}
+    </button>
+  );
+};
+
+const marksComponents: Record<"link", FC<MarkComponentProps>> = {
   link: ({ children, className, value }) => (
-    <a className={className} href={value.href}>
+    <a className={className} href={(value as LinkProps).href}>
       {children}
     </a>
   ),
@@ -101,6 +141,7 @@ const defaultClassNamesDefinitions = {
     },
     marks: {
       link: "text-blue-600 underline hover:text-blue-800",
+      gatedPdfLink: "text-blue-600 underline hover:text-blue-800 cursor-pointer",
     },
   },
 };
@@ -117,7 +158,10 @@ const getImgSrc = (value: { asset?: any }, isInline: boolean) => {
   return imageUrlBuilder(value as any).width(1200).fit("max").auto("format").url();
 };
 
-const getComponents = (classNames: RichTextClassNames): Partial<PortableTextReactComponents> => {
+const getComponents = (
+  classNames: RichTextClassNames,
+  onGatedPdfLinkOpen?: (pdfData: GatedPdfLinkProps) => void
+): Partial<PortableTextReactComponents> => {
   const block: PortableTextReactComponents["block"] = fromPairs(
     Object.keys(classNames.block ?? {}).map((block) => [
       block,
@@ -159,24 +203,31 @@ const getComponents = (classNames: RichTextClassNames): Partial<PortableTextReac
       },
     ]),
   );
-  const marks: PortableTextReactComponents["marks"] = fromPairs(
-    Object.keys(classNames.marks ?? {}).map((mark) => [
-      mark,
-      ({ children, value }) => {
-        const Component = marksComponents[mark as Mark];
-        return (
-          <Component className={classNames.marks?.[mark as Mark]} value={value}>
-            {children}
-          </Component>
-        );
-      },
-    ]),
-  );
+  const marks: PortableTextReactComponents["marks"] = {
+    link: ({ children, value }) => (
+      <a
+        className={classNames.marks?.link}
+        href={(value as LinkProps).href}
+      >
+        {children}
+      </a>
+    ),
+    gatedPdfLink: ({ children, value }) => (
+      <GatedPdfLinkMark
+        className={classNames.marks?.gatedPdfLink}
+        value={value as GatedPdfLinkProps}
+        onOpen={onGatedPdfLinkOpen || (() => {})}
+      >
+        {children}
+      </GatedPdfLinkMark>
+    ),
+  };
+
   return {
     ...(isEmpty(block) ? {} : { block }),
     ...(isEmpty(list) ? {} : { list }),
     ...(isEmpty(listItem) ? {} : { listItem }),
-    ...(isEmpty(marks) ? {} : { marks }),
+    marks,
     types: {
       image: ({ value, isInline }) => {
         const imgSrc = getImgSrc(value, isInline);
@@ -209,15 +260,113 @@ const getComponents = (classNames: RichTextClassNames): Partial<PortableTextReac
   };
 };
 
-const RichText: FC<Props> = ({ classNames = {}, defaultClassNames, value }) => (
-  <PortableText
-    value={value}
-      components={getComponents(
-      defaultClassNames
-        ? merge(defaultClassNamesDefinitions[defaultClassNames], classNames)
-        : classNames,
-      ) as PortableTextReactComponents}
-  />
-);
+const RichText: FC<Props> = ({
+  classNames = {},
+  defaultClassNames,
+  value,
+  pageSlug: pageSluProp,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPdf, setSelectedPdf] = useState<GatedPdfLinkProps | null>(null);
+  const router = useRouter();
+
+  // Auto-capture page slug from router if not provided
+  const pageSlug = pageSluProp || router.asPath.split("?")[0] || router.pathname;
+
+  const handleGatedPdfLinkOpen = (pdfData: GatedPdfLinkProps) => {
+    console.log('🔍 Gated PDF Link opened with data:', pdfData);
+    setSelectedPdf(pdfData);
+    setIsModalOpen(true);
+  };
+
+  const handleModalSubmit = async (data: {
+    organisationName: string;
+    email: string;
+  }) => {
+    if (!selectedPdf) {
+      throw new Error("Missing PDF information");
+    }
+
+    if (!pageSlug) {
+      throw new Error("Missing page information");
+    }
+
+    // Handle file reference - Sanity can store it in multiple formats
+    let pdfFileRef: string | undefined;
+    let pdfExternalUrl: string | undefined = selectedPdf.pdfExternalUrl;
+    
+    if (selectedPdf.pdfFile) {
+      console.log('🔍 pdfFile value:', selectedPdf.pdfFile);
+      
+      // Try multiple extraction paths for the file reference
+      const fileObj = selectedPdf.pdfFile as any;
+      
+      if (typeof fileObj === 'string') {
+        pdfFileRef = fileObj;
+      } else if (typeof fileObj === 'object') {
+        // Most likely path: pdfFile.asset._ref
+        pdfFileRef = fileObj?.asset?._ref || fileObj?._ref;
+      }
+    }
+
+    console.log('📤 Extracted PDF data:', {
+      pdfFileRef,
+      pdfExternalUrl,
+      hasPdfFile: !!selectedPdf.pdfFile,
+      pdfFileObject: selectedPdf.pdfFile,
+    });
+
+    // Validate that at least one PDF source is provided
+    if (!pdfFileRef && !pdfExternalUrl) {
+      throw new Error('Either PDF file or external URL must be provided');
+    }
+
+    const response = await fetch("/api/pdf-gate-submission", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        organisationName: data.organisationName,
+        email: data.email,
+        pageSlug,
+        pdfLabel: selectedPdf.label,
+        pdfFileRef,
+        pdfExternalUrl,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to process PDF request");
+    }
+
+    const result = await response.json();
+    setIsModalOpen(false);
+
+    // Open PDF in new tab
+    if (result.pdfUrl) {
+      window.open(result.pdfUrl, "_blank");
+    }
+  };
+
+  const components = getComponents(
+    defaultClassNames
+      ? merge(defaultClassNamesDefinitions[defaultClassNames], classNames)
+      : classNames,
+    handleGatedPdfLinkOpen
+  ) as PortableTextReactComponents;
+
+  return (
+    <>
+      <PortableText value={value} components={components} />
+      <AccessGateModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleModalSubmit}
+        pageSlug={pageSlug}
+        pdfLabel={selectedPdf?.label}
+      />
+    </>
+  );
+};
 
 export default RichText;

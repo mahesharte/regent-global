@@ -5,6 +5,7 @@ import {
   type BlockStyle,
   existingBlockStyles,
 } from "@/sanity/types/objects";
+import gatedPdfLinkAnnotation from "@/sanity/schemas/objects/gated-pdf-link-annotation";
 
 type DefineFieldParameters = Parameters<typeof defineField>;
 type SchemaField = DefineFieldParameters[0];
@@ -43,6 +44,65 @@ const defineRichtextField = (
             title: existingBlockStyles[value],
             value,
           })),
+          marks: {
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+              { title: "Code", value: "code" },
+            ],
+            annotations: [
+              {
+                name: "link",
+                type: "object",
+                title: "Link",
+                fields: [
+                  {
+                    name: "href",
+                    type: "url",
+                    title: "URL",
+                  },
+                ],
+              },
+              {
+                name: "gatedPdfLink",
+                type: "object",
+                title: "PDF Gate",
+                fields: [
+                  {
+                    name: "pdfFile",
+                    type: "file",
+                    title: "PDF File",
+                    description: "Upload a PDF directly to Sanity",
+                    options: {
+                      accept: "application/pdf",
+                    },
+                  },
+                  {
+                    name: "pdfExternalUrl",
+                    type: "url",
+                    title: "External PDF URL",
+                    description: "Optional: URL to an externally hosted PDF",
+                  },
+                  {
+                    name: "label",
+                    type: "string",
+                    title: "Label (for admin tracking)",
+                    description: "Optional label to identify this PDF in submissions",
+                  },
+                ],
+                validation: (rule) =>
+                  rule.custom((value: { pdfFile?: unknown; pdfExternalUrl?: string } | undefined) => {
+                    if (!value) return true;
+                    const hasPdfFile = value.pdfFile;
+                    const hasPdfUrl = value.pdfExternalUrl;
+                    if (!hasPdfFile && !hasPdfUrl) {
+                      return "At least one of PDF File or External PDF URL must be set";
+                    }
+                    return true;
+                  }),
+              },
+            ],
+          },
         }),
         ...attachments
           .map((attachment) => {
