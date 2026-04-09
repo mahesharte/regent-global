@@ -65,6 +65,62 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
     syncMenu(false);
   };
 
+  const renderDesktopChildren = (items: LinkList[], depth = 0): React.ReactNode => {
+    if (!items.length) {
+      return null;
+    }
+
+    return (
+      <div
+        className={cn(
+          depth === 0
+            ? "min-w-[220px] py-2"
+            : "absolute left-full top-0 z-50 hidden min-w-[220px] bg-white py-2 shadow-lg group-hover/menu-item:block",
+        )}
+      >
+        {items.map((item, idx) => (
+          <div key={`${item.name}-${idx}`} className="group/menu-item relative py-1">
+            <Link
+              href={item.url}
+              className="flex items-center justify-between gap-4 px-3 py-2 text-sm hover:bg-gray-100"
+              onClick={() => syncMenu(false)}
+            >
+              <span>{item.name}</span>
+              {!!item.children?.length && (
+                <span className="text-xs text-gray-500">&#8250;</span>
+              )}
+            </Link>
+            {!!item.children?.length &&
+              renderDesktopChildren(item.children, depth + 1)}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderMobileChildren = (items: LinkList[], depth = 1): React.ReactNode => {
+    if (!items.length) {
+      return null;
+    }
+
+    return (
+      <div className={cn(depth === 1 ? "pl-6" : "pl-8") }>
+        {items.map((item, idx) => (
+          <div key={`${item.name}-mobile-${idx}`}>
+            <Link
+              href={item.url}
+              className="block py-2 text-white"
+              onClick={() => syncMenu(false)}
+            >
+              ↳ {item.name}
+            </Link>
+            {renderMobileChildren(item.children ?? [], depth + 1)}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className={!menuOpen ? "bg-white" : ""}>
       <div
@@ -125,17 +181,8 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
                   {/* Desktop dropdown (desktop only) */}
                   {!mobile && hasChildren && (
-                    <div className="absolute left-0 z-50  hidden w-max max-w-[90vw] overflow-hidden bg-white text-black shadow-lg group-hover:block">
-                      {link.children?.map((child, j) => (
-                        <Link
-                          key={j}
-                          href={child.url}
-                          className="block px-4 py-2 text-sm hover:bg-gray-100"
-                          onClick={() => syncMenu(false)}
-                        >
-                          {child.name}
-                        </Link>
-                      ))}
+                    <div className="absolute left-0 z-50 hidden w-max max-w-[90vw] overflow-visible bg-white text-black shadow-lg group-hover:block">
+                      {renderDesktopChildren(link.children ?? [])}
                     </div>
                   )}
 
@@ -144,18 +191,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
                     mobile &&
                     hasChildren &&
                     mobileOpenIndex === i && (
-                      <div className="pl-6">
-                        {link.children?.map((child, j) => (
-                          <Link
-                            key={j}
-                            href={child.url}
-                            className="block py-2 text-white"
-                            onClick={() => syncMenu(false)}
-                          >
-                            ↳ &nbsp;{child.name}
-                          </Link>
-                        ))}
-                      </div>
+                      <>{renderMobileChildren(link.children ?? [])}</>
                     )}
                 </div>
               );

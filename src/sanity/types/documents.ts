@@ -103,11 +103,12 @@ export type SanityArticle = SanityDocument & {
 
 export type SanityLink = SanityDocument & {
   type: "reference" | "url";
-  title: "string";
+  title: string;
   reference?: SanityArticle | SanityPage | null;
   url?: string;
   target: "_blank" | "_self";
   image?: SanityImage | null;
+  children?: SanityLink[];
 };
 
 export type SanityGradient = SanityDocument & {

@@ -13,7 +13,19 @@ const getHeaderQuery = groq`
         title,
         url,
         type,
-        reference->{ _type, slug }
+        reference->{ _type, slug },
+        children[]-> {
+          title,
+          url,
+          type,
+          reference->{ _type, slug },
+          children[]-> {
+            title,
+            url,
+            type,
+            reference->{ _type, slug }
+          }
+        }
       }
     }
   }
