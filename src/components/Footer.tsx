@@ -7,7 +7,7 @@ import camelCase from "lodash/camelCase";
 import { Logo } from "@/components/Logo";
 import RichText from "@/components/richtext/RichText";
 import { Button } from "@/components/ui/button";
-import { FormProps } from "@/lib/hooks/useFormAction";
+import type { FormProps } from "@/lib/hooks/useFormAction";
 import { SanityRichtext } from "@/sanity/types/objects";
 import type { SanityImage } from "@/sanity/types/documents";
 import type { LinkList } from "./Navbar";
@@ -49,17 +49,6 @@ const Footer: React.FC<FooterProps> = ({
   legalLinks,
   socialIcons,
 }) => {
-  // Debug logging
-  if (typeof window !== 'undefined') {
-    console.log('Footer social data:', {
-      socialLinks,
-      socialIcons,
-      facebookIcon: socialIcons?.facebook,
-      facebookAsset: socialIcons?.facebook?.asset,
-      facebookAssetUrl: socialIcons?.facebook?.asset?.url,
-    });
-  }
-
   const hasSocialLinks =
     !!socialLinks?.facebook ||
     !!socialLinks?.instagram ||

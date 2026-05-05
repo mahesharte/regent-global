@@ -7,6 +7,7 @@ import { Prepare } from "../../types/utils";
 const actions: { [value: string]: string } = {
   contact: "Contact",
   subscribe: "Subscribe",
+  "sustainability-request": "Sustainability Strategy Document Request",
 };
 
 export default defineType({

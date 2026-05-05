@@ -3,7 +3,7 @@ export type User = {
   email: string;
 };
 
-export type Template = "contact" | "subscribe";
+export type Template = "contact" | "subscribe" | "sustainabilityRequest";
 
 export type Args = {
   [name: string]: string;

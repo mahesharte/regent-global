@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import { NextStudio } from "next-sanity/studio";
-import { metadata } from "next-sanity/studio/metadata";
+// import { metadata } from "next-sanity/studio/metadata";
 import { useEffect, useMemo, useState, type FC } from "react";
 import isFunction from "lodash/isFunction";
 import noop from "lodash/noop";
@@ -92,9 +92,8 @@ const StudioPage: FC = () => {
   return (
     <StudioContext.Provider value={value}>
       <Head>
-        {Object.entries(metadata).map(([key, content]) => (
-          <meta key={key} name={key} content={content} />
-        ))}
+        <meta name="robots" content="noindex" />
+        <meta name="referrer" content="same-origin" />
       </Head>
       <NextStudio config={config} />
     </StudioContext.Provider>

@@ -95,12 +95,10 @@ const GatedPdfLinkMark: FC<GatedPdfLinkMarkProps> = ({
   value,
   onOpen,
 }) => {
-  console.log('🎯 GatedPdfLinkMark component rendered with value:', value);
   return (
     <button
       type="button"
       onClick={() => {
-        console.log('👆 PDF link clicked!', value);
         onOpen(value);
       }}
       className={`${className} cursor-pointer bg-transparent p-0 font-inherit text-inherit underline`}
@@ -274,7 +272,6 @@ const RichText: FC<Props> = ({
   const pageSlug = pageSluProp || router.asPath.split("?")[0] || router.pathname;
 
   const handleGatedPdfLinkOpen = (pdfData: GatedPdfLinkProps) => {
-    console.log('🔍 Gated PDF Link opened with data:', pdfData);
     setSelectedPdf(pdfData);
     setIsModalOpen(true);
   };
@@ -296,8 +293,6 @@ const RichText: FC<Props> = ({
     let pdfExternalUrl: string | undefined = selectedPdf.pdfExternalUrl;
     
     if (selectedPdf.pdfFile) {
-      console.log('🔍 pdfFile value:', selectedPdf.pdfFile);
-      
       // Try multiple extraction paths for the file reference
       const fileObj = selectedPdf.pdfFile as any;
       
@@ -308,13 +303,6 @@ const RichText: FC<Props> = ({
         pdfFileRef = fileObj?.asset?._ref || fileObj?._ref;
       }
     }
-
-    console.log('📤 Extracted PDF data:', {
-      pdfFileRef,
-      pdfExternalUrl,
-      hasPdfFile: !!selectedPdf.pdfFile,
-      pdfFileObject: selectedPdf.pdfFile,
-    });
 
     // Validate that at least one PDF source is provided
     if (!pdfFileRef && !pdfExternalUrl) {

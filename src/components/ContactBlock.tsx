@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import camelCase from "lodash/camelCase";
 
-import { FormProps } from "@/lib/hooks/useFormAction";
+import type { FormProps } from "@/lib/hooks/useFormAction";
 import { Button } from "./ui/button";
 import RichText from "./richtext/RichText";
 import { cn } from "@/lib/utils";

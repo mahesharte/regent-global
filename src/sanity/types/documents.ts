@@ -178,7 +178,7 @@ export type SanitySetting = SanityDocument & {
 };
 
 export type SanityForm = SanityDocument & {
-  action: "contact" | "subscribe";
+  action: "contact" | "subscribe" | "sustainability-request";
   title: string;
   content?: SanityRichtext;
   inputs: SanityFormInput[];
