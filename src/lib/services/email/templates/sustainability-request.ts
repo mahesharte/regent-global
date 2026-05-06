@@ -28,5 +28,6 @@ export const html = (args: Args) => `
   Phone number: <strong>${args.phoneNumber}</strong><br />
   Company name: <strong>${args.companyName}</strong><br />
   <br />
-  Regent Global
+  Thanks,<br />
+  Team Regent Global
 `;
